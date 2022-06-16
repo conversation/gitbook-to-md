@@ -35,15 +35,52 @@ describe("renderBlock()", () => {
     expect(renderer.renderBlock(node, 0)).toEqual("## heading text\n\n");
   });
 
-  it("renders a list item", () => {
+  it("renders list items", () => {
     const node = {
-      type: "list-item",
-      leaves: [
-        { marks: [], object: "leaf", selections: [], text: "list text" },
+      type: "list-unordered",
+      nodes: [
+        {
+          object: "block",
+          type: "list-item",
+          nodes: [
+            {
+              object: "block",
+              type: "paragraph",
+              leaves: [
+                {
+                  marks: [],
+                  object: "leaf",
+                  selections: [],
+                  text: "list text",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          object: "block",
+          type: "list-item",
+          nodes: [
+            {
+              object: "block",
+              type: "paragraph",
+              leaves: [
+                {
+                  marks: [],
+                  object: "leaf",
+                  selections: [],
+                  text: "list text",
+                },
+              ],
+            },
+          ],
+        },
       ],
     };
 
-    expect(renderer.renderBlock(node, 0)).toEqual("- list text");
+    expect(renderer.renderBlock(node, 0)).toEqual(
+      "- list text\n- list text\n\n"
+    );
   });
 
   it("renders nested list items", async () => {

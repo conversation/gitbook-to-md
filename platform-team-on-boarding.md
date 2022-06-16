@@ -5,7 +5,6 @@ Very much WIP draft staus
 Security and Privacy are core tenets which should be accounted for when designing and implementing software for The Conversation.
 
 - User privacy is paramount. We strive to make a secure and resilient platform and thus should question decisions orthogonal to that tenet.
-
 - Every member's laptop should have disk level encryption enabled. For Apple OSX users [please follow these instructions](https://support.apple.com/en-au/HT204837).
 
 ## Content Persistence

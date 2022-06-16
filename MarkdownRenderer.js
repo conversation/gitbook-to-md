@@ -73,7 +73,6 @@ class MarkdownRenderer {
         .join("");
     } else if (node.type == "list-unordered") {
       this.listDepth--;
-    } else if (node.type == "list-item") {
       block += "\n";
     }
 
