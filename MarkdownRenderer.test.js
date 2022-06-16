@@ -24,6 +24,15 @@ describe("render", () => {
 
     expect(result).toEqual("- list item\n  - nested item\n\n\n");
   });
+
+  it("renders images", async () => {
+    const renderer = new MarkdownRenderer();
+    const json = await fs.readFile("images.json", "utf8");
+    const node = JSON.parse(json).document;
+    const result = renderer.render(node);
+
+    expect(result).toEqual("![This is a caption](/todo/path)\n\n");
+  });
 });
 
 describe("renderBlock()", () => {

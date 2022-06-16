@@ -21,6 +21,11 @@ class MarkdownRenderer {
         output += this.renderBlock(node, depth);
         break;
 
+      case "fragment":
+        console.log(`${"-".repeat(depth)} ${node.object}`);
+        output += this.renderFragment(node, depth);
+        break;
+
       case "text":
         console.log(`${"-".repeat(depth)} ${node.object}`);
         output += this.renderChildren(node, depth);
@@ -67,6 +72,8 @@ class MarkdownRenderer {
     } else if (node.type == "list-unordered") {
       this.listDepth--;
       block += "\n";
+    } else if (node.type == "image") {
+      block = `![${block.trim()}](/todo/path)\n\n`;
     } else if (node.type == "blockquote") {
       block = block
         .split("\n")
@@ -75,6 +82,10 @@ class MarkdownRenderer {
     }
 
     return block;
+  }
+
+  renderFragment(node, depth) {
+    return this.renderChildren(node, depth);
   }
 
   renderInline(node, depth) {
@@ -107,11 +118,10 @@ class MarkdownRenderer {
   renderChildren(node, depth) {
     let output = "";
 
-    for (const n of node.nodes || []) {
-      output += this.renderNode(n, depth + 1);
-    }
-    for (const n of node.leaves || []) {
-      output += this.renderNode(n, depth + 1);
+    for (const childType of ["nodes", "leaves", "fragments"]) {
+      for (const n of node[childType] || []) {
+        output += this.renderNode(n, depth + 1);
+      }
     }
 
     return output;
