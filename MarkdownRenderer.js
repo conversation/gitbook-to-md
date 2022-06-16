@@ -1,5 +1,5 @@
 class MarkdownRenderer {
-  render(node, output = [], depth = 0) {
+  render(node, output = "", depth = 0) {
     switch (node.object) {
       case "document":
         output = this.renderChildren(node, output, depth);
@@ -7,7 +7,7 @@ class MarkdownRenderer {
 
       case "block":
         console.log(`${"-".repeat(depth)} ${node.object} - ${node.type}`);
-        output.push(this.renderBlock(node, output, depth));
+        output = this.renderBlock(node, output, depth);
         break;
 
       case "text":
@@ -38,15 +38,15 @@ class MarkdownRenderer {
       let headingLevel = parseInt(block.type.split("-").pop());
       let mdHeader = "#".repeat(headingLevel) + " ";
 
-      output.push(mdHeader);
+      output += mdHeader;
     } else if (block.type == "list-item") {
-      output.push("- ");
+      output += "- ";
     }
 
     output = this.renderChildren(block, output, depth);
 
     if (block.type == "paragraph" || block.type.startsWith("heading-")) {
-      output.push("\n\n");
+      output += "\n\n";
     }
 
     return output;
@@ -56,7 +56,7 @@ class MarkdownRenderer {
     if (node.type != "link") throw `Unknown inline type: ${node.type}`;
 
     const text = this.renderChildren(node, [], depth);
-    output.push(`[${text.join()}](${node.data.ref.url})`);
+    output += `[${text}](${node.data.ref.url})`;
     return output;
   }
 
@@ -77,7 +77,7 @@ class MarkdownRenderer {
       }
     }
 
-    output.push(text);
+    output += text;
 
     return output;
   }
