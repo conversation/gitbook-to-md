@@ -3,10 +3,12 @@ class MarkdownRenderer {
     return this.stripTrailingWhitespace(this.renderNode(node));
   }
 
-  renderNode(node, output = "", depth = 0) {
+  renderNode(node, depth = 0) {
+    let output = "";
+
     switch (node.object) {
       case "document":
-        output = this.renderChildren(node, output, depth);
+        output += this.renderChildren(node, depth);
         break;
 
       case "block":
@@ -16,7 +18,7 @@ class MarkdownRenderer {
 
       case "text":
         console.log(`${"-".repeat(depth)} ${node.object}`);
-        output = this.renderChildren(node, output, depth);
+        output += this.renderChildren(node, depth);
         break;
 
       case "leaf":
@@ -49,7 +51,7 @@ class MarkdownRenderer {
       block += "- ";
     }
 
-    block = this.renderChildren(node, block, depth);
+    block += this.renderChildren(node, depth);
 
     if (node.type == "paragraph" || node.type.startsWith("heading-")) {
       block += "\n\n";
@@ -61,7 +63,7 @@ class MarkdownRenderer {
   renderInline(node, depth) {
     if (node.type != "link") throw `Unknown inline type: ${node.type}`;
 
-    const text = this.renderChildren(node, [], depth);
+    const text = this.renderChildren(node, depth);
     return `[${text}](${node.data.ref.url})`;
   }
 
@@ -85,13 +87,16 @@ class MarkdownRenderer {
     return text;
   }
 
-  renderChildren(node, output, depth) {
+  renderChildren(node, depth) {
+    let output = "";
+
     for (const n of node.nodes || []) {
-      output = this.renderNode(n, output, depth + 1);
+      output += this.renderNode(n, depth + 1);
     }
     for (const n of node.leaves || []) {
-      output = this.renderNode(n, output, depth + 1);
+      output += this.renderNode(n, depth + 1);
     }
+
     return output;
   }
 
