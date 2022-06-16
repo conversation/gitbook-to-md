@@ -1,5 +1,11 @@
 {
+  "scripts": {
+    "test": "jest"
+  },
   "dependencies": {
     "prettier": "^2.7.0"
+  },
+  "devDependencies": {
+    "jest": "28.1.1"
   }
 }
