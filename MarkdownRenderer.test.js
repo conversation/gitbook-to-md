@@ -46,6 +46,18 @@ describe("renderBlock()", () => {
     expect(renderer.renderBlock(node, 0)).toEqual("- list text");
   });
 
+  it("renders a block quote", () => {
+    const node = {
+      type: "blockquote",
+      leaves: [
+        { marks: [], object: "leaf", selections: [], text: "line one\n" },
+        { marks: [], object: "leaf", selections: [], text: "line two" },
+      ],
+    };
+
+    expect(renderer.renderBlock(node, 0)).toEqual("> line one\n> line two\n");
+  });
+
   it("renders a paragraph", () => {
     const node = {
       type: "paragraph",

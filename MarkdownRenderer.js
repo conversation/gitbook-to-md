@@ -55,6 +55,11 @@ class MarkdownRenderer {
 
     if (node.type == "paragraph" || node.type.startsWith("heading-")) {
       block += "\n\n";
+    } else if (node.type == "blockquote") {
+      block = block
+        .split("\n")
+        .map((line) => `> ${line}\n`)
+        .join("");
     }
 
     return block;
