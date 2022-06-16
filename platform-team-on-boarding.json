@@ -1,0 +1,313 @@
+{
+    "description": "Let's get you started!",
+    "document": {
+        "data": {
+            "schemaVersion": 4
+        },
+        "nodes": [
+            {
+                "data": {
+                    "id": "platformteamon-boarding-security-and-privacy"
+                },
+                "isVoid": false,
+                "nodes": [
+                    {
+                        "leaves": [
+                            {
+                                "marks": [],
+                                "object": "leaf",
+                                "selections": [],
+                                "text": "Security & Privacy "
+                            }
+                        ],
+                        "object": "text"
+                    }
+                ],
+                "object": "block",
+                "type": "heading-2"
+            },
+            {
+                "data": {},
+                "isVoid": false,
+                "nodes": [
+                    {
+                        "leaves": [
+                            {
+                                "marks": [],
+                                "object": "leaf",
+                                "selections": [],
+                                "text": "Very much WIP draft staus"
+                            }
+                        ],
+                        "object": "text"
+                    }
+                ],
+                "object": "block",
+                "type": "paragraph"
+            },
+            {
+                "data": {},
+                "isVoid": false,
+                "nodes": [
+                    {
+                        "leaves": [
+                            {
+                                "marks": [],
+                                "object": "leaf",
+                                "selections": [],
+                                "text": "Security and Privacy are core tenets which should be accounted for when designing and implementing software for The Conversation."
+                            }
+                        ],
+                        "object": "text"
+                    }
+                ],
+                "object": "block",
+                "type": "paragraph"
+            },
+            {
+                "data": {},
+                "isVoid": false,
+                "nodes": [
+                    {
+                        "data": {},
+                        "isVoid": false,
+                        "nodes": [
+                            {
+                                "data": {},
+                                "isVoid": false,
+                                "nodes": [
+                                    {
+                                        "leaves": [
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "User privacy is paramount. We strive to make a secure and resilient platform and thus should question decisions orthogonal to that tenet."
+                                            }
+                                        ],
+                                        "object": "text"
+                                    }
+                                ],
+                                "object": "block",
+                                "type": "paragraph"
+                            }
+                        ],
+                        "object": "block",
+                        "type": "list-item"
+                    },
+                    {
+                        "data": {},
+                        "isVoid": false,
+                        "nodes": [
+                            {
+                                "data": {},
+                                "isVoid": false,
+                                "nodes": [
+                                    {
+                                        "leaves": [
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "Every member's laptop should have disk level encryption enabled. For Apple OSX users "
+                                            }
+                                        ],
+                                        "object": "text"
+                                    },
+                                    {
+                                        "data": {
+                                            "ref": {
+                                                "kind": "url",
+                                                "url": "https://support.apple.com/en-au/HT204837"
+                                            }
+                                        },
+                                        "isVoid": false,
+                                        "nodes": [
+                                            {
+                                                "leaves": [
+                                                    {
+                                                        "marks": [],
+                                                        "object": "leaf",
+                                                        "selections": [],
+                                                        "text": "please follow these instructions"
+                                                    }
+                                                ],
+                                                "object": "text"
+                                            }
+                                        ],
+                                        "object": "inline",
+                                        "type": "link"
+                                    },
+                                    {
+                                        "leaves": [
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "."
+                                            }
+                                        ],
+                                        "object": "text"
+                                    }
+                                ],
+                                "object": "block",
+                                "type": "paragraph"
+                            }
+                        ],
+                        "object": "block",
+                        "type": "list-item"
+                    }
+                ],
+                "object": "block",
+                "type": "list-unordered"
+            },
+            {
+                "data": {
+                    "id": "platformteamon-boarding-contentpersistence"
+                },
+                "isVoid": false,
+                "nodes": [
+                    {
+                        "leaves": [
+                            {
+                                "marks": [],
+                                "object": "leaf",
+                                "selections": [],
+                                "text": "Content Persistence "
+                            }
+                        ],
+                        "object": "text"
+                    }
+                ],
+                "object": "block",
+                "type": "heading-2"
+            },
+            {
+                "data": {},
+                "isVoid": false,
+                "nodes": [
+                    {
+                        "leaves": [
+                            {
+                                "marks": [],
+                                "object": "leaf",
+                                "selections": [],
+                                "text": "Content persistence is a fundamental part of our identity at The Conversation. \nBy reading the editorial "
+                            }
+                        ],
+                        "object": "text"
+                    },
+                    {
+                        "data": {
+                            "ref": {
+                                "kind": "url",
+                                "url": "https://theconversation.com/au/content-removal-policy"
+                            }
+                        },
+                        "isVoid": false,
+                        "nodes": [
+                            {
+                                "leaves": [
+                                    {
+                                        "marks": [],
+                                        "object": "leaf",
+                                        "selections": [],
+                                        "text": "content removal policy"
+                                    }
+                                ],
+                                "object": "text"
+                            }
+                        ],
+                        "object": "inline",
+                        "type": "link"
+                    },
+                    {
+                        "leaves": [
+                            {
+                                "marks": [],
+                                "object": "leaf",
+                                "selections": [],
+                                "text": " you will get an understanding of how the editorial team make decisions on content removal. \nOnly even in extreme circumstances will we ever "
+                            },
+                            {
+                                "marks": [
+                                    {
+                                        "data": {},
+                                        "object": "mark",
+                                        "type": "italic"
+                                    }
+                                ],
+                                "object": "leaf",
+                                "selections": [],
+                                "text": "kill "
+                            },
+                            {
+                                "marks": [],
+                                "object": "leaf",
+                                "selections": [],
+                                "text": "a piece of content. "
+                            }
+                        ],
+                        "object": "text"
+                    }
+                ],
+                "object": "block",
+                "type": "paragraph"
+            },
+            {
+                "data": {},
+                "isVoid": false,
+                "nodes": [
+                    {
+                        "leaves": [
+                            {
+                                "marks": [],
+                                "object": "leaf",
+                                "selections": [],
+                                "text": "This has some interesting challenges when designing, building and deploying our software. "
+                            }
+                        ],
+                        "object": "text"
+                    }
+                ],
+                "object": "block",
+                "type": "paragraph"
+            }
+        ],
+        "object": "document"
+    },
+    "id": "-L_QL4R-nH-23zD7IMH_",
+    "kind": "sheet",
+    "pages": [
+        {
+            "description": "",
+            "id": "-L_tZS9oWgpOp3Q6Vs3b",
+            "kind": "sheet",
+            "pages": [],
+            "path": "calendars",
+            "title": "Calendars",
+            "uid": "-L_tZS9oWgpOp3Q6Vs3b"
+        },
+        {
+            "description": "",
+            "id": "-L_tWfrI9mKLR69xBFCz",
+            "kind": "sheet",
+            "pages": [],
+            "path": "tools",
+            "title": "Tools",
+            "uid": "-L_tWfrI9mKLR69xBFCz"
+        },
+        {
+            "description": "Dealing with support tickets",
+            "id": "-LyBULYPIaSkRje2tW-9",
+            "kind": "sheet",
+            "pages": [],
+            "path": "support",
+            "title": "Support",
+            "uid": "-LyBULYPIaSkRje2tW-9"
+        }
+    ],
+    "path": "platform-team-on-boarding",
+    "title": "Platform Team On-boarding",
+    "uid": "-L_QL4R-nH-23zD7IMH_"
+}

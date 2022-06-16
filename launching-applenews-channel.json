@@ -1,0 +1,1660 @@
+{
+    "description": "",
+    "document": {
+        "data": {
+            "schemaVersion": 4
+        },
+        "nodes": [
+            {
+                "data": {},
+                "isVoid": false,
+                "nodes": [
+                    {
+                        "leaves": [
+                            {
+                                "marks": [],
+                                "object": "leaf",
+                                "selections": [],
+                                "text": "Create the new channel"
+                            }
+                        ],
+                        "object": "text"
+                    }
+                ],
+                "object": "block",
+                "type": "heading-2"
+            },
+            {
+                "data": {},
+                "isVoid": false,
+                "nodes": [
+                    {
+                        "data": {},
+                        "isVoid": false,
+                        "nodes": [
+                            {
+                                "data": {},
+                                "isVoid": false,
+                                "nodes": [
+                                    {
+                                        "leaves": [
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "Go to https://icloud.com."
+                                            }
+                                        ],
+                                        "object": "text"
+                                    }
+                                ],
+                                "object": "block",
+                                "type": "paragraph"
+                            }
+                        ],
+                        "object": "block",
+                        "type": "list-item"
+                    },
+                    {
+                        "data": {},
+                        "isVoid": false,
+                        "nodes": [
+                            {
+                                "data": {},
+                                "isVoid": false,
+                                "nodes": [
+                                    {
+                                        "leaves": [
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "click on "
+                                            },
+                                            {
+                                                "marks": [
+                                                    {
+                                                        "data": {},
+                                                        "object": "mark",
+                                                        "type": "bold"
+                                                    }
+                                                ],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "newspublisher."
+                                            }
+                                        ],
+                                        "object": "text"
+                                    }
+                                ],
+                                "object": "block",
+                                "type": "paragraph"
+                            }
+                        ],
+                        "object": "block",
+                        "type": "list-item"
+                    },
+                    {
+                        "data": {},
+                        "isVoid": false,
+                        "nodes": [
+                            {
+                                "data": {},
+                                "isVoid": false,
+                                "nodes": [
+                                    {
+                                        "leaves": [
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "click the channel selector drop down."
+                                            }
+                                        ],
+                                        "object": "text"
+                                    }
+                                ],
+                                "object": "block",
+                                "type": "paragraph"
+                            }
+                        ],
+                        "object": "block",
+                        "type": "list-item"
+                    },
+                    {
+                        "data": {},
+                        "isVoid": false,
+                        "nodes": [
+                            {
+                                "data": {},
+                                "isVoid": false,
+                                "nodes": [
+                                    {
+                                        "leaves": [
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "click "
+                                            },
+                                            {
+                                                "marks": [
+                                                    {
+                                                        "data": {},
+                                                        "object": "mark",
+                                                        "type": "bold"
+                                                    }
+                                                ],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "Create New Channel."
+                                            }
+                                        ],
+                                        "object": "text"
+                                    }
+                                ],
+                                "object": "block",
+                                "type": "paragraph"
+                            }
+                        ],
+                        "object": "block",
+                        "type": "list-item"
+                    }
+                ],
+                "object": "block",
+                "type": "list-unordered"
+            },
+            {
+                "data": {},
+                "isVoid": false,
+                "nodes": [
+                    {
+                        "data": {
+                            "ref": {
+                                "file": "-LeJdnTo82YKJZev1qB9",
+                                "kind": "file"
+                            }
+                        },
+                        "fragments": [
+                            {
+                                "fragment": "caption",
+                                "nodes": [
+                                    {
+                                        "data": {},
+                                        "isVoid": false,
+                                        "nodes": [
+                                            {
+                                                "leaves": [
+                                                    {
+                                                        "marks": [],
+                                                        "object": "leaf",
+                                                        "selections": [],
+                                                        "text": ""
+                                                    }
+                                                ],
+                                                "object": "text"
+                                            }
+                                        ],
+                                        "object": "block",
+                                        "type": "paragraph"
+                                    }
+                                ],
+                                "object": "fragment"
+                            }
+                        ],
+                        "isVoid": true,
+                        "nodes": [
+                            {
+                                "leaves": [
+                                    {
+                                        "marks": [],
+                                        "object": "leaf",
+                                        "selections": [],
+                                        "text": ""
+                                    }
+                                ],
+                                "object": "text"
+                            }
+                        ],
+                        "object": "block",
+                        "type": "image"
+                    }
+                ],
+                "object": "block",
+                "type": "images"
+            },
+            {
+                "data": {},
+                "isVoid": false,
+                "nodes": [
+                    {
+                        "leaves": [
+                            {
+                                "marks": [],
+                                "object": "leaf",
+                                "selections": [],
+                                "text": "Contact Apple"
+                            }
+                        ],
+                        "object": "text"
+                    }
+                ],
+                "object": "block",
+                "type": "heading-2"
+            },
+            {
+                "data": {},
+                "isVoid": false,
+                "nodes": [
+                    {
+                        "leaves": [
+                            {
+                                "marks": [],
+                                "object": "leaf",
+                                "selections": [],
+                                "text": "Apple need to take manual action on the account to enable 3 things before we can start publishing. Because of this, it's best to do this step straight after creating the channel."
+                            }
+                        ],
+                        "object": "text"
+                    }
+                ],
+                "object": "block",
+                "type": "paragraph"
+            },
+            {
+                "data": {},
+                "isVoid": false,
+                "nodes": [
+                    {
+                        "data": {},
+                        "isVoid": false,
+                        "nodes": [
+                            {
+                                "data": {},
+                                "isVoid": false,
+                                "nodes": [
+                                    {
+                                        "leaves": [
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "They need to apply custom fonts to the channel (Baskerville)"
+                                            }
+                                        ],
+                                        "object": "text"
+                                    }
+                                ],
+                                "object": "block",
+                                "type": "paragraph"
+                            }
+                        ],
+                        "object": "block",
+                        "type": "list-item"
+                    },
+                    {
+                        "data": {},
+                        "isVoid": false,
+                        "nodes": [
+                            {
+                                "data": {},
+                                "isVoid": false,
+                                "nodes": [
+                                    {
+                                        "leaves": [
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "They need to enable the analytics/reporting endpoint so that we can start polling it for data."
+                                            }
+                                        ],
+                                        "object": "text"
+                                    }
+                                ],
+                                "object": "block",
+                                "type": "paragraph"
+                            }
+                        ],
+                        "object": "block",
+                        "type": "list-item"
+                    },
+                    {
+                        "data": {},
+                        "isVoid": false,
+                        "nodes": [
+                            {
+                                "data": {},
+                                "isVoid": false,
+                                "nodes": [
+                                    {
+                                        "leaves": [
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "They need to approve the channel to get it out of test mode."
+                                            }
+                                        ],
+                                        "object": "text"
+                                    }
+                                ],
+                                "object": "block",
+                                "type": "paragraph"
+                            }
+                        ],
+                        "object": "block",
+                        "type": "list-item"
+                    }
+                ],
+                "object": "block",
+                "type": "list-unordered"
+            },
+            {
+                "data": {},
+                "isVoid": false,
+                "nodes": [
+                    {
+                        "leaves": [
+                            {
+                                "marks": [],
+                                "object": "leaf",
+                                "selections": [],
+                                "text": "Here's an example of the last email I sent Apple requesting these things to be done:"
+                            }
+                        ],
+                        "object": "text"
+                    }
+                ],
+                "object": "block",
+                "type": "paragraph"
+            },
+            {
+                "data": {},
+                "isVoid": false,
+                "nodes": [
+                    {
+                        "data": {},
+                        "isVoid": false,
+                        "nodes": [
+                            {
+                                "leaves": [
+                                    {
+                                        "marks": [],
+                                        "object": "leaf",
+                                        "selections": [],
+                                        "text": "to: "
+                                    },
+                                    {
+                                        "marks": [
+                                            {
+                                                "data": {},
+                                                "object": "mark",
+                                                "type": "bold"
+                                            }
+                                        ],
+                                        "object": "leaf",
+                                        "selections": [],
+                                        "text": "news_ops@apple.com"
+                                    },
+                                    {
+                                        "marks": [],
+                                        "object": "leaf",
+                                        "selections": [],
+                                        "text": "\n\nHey News Ops Team,\n\nWe\u2019re planning on taking TC-CA and TC-CA-FR (French Canada) live.\n\nTC-CA channel_id is: "
+                                    },
+                                    {
+                                        "marks": [
+                                            {
+                                                "data": {},
+                                                "object": "mark",
+                                                "type": "bold"
+                                            }
+                                        ],
+                                        "object": "leaf",
+                                        "selections": [],
+                                        "text": "cc982df1-c40f-4e6d-b76c-d4d7bea5903b\n"
+                                    },
+                                    {
+                                        "marks": [],
+                                        "object": "leaf",
+                                        "selections": [],
+                                        "text": "TC-CA-FR channel_id is: "
+                                    },
+                                    {
+                                        "marks": [
+                                            {
+                                                "data": {},
+                                                "object": "mark",
+                                                "type": "bold"
+                                            }
+                                        ],
+                                        "object": "leaf",
+                                        "selections": [],
+                                        "text": "9e8388e3-8837-4965-a80f-795af0c2cee1"
+                                    },
+                                    {
+                                        "marks": [],
+                                        "object": "leaf",
+                                        "selections": [],
+                                        "text": "\n"
+                                    },
+                                    {
+                                        "marks": [
+                                            {
+                                                "data": {},
+                                                "object": "mark",
+                                                "type": "bold"
+                                            }
+                                        ],
+                                        "object": "leaf",
+                                        "selections": [],
+                                        "text": "\n"
+                                    },
+                                    {
+                                        "marks": [],
+                                        "object": "leaf",
+                                        "selections": [],
+                                        "text": "We assume the following will need to also be done, if that could be done asap, that would be wonderful.\n\n- apply custom fonts to the channels (attached is the fonts payload).\n- enable the analytics endpoint for the channel so we don\u2019t "
+                                    },
+                                    {
+                                        "marks": [
+                                            {
+                                                "data": {},
+                                                "object": "mark",
+                                                "type": "code"
+                                            }
+                                        ],
+                                        "object": "leaf",
+                                        "selections": [],
+                                        "text": "ANALYTICS_NOT_ALLOWED"
+                                    },
+                                    {
+                                        "marks": [],
+                                        "object": "leaf",
+                                        "selections": [],
+                                        "text": " .\n- channel removed from the preliminary state (state which forces three draft articles to be published first)."
+                                    }
+                                ],
+                                "object": "text"
+                            }
+                        ],
+                        "object": "block",
+                        "type": "paragraph"
+                    }
+                ],
+                "object": "block",
+                "type": "blockquote"
+            },
+            {
+                "data": {
+                    "ref": {
+                        "file": "-LeJbNLXH40vFfZn3Zpx",
+                        "kind": "file"
+                    }
+                },
+                "fragments": [
+                    {
+                        "fragment": "caption",
+                        "nodes": [
+                            {
+                                "data": {},
+                                "isVoid": false,
+                                "nodes": [
+                                    {
+                                        "leaves": [
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "Custom Fonts"
+                                            }
+                                        ],
+                                        "object": "text"
+                                    }
+                                ],
+                                "object": "block",
+                                "type": "paragraph"
+                            }
+                        ],
+                        "object": "fragment"
+                    }
+                ],
+                "isVoid": true,
+                "nodes": [
+                    {
+                        "leaves": [
+                            {
+                                "marks": [],
+                                "object": "leaf",
+                                "selections": [],
+                                "text": ""
+                            }
+                        ],
+                        "object": "text"
+                    }
+                ],
+                "object": "block",
+                "type": "file"
+            },
+            {
+                "data": {},
+                "isVoid": false,
+                "nodes": [
+                    {
+                        "leaves": [
+                            {
+                                "marks": [],
+                                "object": "leaf",
+                                "selections": [],
+                                "text": "Adding Members to the channel"
+                            }
+                        ],
+                        "object": "text"
+                    }
+                ],
+                "object": "block",
+                "type": "heading-2"
+            },
+            {
+                "data": {},
+                "isVoid": false,
+                "nodes": [
+                    {
+                        "data": {},
+                        "isVoid": false,
+                        "nodes": [
+                            {
+                                "data": {},
+                                "isVoid": false,
+                                "nodes": [
+                                    {
+                                        "leaves": [
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "Click "
+                                            },
+                                            {
+                                                "marks": [
+                                                    {
+                                                        "data": {},
+                                                        "object": "mark",
+                                                        "type": "bold"
+                                                    }
+                                                ],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "Settings"
+                                            },
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": " > "
+                                            },
+                                            {
+                                                "marks": [
+                                                    {
+                                                        "data": {},
+                                                        "object": "mark",
+                                                        "type": "bold"
+                                                    }
+                                                ],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "Members"
+                                            },
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": " > "
+                                            },
+                                            {
+                                                "marks": [
+                                                    {
+                                                        "data": {},
+                                                        "object": "mark",
+                                                        "type": "bold"
+                                                    }
+                                                ],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "Add Member."
+                                            }
+                                        ],
+                                        "object": "text"
+                                    }
+                                ],
+                                "object": "block",
+                                "type": "paragraph"
+                            }
+                        ],
+                        "object": "block",
+                        "type": "list-item"
+                    },
+                    {
+                        "data": {},
+                        "isVoid": false,
+                        "nodes": [
+                            {
+                                "data": {},
+                                "isVoid": false,
+                                "nodes": [
+                                    {
+                                        "leaves": [
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "This will "
+                                            },
+                                            {
+                                                "marks": [
+                                                    {
+                                                        "data": {},
+                                                        "object": "mark",
+                                                        "type": "bold"
+                                                    }
+                                                ],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "invite "
+                                            },
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "the member to the channel."
+                                            }
+                                        ],
+                                        "object": "text"
+                                    }
+                                ],
+                                "object": "block",
+                                "type": "paragraph"
+                            }
+                        ],
+                        "object": "block",
+                        "type": "list-item"
+                    },
+                    {
+                        "data": {},
+                        "isVoid": false,
+                        "nodes": [
+                            {
+                                "data": {},
+                                "isVoid": false,
+                                "nodes": [
+                                    {
+                                        "leaves": [
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "They need to \"Accept\" the invitation."
+                                            }
+                                        ],
+                                        "object": "text"
+                                    }
+                                ],
+                                "object": "block",
+                                "type": "paragraph"
+                            }
+                        ],
+                        "object": "block",
+                        "type": "list-item"
+                    },
+                    {
+                        "data": {},
+                        "isVoid": false,
+                        "nodes": [
+                            {
+                                "data": {},
+                                "isVoid": false,
+                                "nodes": [
+                                    {
+                                        "leaves": [
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "Once accepted, you need to change the Role to "
+                                            },
+                                            {
+                                                "marks": [
+                                                    {
+                                                        "data": {},
+                                                        "object": "mark",
+                                                        "type": "bold"
+                                                    }
+                                                ],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "Sales."
+                                            }
+                                        ],
+                                        "object": "text"
+                                    }
+                                ],
+                                "object": "block",
+                                "type": "paragraph"
+                            }
+                        ],
+                        "object": "block",
+                        "type": "list-item"
+                    },
+                    {
+                        "data": {},
+                        "isVoid": false,
+                        "nodes": [
+                            {
+                                "data": {},
+                                "isVoid": false,
+                                "nodes": [
+                                    {
+                                        "leaves": [
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "Sales is the role which gives access to Newspublisher analytics, but doesn't grant any further privileges."
+                                            }
+                                        ],
+                                        "object": "text"
+                                    }
+                                ],
+                                "object": "block",
+                                "type": "paragraph"
+                            }
+                        ],
+                        "object": "block",
+                        "type": "list-item"
+                    }
+                ],
+                "object": "block",
+                "type": "list-unordered"
+            },
+            {
+                "data": {},
+                "isVoid": false,
+                "nodes": [
+                    {
+                        "data": {
+                            "ref": {
+                                "file": "-LeJeDMGwTyEddLpvnxt",
+                                "kind": "file"
+                            }
+                        },
+                        "fragments": [
+                            {
+                                "fragment": "caption",
+                                "nodes": [
+                                    {
+                                        "data": {},
+                                        "isVoid": false,
+                                        "nodes": [
+                                            {
+                                                "leaves": [
+                                                    {
+                                                        "marks": [],
+                                                        "object": "leaf",
+                                                        "selections": [],
+                                                        "text": ""
+                                                    }
+                                                ],
+                                                "object": "text"
+                                            }
+                                        ],
+                                        "object": "block",
+                                        "type": "paragraph"
+                                    }
+                                ],
+                                "object": "fragment"
+                            }
+                        ],
+                        "isVoid": true,
+                        "nodes": [
+                            {
+                                "leaves": [
+                                    {
+                                        "marks": [],
+                                        "object": "leaf",
+                                        "selections": [],
+                                        "text": ""
+                                    }
+                                ],
+                                "object": "text"
+                            }
+                        ],
+                        "object": "block",
+                        "type": "image"
+                    }
+                ],
+                "object": "block",
+                "type": "images"
+            },
+            {
+                "data": {},
+                "isVoid": false,
+                "nodes": [
+                    {
+                        "leaves": [
+                            {
+                                "marks": [],
+                                "object": "leaf",
+                                "selections": [],
+                                "text": "Adding Sections to the Channel"
+                            }
+                        ],
+                        "object": "text"
+                    }
+                ],
+                "object": "block",
+                "type": "heading-2"
+            },
+            {
+                "data": {},
+                "isVoid": false,
+                "nodes": [
+                    {
+                        "leaves": [
+                            {
+                                "marks": [],
+                                "object": "leaf",
+                                "selections": [],
+                                "text": "You'll need to consult with the region to identify what sections they want to run on the channel. This is similar to section pages, but may not be a 100% 1-1 match."
+                            }
+                        ],
+                        "object": "text"
+                    }
+                ],
+                "object": "block",
+                "type": "paragraph"
+            },
+            {
+                "data": {},
+                "isVoid": false,
+                "nodes": [
+                    {
+                        "leaves": [
+                            {
+                                "marks": [],
+                                "object": "leaf",
+                                "selections": [],
+                                "text": "Once the region has specified the sections they would like for apple news you can create them here:"
+                            }
+                        ],
+                        "object": "text"
+                    }
+                ],
+                "object": "block",
+                "type": "paragraph"
+            },
+            {
+                "data": {},
+                "isVoid": false,
+                "nodes": [
+                    {
+                        "data": {},
+                        "isVoid": false,
+                        "nodes": [
+                            {
+                                "data": {},
+                                "isVoid": false,
+                                "nodes": [
+                                    {
+                                        "leaves": [
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "Sign into icloud.com."
+                                            }
+                                        ],
+                                        "object": "text"
+                                    }
+                                ],
+                                "object": "block",
+                                "type": "paragraph"
+                            }
+                        ],
+                        "object": "block",
+                        "type": "list-item"
+                    },
+                    {
+                        "data": {},
+                        "isVoid": false,
+                        "nodes": [
+                            {
+                                "data": {},
+                                "isVoid": false,
+                                "nodes": [
+                                    {
+                                        "leaves": [
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "Select News Publisher."
+                                            }
+                                        ],
+                                        "object": "text"
+                                    }
+                                ],
+                                "object": "block",
+                                "type": "paragraph"
+                            }
+                        ],
+                        "object": "block",
+                        "type": "list-item"
+                    },
+                    {
+                        "data": {},
+                        "isVoid": false,
+                        "nodes": [
+                            {
+                                "data": {},
+                                "isVoid": false,
+                                "nodes": [
+                                    {
+                                        "leaves": [
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "Select the channel from the channel drop down."
+                                            }
+                                        ],
+                                        "object": "text"
+                                    }
+                                ],
+                                "object": "block",
+                                "type": "paragraph"
+                            }
+                        ],
+                        "object": "block",
+                        "type": "list-item"
+                    },
+                    {
+                        "data": {},
+                        "isVoid": false,
+                        "nodes": [
+                            {
+                                "data": {},
+                                "isVoid": false,
+                                "nodes": [
+                                    {
+                                        "leaves": [
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "Select "
+                                            },
+                                            {
+                                                "marks": [
+                                                    {
+                                                        "data": {},
+                                                        "object": "mark",
+                                                        "type": "bold"
+                                                    }
+                                                ],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "Articles"
+                                            },
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "."
+                                            }
+                                        ],
+                                        "object": "text"
+                                    }
+                                ],
+                                "object": "block",
+                                "type": "paragraph"
+                            }
+                        ],
+                        "object": "block",
+                        "type": "list-item"
+                    },
+                    {
+                        "data": {},
+                        "isVoid": false,
+                        "nodes": [
+                            {
+                                "data": {},
+                                "isVoid": false,
+                                "nodes": [
+                                    {
+                                        "leaves": [
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "Select "
+                                            },
+                                            {
+                                                "marks": [
+                                                    {
+                                                        "data": {},
+                                                        "object": "mark",
+                                                        "type": "bold"
+                                                    }
+                                                ],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "Edit Sections"
+                                            },
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "."
+                                            }
+                                        ],
+                                        "object": "text"
+                                    }
+                                ],
+                                "object": "block",
+                                "type": "paragraph"
+                            }
+                        ],
+                        "object": "block",
+                        "type": "list-item"
+                    }
+                ],
+                "object": "block",
+                "type": "list-unordered"
+            },
+            {
+                "data": {},
+                "isVoid": false,
+                "nodes": [
+                    {
+                        "data": {
+                            "ref": {
+                                "file": "-LeJgQ5kpd8-zKT-I10D",
+                                "kind": "file"
+                            }
+                        },
+                        "fragments": [
+                            {
+                                "fragment": "caption",
+                                "nodes": [
+                                    {
+                                        "data": {},
+                                        "isVoid": false,
+                                        "nodes": [
+                                            {
+                                                "leaves": [
+                                                    {
+                                                        "marks": [],
+                                                        "object": "leaf",
+                                                        "selections": [],
+                                                        "text": ""
+                                                    }
+                                                ],
+                                                "object": "text"
+                                            }
+                                        ],
+                                        "object": "block",
+                                        "type": "paragraph"
+                                    }
+                                ],
+                                "object": "fragment"
+                            }
+                        ],
+                        "isVoid": true,
+                        "nodes": [
+                            {
+                                "leaves": [
+                                    {
+                                        "marks": [],
+                                        "object": "leaf",
+                                        "selections": [],
+                                        "text": ""
+                                    }
+                                ],
+                                "object": "text"
+                            }
+                        ],
+                        "object": "block",
+                        "type": "image"
+                    }
+                ],
+                "object": "block",
+                "type": "images"
+            },
+            {
+                "data": {},
+                "isVoid": false,
+                "nodes": [
+                    {
+                        "leaves": [
+                            {
+                                "marks": [],
+                                "object": "leaf",
+                                "selections": [],
+                                "text": "Get the API key"
+                            }
+                        ],
+                        "object": "text"
+                    }
+                ],
+                "object": "block",
+                "type": "heading-2"
+            },
+            {
+                "data": {},
+                "isVoid": false,
+                "nodes": [
+                    {
+                        "leaves": [
+                            {
+                                "marks": [],
+                                "object": "leaf",
+                                "selections": [],
+                                "text": "We'll now need the API key to put into TC's "
+                            },
+                            {
+                                "marks": [
+                                    {
+                                        "data": {},
+                                        "object": "mark",
+                                        "type": "code"
+                                    }
+                                ],
+                                "object": "leaf",
+                                "selections": [],
+                                "text": "services.yml"
+                            },
+                            {
+                                "marks": [],
+                                "object": "leaf",
+                                "selections": [],
+                                "text": " encrypted key file."
+                            }
+                        ],
+                        "object": "text"
+                    }
+                ],
+                "object": "block",
+                "type": "paragraph"
+            },
+            {
+                "data": {},
+                "isVoid": false,
+                "nodes": [
+                    {
+                        "data": {},
+                        "isVoid": false,
+                        "nodes": [
+                            {
+                                "data": {},
+                                "isVoid": false,
+                                "nodes": [
+                                    {
+                                        "leaves": [
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "Sign into icloud.com."
+                                            }
+                                        ],
+                                        "object": "text"
+                                    }
+                                ],
+                                "object": "block",
+                                "type": "paragraph"
+                            }
+                        ],
+                        "object": "block",
+                        "type": "list-item"
+                    },
+                    {
+                        "data": {},
+                        "isVoid": false,
+                        "nodes": [
+                            {
+                                "data": {},
+                                "isVoid": false,
+                                "nodes": [
+                                    {
+                                        "leaves": [
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "Select News Publisher."
+                                            }
+                                        ],
+                                        "object": "text"
+                                    }
+                                ],
+                                "object": "block",
+                                "type": "paragraph"
+                            }
+                        ],
+                        "object": "block",
+                        "type": "list-item"
+                    },
+                    {
+                        "data": {},
+                        "isVoid": false,
+                        "nodes": [
+                            {
+                                "data": {},
+                                "isVoid": false,
+                                "nodes": [
+                                    {
+                                        "leaves": [
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "Select the channel from the channel drop down."
+                                            }
+                                        ],
+                                        "object": "text"
+                                    }
+                                ],
+                                "object": "block",
+                                "type": "paragraph"
+                            }
+                        ],
+                        "object": "block",
+                        "type": "list-item"
+                    },
+                    {
+                        "data": {},
+                        "isVoid": false,
+                        "nodes": [
+                            {
+                                "data": {},
+                                "isVoid": false,
+                                "nodes": [
+                                    {
+                                        "leaves": [
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "Click "
+                                            },
+                                            {
+                                                "marks": [
+                                                    {
+                                                        "data": {},
+                                                        "object": "mark",
+                                                        "type": "bold"
+                                                    }
+                                                ],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "Settings"
+                                            },
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "."
+                                            }
+                                        ],
+                                        "object": "text"
+                                    }
+                                ],
+                                "object": "block",
+                                "type": "paragraph"
+                            }
+                        ],
+                        "object": "block",
+                        "type": "list-item"
+                    },
+                    {
+                        "data": {},
+                        "isVoid": false,
+                        "nodes": [
+                            {
+                                "data": {},
+                                "isVoid": false,
+                                "nodes": [
+                                    {
+                                        "leaves": [
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "Click "
+                                            },
+                                            {
+                                                "marks": [
+                                                    {
+                                                        "data": {},
+                                                        "object": "mark",
+                                                        "type": "bold"
+                                                    }
+                                                ],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "Connect CMS"
+                                            },
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "."
+                                            }
+                                        ],
+                                        "object": "text"
+                                    }
+                                ],
+                                "object": "block",
+                                "type": "paragraph"
+                            }
+                        ],
+                        "object": "block",
+                        "type": "list-item"
+                    },
+                    {
+                        "data": {},
+                        "isVoid": false,
+                        "nodes": [
+                            {
+                                "data": {},
+                                "isVoid": false,
+                                "nodes": [
+                                    {
+                                        "leaves": [
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "Click "
+                                            },
+                                            {
+                                                "marks": [
+                                                    {
+                                                        "data": {},
+                                                        "object": "mark",
+                                                        "type": "italic"
+                                                    }
+                                                ],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "\"Get an "
+                                            },
+                                            {
+                                                "marks": [
+                                                    {
+                                                        "data": {},
+                                                        "object": "mark",
+                                                        "type": "bold"
+                                                    },
+                                                    {
+                                                        "data": {},
+                                                        "object": "mark",
+                                                        "type": "italic"
+                                                    }
+                                                ],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "API Key\""
+                                            },
+                                            {
+                                                "marks": [
+                                                    {
+                                                        "data": {},
+                                                        "object": "mark",
+                                                        "type": "bold"
+                                                    }
+                                                ],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "."
+                                            }
+                                        ],
+                                        "object": "text"
+                                    }
+                                ],
+                                "object": "block",
+                                "type": "paragraph"
+                            }
+                        ],
+                        "object": "block",
+                        "type": "list-item"
+                    },
+                    {
+                        "data": {},
+                        "isVoid": false,
+                        "nodes": [
+                            {
+                                "data": {},
+                                "isVoid": false,
+                                "nodes": [
+                                    {
+                                        "leaves": [
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "Copy:"
+                                            }
+                                        ],
+                                        "object": "text"
+                                    }
+                                ],
+                                "object": "block",
+                                "type": "paragraph"
+                            },
+                            {
+                                "data": {},
+                                "isVoid": false,
+                                "nodes": [
+                                    {
+                                        "data": {},
+                                        "isVoid": false,
+                                        "nodes": [
+                                            {
+                                                "data": {},
+                                                "isVoid": false,
+                                                "nodes": [
+                                                    {
+                                                        "leaves": [
+                                                            {
+                                                                "marks": [
+                                                                    {
+                                                                        "data": {},
+                                                                        "object": "mark",
+                                                                        "type": "code"
+                                                                    }
+                                                                ],
+                                                                "object": "leaf",
+                                                                "selections": [],
+                                                                "text": "channel_id"
+                                                            },
+                                                            {
+                                                                "marks": [],
+                                                                "object": "leaf",
+                                                                "selections": [],
+                                                                "text": " to "
+                                                            },
+                                                            {
+                                                                "marks": [
+                                                                    {
+                                                                        "data": {},
+                                                                        "object": "mark",
+                                                                        "type": "code"
+                                                                    }
+                                                                ],
+                                                                "object": "leaf",
+                                                                "selections": [],
+                                                                "text": "config/settings/production.yml"
+                                                            }
+                                                        ],
+                                                        "object": "text"
+                                                    }
+                                                ],
+                                                "object": "block",
+                                                "type": "paragraph"
+                                            }
+                                        ],
+                                        "object": "block",
+                                        "type": "list-item"
+                                    },
+                                    {
+                                        "data": {},
+                                        "isVoid": false,
+                                        "nodes": [
+                                            {
+                                                "data": {},
+                                                "isVoid": false,
+                                                "nodes": [
+                                                    {
+                                                        "leaves": [
+                                                            {
+                                                                "marks": [
+                                                                    {
+                                                                        "data": {},
+                                                                        "object": "mark",
+                                                                        "type": "code"
+                                                                    }
+                                                                ],
+                                                                "object": "leaf",
+                                                                "selections": [],
+                                                                "text": "key_id"
+                                                            },
+                                                            {
+                                                                "marks": [],
+                                                                "object": "leaf",
+                                                                "selections": [],
+                                                                "text": " and "
+                                                            },
+                                                            {
+                                                                "marks": [
+                                                                    {
+                                                                        "data": {},
+                                                                        "object": "mark",
+                                                                        "type": "code"
+                                                                    }
+                                                                ],
+                                                                "object": "leaf",
+                                                                "selections": [],
+                                                                "text": "secret"
+                                                            },
+                                                            {
+                                                                "marks": [],
+                                                                "object": "leaf",
+                                                                "selections": [],
+                                                                "text": " to "
+                                                            },
+                                                            {
+                                                                "marks": [
+                                                                    {
+                                                                        "data": {},
+                                                                        "object": "mark",
+                                                                        "type": "code"
+                                                                    }
+                                                                ],
+                                                                "object": "leaf",
+                                                                "selections": [],
+                                                                "text": "config/settings/services.yml"
+                                                            }
+                                                        ],
+                                                        "object": "text"
+                                                    }
+                                                ],
+                                                "object": "block",
+                                                "type": "paragraph"
+                                            }
+                                        ],
+                                        "object": "block",
+                                        "type": "list-item"
+                                    }
+                                ],
+                                "object": "block",
+                                "type": "list-unordered"
+                            }
+                        ],
+                        "object": "block",
+                        "type": "list-item"
+                    }
+                ],
+                "object": "block",
+                "type": "list-unordered"
+            },
+            {
+                "data": {},
+                "isVoid": false,
+                "nodes": [
+                    {
+                        "data": {
+                            "ref": {
+                                "file": "-LeJgwPuWRv0566M1lIy",
+                                "kind": "file"
+                            }
+                        },
+                        "fragments": [
+                            {
+                                "fragment": "caption",
+                                "nodes": [
+                                    {
+                                        "data": {},
+                                        "isVoid": false,
+                                        "nodes": [
+                                            {
+                                                "leaves": [
+                                                    {
+                                                        "marks": [],
+                                                        "object": "leaf",
+                                                        "selections": [],
+                                                        "text": ""
+                                                    }
+                                                ],
+                                                "object": "text"
+                                            }
+                                        ],
+                                        "object": "block",
+                                        "type": "paragraph"
+                                    }
+                                ],
+                                "object": "fragment"
+                            }
+                        ],
+                        "isVoid": true,
+                        "nodes": [
+                            {
+                                "leaves": [
+                                    {
+                                        "marks": [],
+                                        "object": "leaf",
+                                        "selections": [],
+                                        "text": ""
+                                    }
+                                ],
+                                "object": "text"
+                            }
+                        ],
+                        "object": "block",
+                        "type": "image"
+                    }
+                ],
+                "object": "block",
+                "type": "images"
+            }
+        ],
+        "object": "document"
+    },
+    "id": "-LbksA5BtPjGnVM8d-0e",
+    "kind": "sheet",
+    "pages": [],
+    "path": "launching-applenews-channel",
+    "title": "Launching an Apple News channel",
+    "uid": "-LbksA5BtPjGnVM8d-0e"
+}
