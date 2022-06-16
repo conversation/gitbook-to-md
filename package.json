@@ -4,6 +4,7 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "prettier": "^2.7.0"
   },
   "devDependencies": {
