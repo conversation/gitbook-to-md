@@ -1,5 +1,9 @@
 class MarkdownRenderer {
-  render(node, output = "", depth = 0) {
+  render(node) {
+    return this.stripTrailingWhitespace(this.renderNode(node));
+  }
+
+  renderNode(node, output = "", depth = 0) {
     switch (node.object) {
       case "document":
         output = this.renderChildren(node, output, depth);
@@ -84,12 +88,19 @@ class MarkdownRenderer {
 
   renderChildren(node, output, depth) {
     for (const n of node.nodes || []) {
-      output = this.render(n, output, depth + 1);
+      output = this.renderNode(n, output, depth + 1);
     }
     for (const n of node.leaves || []) {
-      output = this.render(n, output, depth + 1);
+      output = this.renderNode(n, output, depth + 1);
     }
     return output;
+  }
+
+  stripTrailingWhitespace(output) {
+    return output
+      .split("\n")
+      .map((s) => s.trim())
+      .join("\n");
   }
 }
 
