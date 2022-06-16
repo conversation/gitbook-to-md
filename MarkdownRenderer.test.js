@@ -16,3 +16,27 @@ describe("render", () => {
     expect(output).toEqual(expectedMd);
   });
 });
+
+describe("renderInline()", () => {
+  it("throws an error if not a link", () => {
+    const node = { type: "other-inline" };
+    const renderer = new MarkdownRenderer();
+    expect(() => renderer.renderInline(node, 0)).toThrowError(
+      "Unknown inline type: other-inline"
+    );
+  });
+
+  it("renders links", () => {
+    const node = {
+      type: "link",
+      data: { ref: { url: "https://example.com" } },
+      leaves: [
+        { marks: [], object: "leaf", selections: [], text: "link text" },
+      ],
+    };
+    const renderer = new MarkdownRenderer();
+    expect(renderer.renderInline(node, 0)).toEqual(
+      "[link text](https://example.com)"
+    );
+  });
+});

@@ -26,7 +26,7 @@ class MarkdownRenderer {
 
       case "inline":
         console.log(`${"-".repeat(depth)} ${node.object}`);
-        output = this.renderInline(node, output, depth);
+        output += this.renderInline(node, depth);
         break;
 
       default:
@@ -56,12 +56,11 @@ class MarkdownRenderer {
     return output;
   }
 
-  renderInline(node, output, depth) {
+  renderInline(node, depth) {
     if (node.type != "link") throw `Unknown inline type: ${node.type}`;
 
     const text = this.renderChildren(node, [], depth);
-    output += `[${text}](${node.data.ref.url})`;
-    return output;
+    return `[${text}](${node.data.ref.url})`;
   }
 
   renderLeaf(node, output, depth) {
