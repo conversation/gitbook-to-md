@@ -1,0 +1,87 @@
+{
+    "description": "",
+    "document": {
+        "data": {
+            "schemaVersion": 4
+        },
+        "nodes": [
+            {
+                "data": {},
+                "isVoid": false,
+                "nodes": [
+                    {
+                        "data": {},
+                        "isVoid": false,
+                        "nodes": [
+                            {
+                                "data": {},
+                                "isVoid": false,
+                                "nodes": [
+                                    {
+                                        "leaves": [
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "list item"
+                                            }
+                                        ],
+                                        "object": "text"
+                                    }
+                                ],
+                                "object": "block",
+                                "type": "paragraph"
+                            },
+                            {
+                                "data": {},
+                                "isVoid": false,
+                                "nodes": [
+                                    {
+                                        "data": {},
+                                        "isVoid": false,
+                                        "nodes": [
+                                            {
+                                                "data": {},
+                                                "isVoid": false,
+                                                "nodes": [
+                                                    {
+                                                        "leaves": [
+                                                            {
+                                                                "marks": [],
+                                                                "object": "leaf",
+                                                                "selections": [],
+                                                                "text": "nested item"
+                                                            }
+                                                        ],
+                                                        "object": "text"
+                                                    }
+                                                ],
+                                                "object": "block",
+                                                "type": "paragraph"
+                                            }
+                                        ],
+                                        "object": "block",
+                                        "type": "list-item"
+                                    }
+                                ],
+                                "object": "block",
+                                "type": "list-unordered"
+                            }
+                        ],
+                        "object": "block",
+                        "type": "list-item"
+                    }
+                ],
+                "object": "block",
+                "type": "list-unordered"
+            }
+        ],
+        "object": "document"
+    },
+    "id": "iuC8g6el2awtU8Df8sX7",
+    "kind": "sheet",
+    "pages": [],
+    "path": "test-page",
+    "title": "Test Page",
+    "uid": "iuC8g6el2awtU8Df8sX7"
+}

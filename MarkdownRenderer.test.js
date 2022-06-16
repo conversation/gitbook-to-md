@@ -46,6 +46,14 @@ describe("renderBlock()", () => {
     expect(renderer.renderBlock(node, 0)).toEqual("- list text");
   });
 
+  it("renders nested list items", async () => {
+    const json = await fs.readFile("nested-list.json", "utf8");
+    const node = JSON.parse(json).document;
+    const result = renderer.render(node);
+
+    expect(result).toEqual("- list item\n  - nested item\n\n\n");
+  });
+
   it("renders a block quote", () => {
     const node = {
       type: "blockquote",

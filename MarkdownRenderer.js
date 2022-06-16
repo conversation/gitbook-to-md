@@ -1,5 +1,10 @@
 class MarkdownRenderer {
+  constructor() {
+    this.listDepth = 0;
+  }
+
   render(node) {
+    this.listDepth = 0;
     return this.stripTrailingWhitespace(this.renderNode(node));
   }
 
@@ -47,19 +52,29 @@ class MarkdownRenderer {
       let mdHeader = "#".repeat(headingLevel) + " ";
 
       block += mdHeader;
+    } else if (node.type == "list-unordered") {
+      this.listDepth++;
     } else if (node.type == "list-item") {
+      block += " ".repeat((this.listDepth - 1) * 2);
       block += "- ";
     }
 
     block += this.renderChildren(node, depth);
 
-    if (node.type == "paragraph" || node.type.startsWith("heading-")) {
+    if (node.type.startsWith("heading-")) {
       block += "\n\n";
+    } else if (node.type == "paragraph") {
+      block += "\n";
+      if (this.listDepth == 0) block += "\n";
     } else if (node.type == "blockquote") {
       block = block
         .split("\n")
         .map((line) => `> ${line}\n`)
         .join("");
+    } else if (node.type == "list-unordered") {
+      this.listDepth--;
+    } else if (node.type == "list-item") {
+      block += "\n";
     }
 
     return block;
@@ -108,7 +123,7 @@ class MarkdownRenderer {
   stripTrailingWhitespace(output) {
     return output
       .split("\n")
-      .map((s) => s.trim())
+      .map((s) => s.trimEnd())
       .join("\n");
   }
 }
