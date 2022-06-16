@@ -3,9 +3,12 @@ const MarkdownRenderer = require("./MarkdownRenderer");
 
 describe("render", () => {
   it("renders a sample document", async () => {
-    const json = await fs.readFile("platform-team-on-boarding.json", "utf8");
+    const json = await fs.readFile(
+      "fixtures/platform-team-on-boarding.json",
+      "utf8"
+    );
     const expectedMd = await fs.readFile(
-      "platform-team-on-boarding.md",
+      "fixtures/platform-team-on-boarding.md",
       "utf8"
     );
     const doc = JSON.parse(json).document;
@@ -18,7 +21,7 @@ describe("render", () => {
 
   it("renders nested list items", async () => {
     const renderer = new MarkdownRenderer();
-    const json = await fs.readFile("nested-list.json", "utf8");
+    const json = await fs.readFile("fixtures/nested-list.json", "utf8");
     const node = JSON.parse(json).document;
     const result = renderer.render(node);
 
@@ -27,7 +30,7 @@ describe("render", () => {
 
   it("renders images", async () => {
     const renderer = new MarkdownRenderer();
-    const json = await fs.readFile("images.json", "utf8");
+    const json = await fs.readFile("fixtures/images.json", "utf8");
     const node = JSON.parse(json).document;
     const result = renderer.render(node);
 
@@ -36,7 +39,7 @@ describe("render", () => {
 
   it("renders files", async () => {
     const renderer = new MarkdownRenderer();
-    const json = await fs.readFile("files.json", "utf8");
+    const json = await fs.readFile("fixtures/files.json", "utf8");
     const node = JSON.parse(json).document;
     const result = renderer.render(node);
 
