@@ -49,9 +49,7 @@ class MarkdownRenderer {
 
     if (node.type.startsWith("heading-")) {
       let headingLevel = parseInt(node.type.split("-").pop());
-      let mdHeader = "#".repeat(headingLevel) + " ";
-
-      block += mdHeader;
+      block += "#".repeat(headingLevel) + " ";
     } else if (node.type == "list-unordered") {
       this.listDepth++;
     } else if (node.type == "list-item") {
@@ -66,14 +64,14 @@ class MarkdownRenderer {
     } else if (node.type == "paragraph") {
       block += "\n";
       if (this.listDepth == 0) block += "\n";
+    } else if (node.type == "list-unordered") {
+      this.listDepth--;
+      block += "\n";
     } else if (node.type == "blockquote") {
       block = block
         .split("\n")
         .map((line) => `> ${line}\n`)
         .join("");
-    } else if (node.type == "list-unordered") {
-      this.listDepth--;
-      block += "\n";
     }
 
     return block;
