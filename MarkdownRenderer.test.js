@@ -40,3 +40,45 @@ describe("renderInline()", () => {
     );
   });
 });
+
+describe("renderLeaf()", () => {
+  let renderer;
+
+  beforeEach(() => {
+    renderer = new MarkdownRenderer();
+  });
+
+  it("renders plain text", () => {
+    const node = { text: "my text", marks: [] };
+    expect(renderer.renderLeaf(node, 0)).toEqual("my text");
+  });
+
+  it("renders bold text", () => {
+    const node = { text: "my text", marks: [{ object: "mark", type: "bold" }] };
+    expect(renderer.renderLeaf(node, 0)).toEqual("**my text**");
+  });
+
+  it("renders italic text", () => {
+    const node = {
+      text: "my text",
+      marks: [{ object: "mark", type: "italic" }],
+    };
+    expect(renderer.renderLeaf(node, 0)).toEqual("_my text_");
+  });
+
+  it("renders bold and italic text", () => {
+    const node = {
+      text: "my text",
+      marks: [
+        { object: "mark", type: "bold" },
+        { object: "mark", type: "italic" },
+      ],
+    };
+    expect(renderer.renderLeaf(node, 0)).toEqual("_**my text**_");
+  });
+
+  it("renders code", () => {
+    const node = { text: "my text", marks: [{ object: "mark", type: "code" }] };
+    expect(renderer.renderLeaf(node, 0)).toEqual("`my text`");
+  });
+});

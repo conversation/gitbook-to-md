@@ -21,7 +21,7 @@ class MarkdownRenderer {
 
       case "leaf":
         console.log(`${"-".repeat(depth)} ${node.object}`);
-        output = this.renderLeaf(node, output, depth);
+        output += this.renderLeaf(node, depth);
         break;
 
       case "inline":
@@ -63,7 +63,7 @@ class MarkdownRenderer {
     return `[${text}](${node.data.ref.url})`;
   }
 
-  renderLeaf(node, output, depth) {
+  renderLeaf(node, depth) {
     let text = node.text;
 
     for (const mark of node.marks) {
@@ -80,9 +80,7 @@ class MarkdownRenderer {
       }
     }
 
-    output += text;
-
-    return output;
+    return text;
   }
 
   renderChildren(node, output, depth) {
