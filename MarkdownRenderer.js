@@ -17,32 +17,26 @@ class MarkdownRenderer {
         break;
 
       case "block":
-        console.log(`${"-".repeat(depth)} ${node.object} - ${node.type}`);
         output += this.renderBlock(node, depth);
         break;
 
       case "fragment":
-        console.log(`${"-".repeat(depth)} ${node.object}`);
         output += this.renderFragment(node, depth);
         break;
 
       case "text":
-        console.log(`${"-".repeat(depth)} ${node.object}`);
         output += this.renderChildren(node, depth);
         break;
 
       case "leaf":
-        console.log(`${"-".repeat(depth)} ${node.object}`);
         output += this.renderLeaf(node, depth);
         break;
 
       case "inline":
-        console.log(`${"-".repeat(depth)} ${node.object}`);
         output += this.renderInline(node, depth);
         break;
 
       default:
-        console.log(`Unknown object type: ${node.object}`);
         break;
     }
 
