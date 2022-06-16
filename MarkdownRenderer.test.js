@@ -15,6 +15,15 @@ describe("render", () => {
 
     expect(output).toEqual(expectedMd);
   });
+
+  it("renders nested list items", async () => {
+    const renderer = new MarkdownRenderer();
+    const json = await fs.readFile("nested-list.json", "utf8");
+    const node = JSON.parse(json).document;
+    const result = renderer.render(node);
+
+    expect(result).toEqual("- list item\n  - nested item\n\n\n");
+  });
 });
 
 describe("renderBlock()", () => {
@@ -81,14 +90,6 @@ describe("renderBlock()", () => {
     expect(renderer.renderBlock(node, 0)).toEqual(
       "- list text\n- list text\n\n"
     );
-  });
-
-  it("renders nested list items", async () => {
-    const json = await fs.readFile("nested-list.json", "utf8");
-    const node = JSON.parse(json).document;
-    const result = renderer.render(node);
-
-    expect(result).toEqual("- list item\n  - nested item\n\n\n");
   });
 
   it("renders a block quote", () => {
