@@ -17,6 +17,56 @@ describe("render", () => {
   });
 });
 
+describe("renderBlock()", () => {
+  let renderer;
+
+  beforeEach(() => {
+    renderer = new MarkdownRenderer();
+  });
+
+  it("renders a heading", () => {
+    const node = {
+      type: "heading-2",
+      leaves: [
+        { marks: [], object: "leaf", selections: [], text: "heading text" },
+      ],
+    };
+
+    expect(renderer.renderBlock(node, 0)).toEqual("## heading text\n\n");
+  });
+
+  it("renders a list item", () => {
+    const node = {
+      type: "list-item",
+      leaves: [
+        { marks: [], object: "leaf", selections: [], text: "list text" },
+      ],
+    };
+
+    expect(renderer.renderBlock(node, 0)).toEqual("- list text");
+  });
+
+  it("renders a paragraph", () => {
+    const node = {
+      type: "paragraph",
+      leaves: [
+        { marks: [], object: "leaf", selections: [], text: "my paragraph" },
+      ],
+    };
+
+    expect(renderer.renderBlock(node, 0)).toEqual("my paragraph\n\n");
+  });
+
+  it("renders an unknown block type", () => {
+    const node = {
+      type: "who-knows",
+      leaves: [{ marks: [], object: "leaf", selections: [], text: "my text" }],
+    };
+
+    expect(renderer.renderBlock(node, 0)).toEqual("my text");
+  });
+});
+
 describe("renderInline()", () => {
   it("throws an error if not a link", () => {
     const node = { type: "other-inline" };

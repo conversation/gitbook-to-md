@@ -11,7 +11,7 @@ class MarkdownRenderer {
 
       case "block":
         console.log(`${"-".repeat(depth)} ${node.object} - ${node.type}`);
-        output = this.renderBlock(node, output, depth);
+        output += this.renderBlock(node, depth);
         break;
 
       case "text":
@@ -37,23 +37,25 @@ class MarkdownRenderer {
     return output;
   }
 
-  renderBlock(block, output, depth) {
-    if (block.type.startsWith("heading-")) {
-      let headingLevel = parseInt(block.type.split("-").pop());
+  renderBlock(node, depth) {
+    let block = "";
+
+    if (node.type.startsWith("heading-")) {
+      let headingLevel = parseInt(node.type.split("-").pop());
       let mdHeader = "#".repeat(headingLevel) + " ";
 
-      output += mdHeader;
-    } else if (block.type == "list-item") {
-      output += "- ";
+      block += mdHeader;
+    } else if (node.type == "list-item") {
+      block += "- ";
     }
 
-    output = this.renderChildren(block, output, depth);
+    block = this.renderChildren(node, block, depth);
 
-    if (block.type == "paragraph" || block.type.startsWith("heading-")) {
-      output += "\n\n";
+    if (node.type == "paragraph" || node.type.startsWith("heading-")) {
+      block += "\n\n";
     }
 
-    return output;
+    return block;
   }
 
   renderInline(node, depth) {
