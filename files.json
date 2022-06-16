@@ -1,0 +1,68 @@
+{
+    "description": "",
+    "document": {
+        "data": {
+            "schemaVersion": 4
+        },
+        "nodes": [
+            {
+                "data": {
+                    "ref": {
+                        "file": "bYxy1vsBYjP2bXkJKFCb",
+                        "kind": "file"
+                    }
+                },
+                "fragments": [
+                    {
+                        "fragment": "caption",
+                        "nodes": [
+                            {
+                                "data": {},
+                                "isVoid": false,
+                                "nodes": [
+                                    {
+                                        "leaves": [
+                                            {
+                                                "marks": [],
+                                                "object": "leaf",
+                                                "selections": [],
+                                                "text": "This is a file"
+                                            }
+                                        ],
+                                        "object": "text"
+                                    }
+                                ],
+                                "object": "block",
+                                "type": "paragraph"
+                            }
+                        ],
+                        "object": "fragment"
+                    }
+                ],
+                "isVoid": true,
+                "nodes": [
+                    {
+                        "leaves": [
+                            {
+                                "marks": [],
+                                "object": "leaf",
+                                "selections": [],
+                                "text": ""
+                            }
+                        ],
+                        "object": "text"
+                    }
+                ],
+                "object": "block",
+                "type": "file"
+            }
+        ],
+        "object": "document"
+    },
+    "id": "iuC8g6el2awtU8Df8sX7",
+    "kind": "sheet",
+    "pages": [],
+    "path": "test-page",
+    "title": "Test Page",
+    "uid": "iuC8g6el2awtU8Df8sX7"
+}

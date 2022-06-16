@@ -68,6 +68,8 @@ class MarkdownRenderer {
       block += "\n";
     } else if (node.type == "image") {
       block = `![${block.trim()}](/todo/path)\n\n`;
+    } else if (node.type == "file") {
+      block = `[${block.trim()}](/todo/path)\n\n`;
     } else if (node.type == "blockquote") {
       block = block
         .split("\n")

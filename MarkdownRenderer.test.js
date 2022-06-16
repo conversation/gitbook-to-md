@@ -33,6 +33,15 @@ describe("render", () => {
 
     expect(result).toEqual("![This is a caption](/todo/path)\n\n");
   });
+
+  it("renders files", async () => {
+    const renderer = new MarkdownRenderer();
+    const json = await fs.readFile("files.json", "utf8");
+    const node = JSON.parse(json).document;
+    const result = renderer.render(node);
+
+    expect(result).toEqual("[This is a file](/todo/path)\n\n");
+  });
 });
 
 describe("renderBlock()", () => {
