@@ -1,4 +1,6 @@
 class MarkdownRenderer {
+  listDepth: number;
+
   constructor() {
     this.listDepth = 0;
   }

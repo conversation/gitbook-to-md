@@ -16,7 +16,7 @@ const getContent = async () => {
     config
   );
 
-  for (space of spaces.data.items) {
+  for (let space of spaces.data.items) {
     console.log(space.title);
     try {
       await fs.mkdir(`data/${space.title}`);
