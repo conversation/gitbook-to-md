@@ -16,6 +16,7 @@
     "@types/jest": "28.1.2",
     "babel-jest": "28.1.1",
     "jest": "28.1.1",
+    "ts-node": "10.8.1",
     "typescript": "4.7.4"
   }
 }
