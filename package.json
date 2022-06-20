@@ -2,13 +2,17 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "build": "tsc"
+    "build": "babel src --out-dir built"
   },
   "dependencies": {
     "axios": "^0.27.2",
     "prettier": "^2.7.0"
   },
   "devDependencies": {
+    "@babel/cli": "7.17.10",
+    "@babel/core": "7.18.5",
+    "@babel/preset-env": "7.18.2",
+    "babel-jest": "28.1.1",
     "jest": "28.1.1",
     "typescript": "4.7.4"
   }
