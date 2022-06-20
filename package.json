@@ -2,9 +2,10 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "build": "babel src --out-dir built",
+    "build": "babel src --out-dir built --extensions \".ts,.js\"",
     "get-content": "node built/get-content.js",
-    "gitbook-to-md": "node built/gitbook-to-md.js"
+    "gitbook-to-md": "node built/gitbook-to-md.js",
+    "types": "tsc --noEmit --incremental false"
   },
   "dependencies": {
     "axios": "^0.27.2",
