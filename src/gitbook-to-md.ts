@@ -1,6 +1,5 @@
-#!/usr/bin/env node
-const fs = require("fs");
-const MarkdownRenderer = require("./MarkdownRenderer");
+import { promises as fs } from "fs";
+import MarkdownRenderer from "./MarkdownRenderer";
 
 const processFile = process.argv[2];
 

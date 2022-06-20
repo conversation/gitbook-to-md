@@ -1,5 +1,5 @@
-const fs = require("fs").promises;
-const MarkdownRenderer = require("./MarkdownRenderer");
+import { promises as fs } from "fs";
+import MarkdownRenderer from "./MarkdownRenderer";
 
 describe("render", () => {
   it("renders a sample document", async () => {

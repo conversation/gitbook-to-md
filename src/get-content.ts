@@ -1,7 +1,5 @@
-#!/usr/bin/env node
-
-const fs = require("fs").promises;
-const axios = require("axios").default;
+import { promises as fs } from "fs";
+import axios from "axios";
 
 const apiToken = process.env.API_TOKEN;
 const orgId = process.env.ORG_ID;

@@ -131,4 +131,4 @@ class MarkdownRenderer {
   }
 }
 
-module.exports = MarkdownRenderer;
+export default MarkdownRenderer;
