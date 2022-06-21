@@ -10,7 +10,7 @@ class MarkdownRenderer {
     return this.stripTrailingWhitespace(this.renderNode(node));
   }
 
-  renderNode(node, depth = 0) {
+  renderNode(node, depth: number = 0) {
     let output = "";
 
     switch (node.object) {
@@ -45,7 +45,7 @@ class MarkdownRenderer {
     return output;
   }
 
-  renderBlock(node, depth) {
+  renderBlock(node, depth: number) {
     let block = "";
 
     if (node.type.startsWith("heading-")) {
@@ -82,18 +82,18 @@ class MarkdownRenderer {
     return block;
   }
 
-  renderFragment(node, depth) {
+  renderFragment(node, depth: number) {
     return this.renderChildren(node, depth);
   }
 
-  renderInline(node, depth) {
+  renderInline(node, depth: number) {
     if (node.type != "link") throw `Unknown inline type: ${node.type}`;
 
     const text = this.renderChildren(node, depth);
     return `[${text}](${node.data.ref.url})`;
   }
 
-  renderLeaf(node, depth) {
+  renderLeaf(node, depth: number) {
     let text = node.text;
 
     for (const mark of node.marks) {
@@ -113,7 +113,7 @@ class MarkdownRenderer {
     return text;
   }
 
-  renderChildren(node, depth) {
+  renderChildren(node, depth: number) {
     let output = "";
 
     for (const childType of ["nodes", "leaves", "fragments"]) {
@@ -125,7 +125,7 @@ class MarkdownRenderer {
     return output;
   }
 
-  stripTrailingWhitespace(output) {
+  stripTrailingWhitespace(output: string) {
     return output
       .split("\n")
       .map((s) => s.trimEnd())

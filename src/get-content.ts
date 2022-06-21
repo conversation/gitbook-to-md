@@ -1,8 +1,17 @@
 import { promises as fs } from "fs";
 import axios from "axios";
 
-const apiToken = process.env.API_TOKEN;
-const orgId = process.env.ORG_ID;
+if (process.env.API_TOKEN === undefined) {
+  console.error("Please provide the API_TOKEN environment variable");
+  process.exit(1);
+}
+if (process.argv.length < 2) {
+  console.error("Usage: npm run get-content -- [organisation_id]");
+  process.exit(1);
+}
+
+const apiToken: string = process.env.API_TOKEN;
+const orgId: string = process.argv[2];
 
 const config = { headers: { Authorization: `Bearer ${apiToken}` } };
 

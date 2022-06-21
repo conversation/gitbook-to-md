@@ -14,7 +14,7 @@ describe("render", () => {
     const doc = JSON.parse(json).document;
 
     const renderer = new MarkdownRenderer();
-    const output = renderer.render(doc);
+    const output: string = renderer.render(doc);
 
     expect(output).toEqual(expectedMd);
   });
@@ -23,7 +23,7 @@ describe("render", () => {
     const renderer = new MarkdownRenderer();
     const json = await fs.readFile("fixtures/nested-list.json", "utf8");
     const node = JSON.parse(json).document;
-    const result = renderer.render(node);
+    const result: string = renderer.render(node);
 
     expect(result).toEqual("- list item\n  - nested item\n\n\n");
   });
@@ -32,7 +32,7 @@ describe("render", () => {
     const renderer = new MarkdownRenderer();
     const json = await fs.readFile("fixtures/images.json", "utf8");
     const node = JSON.parse(json).document;
-    const result = renderer.render(node);
+    const result: string = renderer.render(node);
 
     expect(result).toEqual("![This is a caption](/todo/path)\n\n");
   });
@@ -41,14 +41,14 @@ describe("render", () => {
     const renderer = new MarkdownRenderer();
     const json = await fs.readFile("fixtures/files.json", "utf8");
     const node = JSON.parse(json).document;
-    const result = renderer.render(node);
+    const result: string = renderer.render(node);
 
     expect(result).toEqual("[This is a file](/todo/path)\n\n");
   });
 });
 
 describe("renderBlock()", () => {
-  let renderer;
+  let renderer: MarkdownRenderer;
 
   beforeEach(() => {
     renderer = new MarkdownRenderer();
@@ -171,7 +171,7 @@ describe("renderInline()", () => {
 });
 
 describe("renderLeaf()", () => {
-  let renderer;
+  let renderer: MarkdownRenderer;
 
   beforeEach(() => {
     renderer = new MarkdownRenderer();
