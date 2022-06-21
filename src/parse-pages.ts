@@ -21,7 +21,9 @@ const readDir = async (path: string) => {
     } else if (file.match(/\.json$/)) {
       console.log(`${absPath} -> ${absPath.replace(".json", ".md")}`);
       const markdown = await convertToMarkdown(absPath);
-      fs.writeFile(absPath.replace(".json", ".md"), markdown);
+      if (markdown) {
+        await fs.writeFile(absPath.replace(".json", ".md"), markdown);
+      }
     }
   }
 };

@@ -2,8 +2,10 @@ import { promises as fs } from "fs";
 import MarkdownRenderer from "./MarkdownRenderer.js";
 
 export default async (filename: string) => {
-  const data = await fs.readFile(filename, "utf8");
   const renderer = new MarkdownRenderer();
-  const output = renderer.render(JSON.parse(data).document);
+  const file = await fs.readFile(filename, "utf8");
+  const data = JSON.parse(file);
+  const output = data.kind == "sheet" ? renderer.render(data.document) : undefined;
+
   return output;
 };
