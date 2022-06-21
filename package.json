@@ -5,6 +5,7 @@
     "test:watch": "jest --watch",
     "build": "babel src --out-dir built --extensions \".ts,.js\"",
     "get-content": "node built/get-content.js",
+    "get-pages": "node built/get-pages.js",
     "gitbook-to-md": "node built/gitbook-to-md.js",
     "types": "tsc --noEmit --incremental false"
   },
