@@ -1,5 +1,6 @@
 import { promises as fs } from "fs";
 import MarkdownRenderer from "./MarkdownRenderer";
+import type { BlockNode, InlineNode, LinkNode, LeafNode } from "./MarkdownRenderer";
 
 describe("render", () => {
   it("renders a sample document", async () => {
@@ -55,7 +56,8 @@ describe("renderBlock()", () => {
   });
 
   it("renders a heading", () => {
-    const node = {
+    const node: BlockNode = {
+      object: "block",
       type: "heading-2",
       leaves: [
         { marks: [], object: "leaf", selections: [], text: "heading text" },
@@ -66,7 +68,8 @@ describe("renderBlock()", () => {
   });
 
   it("renders list items", () => {
-    const node = {
+    const node: BlockNode = {
+      object: "block",
       type: "list-unordered",
       nodes: [
         {
@@ -114,7 +117,8 @@ describe("renderBlock()", () => {
   });
 
   it("renders a block quote", () => {
-    const node = {
+    const node: BlockNode = {
+      object: "block",
       type: "blockquote",
       leaves: [
         { marks: [], object: "leaf", selections: [], text: "line one\n" },
@@ -126,7 +130,8 @@ describe("renderBlock()", () => {
   });
 
   it("renders a paragraph", () => {
-    const node = {
+    const node: BlockNode = {
+      object: "block",
       type: "paragraph",
       leaves: [
         { marks: [], object: "leaf", selections: [], text: "my paragraph" },
@@ -137,7 +142,8 @@ describe("renderBlock()", () => {
   });
 
   it("renders an unknown block type", () => {
-    const node = {
+    const node: BlockNode = {
+      object: "block",
       type: "who-knows",
       leaves: [{ marks: [], object: "leaf", selections: [], text: "my text" }],
     };
@@ -148,7 +154,7 @@ describe("renderBlock()", () => {
 
 describe("renderInline()", () => {
   it("throws an error if not a link", () => {
-    const node = { type: "other-inline" };
+    const node: InlineNode = { object: "inline", type: "other-inline" };
     const renderer = new MarkdownRenderer();
     expect(() => renderer.renderInline(node, 0)).toThrowError(
       "Unknown inline type: other-inline"
@@ -156,7 +162,8 @@ describe("renderInline()", () => {
   });
 
   it("renders links", () => {
-    const node = {
+    const node: LinkNode = {
+      object: "inline",
       type: "link",
       data: { ref: { url: "https://example.com" } },
       leaves: [
@@ -178,17 +185,18 @@ describe("renderLeaf()", () => {
   });
 
   it("renders plain text", () => {
-    const node = { text: "my text", marks: [] };
+    const node: LeafNode = { object: "leaf", text: "my text", marks: [] };
     expect(renderer.renderLeaf(node, 0)).toEqual("my text");
   });
 
   it("renders bold text", () => {
-    const node = { text: "my text", marks: [{ object: "mark", type: "bold" }] };
+    const node: LeafNode = { object: "leaf", text: "my text", marks: [{ object: "mark", type: "bold" }] };
     expect(renderer.renderLeaf(node, 0)).toEqual("**my text**");
   });
 
   it("renders italic text", () => {
-    const node = {
+    const node: LeafNode = {
+      object: "leaf",
       text: "my text",
       marks: [{ object: "mark", type: "italic" }],
     };
@@ -196,7 +204,8 @@ describe("renderLeaf()", () => {
   });
 
   it("renders bold and italic text", () => {
-    const node = {
+    const node: LeafNode = {
+      object: "leaf",
       text: "my text",
       marks: [
         { object: "mark", type: "bold" },
@@ -207,7 +216,7 @@ describe("renderLeaf()", () => {
   });
 
   it("renders code", () => {
-    const node = { text: "my text", marks: [{ object: "mark", type: "code" }] };
+    const node: LeafNode = { object: "leaf", text: "my text", marks: [{ object: "mark", type: "code" }] };
     expect(renderer.renderLeaf(node, 0)).toEqual("`my text`");
   });
 });

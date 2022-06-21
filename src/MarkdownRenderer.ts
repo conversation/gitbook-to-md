@@ -1,3 +1,41 @@
+type Node = {
+  object: string;
+  nodes?: Array<Node | BlockNode | InlineNode | LeafNode>;
+  leaves?: Array<LeafNode>;
+  fragments?: Array<Node | BlockNode | InlineNode | LeafNode>;
+};
+
+type BlockNode = Node & {
+  object: "block";
+  type: string;
+};
+
+type InlineNode = Node & {
+  object: "inline";
+  type: string;
+};
+
+type LinkNode = InlineNode & {
+  type: "link";
+  data: { ref: { url: string } };
+};
+
+type Mark = {
+  object: "mark";
+  type: "bold" | "italic" | "code";
+};
+
+type LeafNode = Node & {
+  object: "leaf";
+  text: string;
+  marks: Array<Mark>;
+  selections?: [];
+};
+
+function isLinkNode(node: InlineNode): node is LinkNode {
+  return node.type === "link";
+}
+
 class MarkdownRenderer {
   listDepth: number;
 
@@ -5,12 +43,12 @@ class MarkdownRenderer {
     this.listDepth = 0;
   }
 
-  render(node) {
+  render(node: Node) {
     this.listDepth = 0;
     return this.stripTrailingWhitespace(this.renderNode(node));
   }
 
-  renderNode(node, depth: number = 0) {
+  renderNode(node: Node, depth: number = 0) {
     let output = "";
 
     switch (node.object) {
@@ -19,7 +57,7 @@ class MarkdownRenderer {
         break;
 
       case "block":
-        output += this.renderBlock(node, depth);
+        output += this.renderBlock(node as BlockNode, depth);
         break;
 
       case "fragment":
@@ -31,11 +69,11 @@ class MarkdownRenderer {
         break;
 
       case "leaf":
-        output += this.renderLeaf(node, depth);
+        output += this.renderLeaf(node as LeafNode, depth);
         break;
 
       case "inline":
-        output += this.renderInline(node, depth);
+        output += this.renderInline(node as InlineNode, depth);
         break;
 
       default:
@@ -45,11 +83,12 @@ class MarkdownRenderer {
     return output;
   }
 
-  renderBlock(node, depth: number) {
+  renderBlock(node: BlockNode, depth: number) {
     let block = "";
 
     if (node.type.startsWith("heading-")) {
-      let headingLevel = parseInt(node.type.split("-").pop());
+      // Default to level 2 heading if undefined
+      const headingLevel = parseInt(node.type.split("-").pop() || "2");
       block += "#".repeat(headingLevel) + " ";
     } else if (node.type == "list-unordered") {
       this.listDepth++;
@@ -82,18 +121,18 @@ class MarkdownRenderer {
     return block;
   }
 
-  renderFragment(node, depth: number) {
+  renderFragment(node: Node, depth: number) {
     return this.renderChildren(node, depth);
   }
 
-  renderInline(node, depth: number) {
-    if (node.type != "link") throw `Unknown inline type: ${node.type}`;
+  renderInline(node: InlineNode, depth: number) {
+    if (!isLinkNode(node)) throw `Unknown inline type: ${node.type}`;
 
     const text = this.renderChildren(node, depth);
     return `[${text}](${node.data.ref.url})`;
   }
 
-  renderLeaf(node, depth: number) {
+  renderLeaf(node: LeafNode, depth: number) {
     let text = node.text;
 
     for (const mark of node.marks) {
@@ -113,13 +152,17 @@ class MarkdownRenderer {
     return text;
   }
 
-  renderChildren(node, depth: number) {
+  renderChildren(node: Node, depth: number) {
     let output = "";
 
-    for (const childType of ["nodes", "leaves", "fragments"]) {
-      for (const n of node[childType] || []) {
-        output += this.renderNode(n, depth + 1);
-      }
+    for (const n of node.nodes || []) {
+      output += this.renderNode(n, depth + 1);
+    }
+    for (const n of node.leaves || []) {
+      output += this.renderNode(n, depth + 1);
+    }
+    for (const n of node.fragments || []) {
+      output += this.renderNode(n, depth + 1);
     }
 
     return output;
@@ -132,5 +175,5 @@ class MarkdownRenderer {
       .join("\n");
   }
 }
-
+export type { Node, BlockNode, InlineNode, LinkNode, LeafNode };
 export default MarkdownRenderer;
