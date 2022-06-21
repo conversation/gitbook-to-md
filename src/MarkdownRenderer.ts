@@ -103,13 +103,28 @@ class MarkdownRenderer {
   renderBlock(node: BlockNode, depth: number) {
     let block = "";
 
+    const getChildren = () => this.renderChildren(node, depth);
+
     if (node.type.startsWith("heading-")) {
       // Default to level 2 heading if undefined
       const headingLevel = parseInt(node.type.split("-").pop() || "2");
-      block += "#".repeat(headingLevel) + " ";
+      const headingMark = "#".repeat(headingLevel);
+      block = `${headingMark} ${getChildren()}\n\n`;
+
+    } else if (node.type == "paragraph") {
+      block = getChildren() + "\n";
+      if (this.listCount.length == 0) block += "\n";
+
     } else if (node.type == "list-unordered" || node.type == "list-ordered") {
       this.listType.push(node.type);
       this.listCount.push(0);
+
+      block += getChildren();
+      block += "\n";
+
+      this.listType.pop();
+      this.listCount.pop();
+
     } else if (node.type == "list-item") {
       const count = this.listCount[this.listCount.length - 1]++;
       block += " ".repeat((this.listCount.length - 1) * 2);
@@ -119,28 +134,23 @@ class MarkdownRenderer {
       } else if (this.listType.at(-1) == "list-ordered") {
         block += `${count + 1}. `;
       }
-    }
 
-    block += this.renderChildren(node, depth);
+      block += getChildren();
 
-    if (node.type.startsWith("heading-")) {
-      block += "\n\n";
-    } else if (node.type == "paragraph") {
-      block += "\n";
-      if (this.listCount.length == 0) block += "\n";
-    } else if (node.type == "list-unordered" || node.type == "list-ordered") {
-      this.listType.pop();
-      this.listCount.pop();
-      block += "\n";
     } else if (node.type == "image") {
-      block = `![${block.trim()}](/todo/path)\n\n`;
+      block = `![${getChildren().trim()}](/todo/path)\n\n`;
+
     } else if (node.type == "file") {
-      block = `[${block.trim()}](/todo/path)\n\n`;
+      block = `[${getChildren().trim()}](/todo/path)\n\n`;
+
     } else if (node.type == "blockquote") {
-      block = block
+      block = getChildren()
         .split("\n")
         .map((line) => `> ${line}\n`)
         .join("");
+
+    } else {
+      block = getChildren();
     }
 
     return block;
