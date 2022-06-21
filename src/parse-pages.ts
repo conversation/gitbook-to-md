@@ -18,7 +18,7 @@ const readDir = async (path: string) => {
 
     if (stat.isDirectory()) {
       readDir(absPath);
-    } else if (file.match(/\.json$/)) {
+    } else if (file.match(/\.json$/) && file != "content.json") {
       console.log(`${absPath} -> ${absPath.replace(".json", ".md")}`);
       const markdown = await convertToMarkdown(absPath);
       if (markdown) {
