@@ -5,14 +5,13 @@ if (process.env.API_TOKEN === undefined) {
   console.error("Please provide the API_TOKEN environment variable");
   process.exit(1);
 }
-if (process.argv.length < 3) {
-  console.error("Usage: npm run get-pages -- [space name] [space id]");
+if (process.argv.length < 2) {
+  console.error("Usage: npm run get-pages -- [space name]");
   process.exit(1);
 }
 
 const apiToken: string = process.env.API_TOKEN;
 const spaceName: string = process.argv[2];
-const spaceId: string = process.argv[3];
 
 const config = { headers: { Authorization: `Bearer ${apiToken}` } };
 
@@ -55,6 +54,8 @@ const getPages = async (spaceName: string) => {
   const content = JSON.parse(
     await fs.readFile(`data/${spaceName}/content.json`, "utf8")
   );
+
+  const spaceId = await fs.readFile(`data/${spaceName}/space.id`, "utf8");
 
   await fetchPath(spaceName, spaceId, "", content);
 };
