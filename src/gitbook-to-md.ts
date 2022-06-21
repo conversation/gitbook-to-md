@@ -1,5 +1,5 @@
 import { promises as fs } from "fs";
-import MarkdownRenderer from "./MarkdownRenderer";
+import MarkdownRenderer from "./MarkdownRenderer.js";
 
 const processFile: string = process.argv[2];
 
