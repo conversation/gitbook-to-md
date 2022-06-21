@@ -29,6 +29,15 @@ describe("render", () => {
     expect(result).toEqual("- list item\n  - nested item\n\n\n");
   });
 
+  it("renders mixed type nested list items", async () => {
+    const renderer = new MarkdownRenderer();
+    const json = await fs.readFile("fixtures/mixed-order-nested-list.json", "utf8");
+    const node = JSON.parse(json).document;
+    const result: string = renderer.render(node);
+
+    expect(result).toEqual("1. One\n  - Nested unordered\n\n2. Two\n  1. Nested ordered\n\n\n");
+  });
+
   it("renders images", async () => {
     const renderer = new MarkdownRenderer();
     const json = await fs.readFile("fixtures/images.json", "utf8");
@@ -67,7 +76,7 @@ describe("renderBlock()", () => {
     expect(renderer.renderBlock(node, 0)).toEqual("## heading text\n\n");
   });
 
-  it("renders list items", () => {
+  it("renders unordered list items", () => {
     const node: BlockNode = {
       object: "block",
       type: "list-unordered",
@@ -113,6 +122,55 @@ describe("renderBlock()", () => {
 
     expect(renderer.renderBlock(node, 0)).toEqual(
       "- list text\n- list text\n\n"
+    );
+  });
+
+  it("renders ordered list items", () => {
+    const node: BlockNode = {
+      object: "block",
+      type: "list-ordered",
+      nodes: [
+        {
+          object: "block",
+          type: "list-item",
+          nodes: [
+            {
+              object: "block",
+              type: "paragraph",
+              leaves: [
+                {
+                  marks: [],
+                  object: "leaf",
+                  selections: [],
+                  text: "list text",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          object: "block",
+          type: "list-item",
+          nodes: [
+            {
+              object: "block",
+              type: "paragraph",
+              leaves: [
+                {
+                  marks: [],
+                  object: "leaf",
+                  selections: [],
+                  text: "another item",
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    };
+
+    expect(renderer.renderBlock(node, 0)).toEqual(
+      "1. list text\n2. another item\n\n"
     );
   });
 

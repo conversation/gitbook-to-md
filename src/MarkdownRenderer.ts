@@ -37,14 +37,17 @@ function isLinkNode(node: InlineNode): node is LinkNode {
 }
 
 class MarkdownRenderer {
-  listDepth: number;
+  listCount: number[];
+  listType: ("list-unordered" | "list-ordered")[];
 
   constructor() {
-    this.listDepth = 0;
+    this.listCount = [];
+    this.listType = [];
   }
 
   render(node: Node) {
-    this.listDepth = 0;
+    this.listCount = [];
+    this.listType = [];
     return this.stripTrailingWhitespace(this.renderNode(node));
   }
 
@@ -90,11 +93,18 @@ class MarkdownRenderer {
       // Default to level 2 heading if undefined
       const headingLevel = parseInt(node.type.split("-").pop() || "2");
       block += "#".repeat(headingLevel) + " ";
-    } else if (node.type == "list-unordered") {
-      this.listDepth++;
+    } else if (node.type == "list-unordered" || node.type == "list-ordered") {
+      this.listType.push(node.type);
+      this.listCount.push(0);
     } else if (node.type == "list-item") {
-      block += " ".repeat((this.listDepth - 1) * 2);
-      block += "- ";
+      const count = this.listCount[this.listCount.length - 1]++;
+      block += " ".repeat((this.listCount.length - 1) * 2);
+
+      if (this.listType.at(-1) == "list-unordered") {
+        block += "- ";
+      } else if (this.listType.at(-1) == "list-ordered") {
+        block += `${count + 1}. `;
+      }
     }
 
     block += this.renderChildren(node, depth);
@@ -103,9 +113,10 @@ class MarkdownRenderer {
       block += "\n\n";
     } else if (node.type == "paragraph") {
       block += "\n";
-      if (this.listDepth == 0) block += "\n";
-    } else if (node.type == "list-unordered") {
-      this.listDepth--;
+      if (this.listCount.length == 0) block += "\n";
+    } else if (node.type == "list-unordered" || node.type == "list-ordered") {
+      this.listType.pop();
+      this.listCount.pop();
       block += "\n";
     } else if (node.type == "image") {
       block = `![${block.trim()}](/todo/path)\n\n`;
