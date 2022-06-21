@@ -9,4 +9,11 @@ export default {
 
   // The root directory that Jest should scan for tests and modules within
   rootDir: "src",
+
+  // Typescript config
+  preset: 'ts-jest',
+  transform: {
+    "^.+\\.(ts|tsx)?$": "ts-jest",
+    "^.+\\.(js|jsx)$": "babel-jest",
+  }
 };

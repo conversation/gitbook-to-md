@@ -1,10 +1,17 @@
-#!/usr/bin/env node
+import { promises as fs } from "fs";
+import axios from "axios";
 
-const fs = require("fs").promises;
-const axios = require("axios").default;
+if (process.env.API_TOKEN === undefined) {
+  console.error("Please provide the API_TOKEN environment variable");
+  process.exit(1);
+}
+if (process.argv.length < 2) {
+  console.error("Usage: npm run get-content -- [organisation_id]");
+  process.exit(1);
+}
 
-const apiToken = process.env.API_TOKEN;
-const orgId = process.env.ORG_ID;
+const apiToken: string = process.env.API_TOKEN;
+const orgId: string = process.argv[2];
 
 const config = { headers: { Authorization: `Bearer ${apiToken}` } };
 
@@ -18,7 +25,7 @@ const getContent = async () => {
     config
   );
 
-  for (space of spaces.data.items) {
+  for (let space of spaces.data.items) {
     console.log(space.title);
     try {
       await fs.mkdir(`data/${space.title}`);
