@@ -1,6 +1,6 @@
 import { promises as fs } from "fs";
 import MarkdownRenderer from "./MarkdownRenderer";
-import type { BlockNode, InlineNode, LinkNode, LeafNode } from "./MarkdownRenderer";
+import type { BlockNode, InlineNode, LinkNode, ImageNode, LeafNode } from "./MarkdownRenderer";
 
 describe("render", () => {
   it("renders a sample document", async () => {
@@ -211,7 +211,7 @@ describe("renderBlock()", () => {
 });
 
 describe("renderInline()", () => {
-  it("throws an error if not a link", () => {
+  it("throws an error for unknown inline types", () => {
     const node: InlineNode = { object: "inline", type: "other-inline" };
     const renderer = new MarkdownRenderer();
     expect(() => renderer.renderInline(node, 0)).toThrowError(
@@ -233,6 +233,22 @@ describe("renderInline()", () => {
       "[link text](https://example.com)"
     );
   });
+
+  it("renders images", () => {
+    const node: ImageNode = {
+      object: "inline",
+      type: "inline-image",
+      data: { caption: "my image", ref: { url: "https://example.com" }, size: "line" },
+      leaves: [
+        { marks: [], object: "leaf", selections: [], text: "link text" },
+      ],
+    };
+    const renderer = new MarkdownRenderer();
+    expect(renderer.renderInline(node, 0)).toEqual(
+      "![my image](https://example.com)"
+    );
+  });
+
 });
 
 describe("renderLeaf()", () => {

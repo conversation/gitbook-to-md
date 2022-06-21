@@ -20,6 +20,17 @@ type LinkNode = InlineNode & {
   data: { ref: { url: string } };
 };
 
+type ImageNode = InlineNode & {
+  type: "inline-image";
+  data: {
+    caption: string,
+    ref: {
+      url: string
+    },
+    size: string,
+  };
+};
+
 type Mark = {
   object: "mark";
   type: "bold" | "italic" | "code";
@@ -34,6 +45,9 @@ type LeafNode = Node & {
 
 function isLinkNode(node: InlineNode): node is LinkNode {
   return node.type === "link";
+}
+function isImageNode(node: InlineNode): node is ImageNode {
+  return node.type === "inline-image";
 }
 
 class MarkdownRenderer {
@@ -137,10 +151,17 @@ class MarkdownRenderer {
   }
 
   renderInline(node: InlineNode, depth: number) {
-    if (!isLinkNode(node)) throw `Unknown inline type: ${node.type}`;
-
-    const text = this.renderChildren(node, depth);
-    return `[${text}](${node.data.ref.url})`;
+    if (isLinkNode(node)) {
+      const text = this.renderChildren(node, depth);
+      const url = node.data.ref.url;
+      return `[${text}](${url})`;
+    } else if (isImageNode(node)) {
+      const text = node.data.caption;
+      const url = node.data.ref.url;
+      return `![${text}](${url})`;
+    } else {
+      throw `Unknown inline type: ${node.type}`;
+    }
   }
 
   renderLeaf(node: LeafNode, depth: number) {
@@ -186,5 +207,5 @@ class MarkdownRenderer {
       .join("\n");
   }
 }
-export type { Node, BlockNode, InlineNode, LinkNode, LeafNode };
+export type { Node, BlockNode, InlineNode, LinkNode, ImageNode, LeafNode };
 export default MarkdownRenderer;
