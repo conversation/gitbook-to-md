@@ -18,7 +18,7 @@ const config = { headers: { Authorization: `Bearer ${apiToken}` } };
 const getContent = async () => {
   try {
     await fs.mkdir(`data`);
-  } catch (error) {}
+  } catch (error) { }
 
   const spaces = await axios.get(
     `https://api.gitbook.com/v1/owners/${orgId}/spaces`,
@@ -29,7 +29,7 @@ const getContent = async () => {
     console.log(space.title);
     try {
       await fs.mkdir(`data/${space.title}`);
-    } catch (error) {}
+    } catch (error) { }
     const content = await axios.get(
       `https://api.gitbook.com/v1/spaces/${space.id}/content`,
       { ...config, responseType: "stream" }
@@ -37,6 +37,8 @@ const getContent = async () => {
 
     const f = await fs.open(`data/${space.title}/content.json`, "w");
     content.data.pipe(f.createWriteStream());
+
+    await fs.writeFile(`data/${space.title}/space.id`, space.id);
   }
 };
 
