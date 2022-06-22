@@ -1,9 +1,10 @@
 const extractFilename = (urlStr: string): string => {
   const url = new URL(urlStr);
   const path = decodeURIComponent(url.pathname);
-  const file = path.match(/([^\/])+$/);
+  const file = path.match(/([^\/]+)\/([^\/]+)\.(\w+)$/);
 
-  return file ? file[0] : "unknown";
+  // Select the file id and extension
+  return file ? `${file[1]}.${file[3]}` : "unknown";
 };
 
 export { extractFilename };
