@@ -264,5 +264,5 @@ class MarkdownRenderer {
       .join("\n");
   }
 }
-export type { Node, BlockNode, InlineNode, LinkNode, ImageNode, LeafNode };
+export type { Node, BlockNode, InlineNode, LinkNode, ImageNode, LeafNode, Files };
 export default MarkdownRenderer;
