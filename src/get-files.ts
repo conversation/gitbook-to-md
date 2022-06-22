@@ -1,5 +1,6 @@
 import { promises as fs } from "fs";
 import axios from "axios";
+import { extractFilename } from "./utils.js";
 
 if (process.argv.length < 2) {
   console.error("Usage: npm run get-pages -- [space name]");
@@ -7,14 +8,6 @@ if (process.argv.length < 2) {
 }
 
 const spaceName: string = process.argv[2];
-
-const extractFilename = (urlStr: string): string => {
-  const url = new URL(urlStr);
-  const path = decodeURIComponent(url.pathname);
-  const file = path.match(/([^\/])+$/);
-
-  return file ? file[0] : "unknown";
-};
 
 const getFile = async (spaceName: string, url: string) => {
   const filename = extractFilename(url);
