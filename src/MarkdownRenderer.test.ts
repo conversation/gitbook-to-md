@@ -39,21 +39,23 @@ describe("render", () => {
   });
 
   it("renders images", async () => {
-    const renderer = new MarkdownRenderer();
+    const files = { "VlKCZMuShVzkE0pdnffR": "my-image.png" };
+    const renderer = new MarkdownRenderer(files);
     const json = await fs.readFile("fixtures/images.json", "utf8");
     const node = JSON.parse(json).document;
     const result: string = renderer.render(node);
 
-    expect(result).toEqual("![This is a caption](/todo/path)\n\n");
+    expect(result).toEqual("![This is a caption](files/my-image.png)\n\n");
   });
 
   it("renders files", async () => {
-    const renderer = new MarkdownRenderer();
+    const files = { "bYxy1vsBYjP2bXkJKFCb": "my-file.txt" };
+    const renderer = new MarkdownRenderer(files);
     const json = await fs.readFile("fixtures/files.json", "utf8");
     const node = JSON.parse(json).document;
     const result: string = renderer.render(node);
 
-    expect(result).toEqual("[This is a file](/todo/path)\n\n");
+    expect(result).toEqual("[This is a file](files/my-file.txt)\n\n");
   });
 });
 

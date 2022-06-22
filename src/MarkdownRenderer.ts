@@ -13,6 +13,24 @@ type BlockNode = Node & {
   };
 };
 
+type ImageBlockNode = BlockNode & {
+  type: "image",
+  data: {
+    ref: {
+      file: string,
+    },
+  };
+};
+
+type FileBlockNode = BlockNode & {
+  type: "file",
+  data: {
+    ref: {
+      file: string,
+    },
+  };
+};
+
 type InlineNode = Node & {
   object: "inline";
   type: string;
@@ -55,6 +73,12 @@ function isLinkNode(node: InlineNode): node is LinkNode {
 }
 function isImageNode(node: InlineNode): node is ImageNode {
   return node.type === "inline-image";
+}
+function isImageBlockNode(node: BlockNode): node is ImageBlockNode {
+  return node.type === "image";
+}
+function isFileBlockNode(node: BlockNode): node is FileBlockNode {
+  return node.type === "file";
 }
 
 class MarkdownRenderer {
@@ -146,11 +170,15 @@ class MarkdownRenderer {
 
       block += getChildren();
 
-    } else if (node.type == "image") {
-      block = `![${getChildren().trim()}](/todo/path)\n\n`;
+    } else if (isImageBlockNode(node)) {
+      const fileId = node.data.ref.file;
+      const filename = this.files[fileId];
+      block = `![${getChildren().trim()}](files/${filename})\n\n`;
 
-    } else if (node.type == "file") {
-      block = `[${getChildren().trim()}](/todo/path)\n\n`;
+    } else if (isFileBlockNode(node)) {
+      const fileId = node.data.ref.file;
+      const filename = this.files[fileId];
+      block = `[${getChildren().trim()}](files/${filename})\n\n`;
 
     } else if (node.type == "code") {
       block += "```";
