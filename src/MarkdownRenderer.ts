@@ -46,6 +46,10 @@ type LeafNode = Node & {
   selections?: [];
 };
 
+type Files = {
+  [id: string]: string;
+};
+
 function isLinkNode(node: InlineNode): node is LinkNode {
   return node.type === "link";
 }
@@ -54,10 +58,12 @@ function isImageNode(node: InlineNode): node is ImageNode {
 }
 
 class MarkdownRenderer {
+  files: Files;
   listCount: number[];
   listType: ("list-unordered" | "list-ordered")[];
 
-  constructor() {
+  constructor(files: Files = {}) {
+    this.files = files;
     this.listCount = [];
     this.listType = [];
   }
