@@ -7,6 +7,7 @@
     "build": "babel src --out-dir built --extensions \".ts,.js\"",
     "get-content": "node built/get-content.js",
     "get-pages": "node built/get-pages.js",
+    "get-files": "node built/get-files.js",
     "parse-pages": "node built/parse-pages.js",
     "gitbook-to-md": "node built/gitbook-to-md.js"
   },
