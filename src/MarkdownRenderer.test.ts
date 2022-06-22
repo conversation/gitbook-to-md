@@ -187,6 +187,38 @@ describe("renderBlock()", () => {
     expect(renderer.renderBlock(node, 0)).toEqual("> line one\n> line two\n");
   });
 
+  it("renders a code block", () => {
+    const node: BlockNode = {
+      object: "block",
+      type: "code",
+      data: { syntax: "javascript" },
+      nodes: [
+        {
+          object: "block",
+          type: "code-line",
+          nodes: [
+            {
+              object: "text",
+              leaves: [{ object: "leaf", text: "// line one", marks: [] }],
+            }
+          ]
+        },
+        {
+          object: "block",
+          type: "code-line",
+          nodes: [
+            {
+              object: "text",
+              leaves: [{ object: "leaf", text: "// line two", marks: [] }],
+            }
+          ]
+        },
+      ],
+    };
+
+    expect(renderer.renderBlock(node, 0)).toEqual("```javascript\n// line one\n// line two\n```\n\n");
+  });
+
   it("renders a paragraph", () => {
     const node: BlockNode = {
       object: "block",

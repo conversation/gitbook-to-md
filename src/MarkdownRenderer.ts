@@ -8,6 +8,9 @@ type Node = {
 type BlockNode = Node & {
   object: "block";
   type: string;
+  data?: {
+    syntax: string,
+  };
 };
 
 type InlineNode = Node & {
@@ -142,6 +145,16 @@ class MarkdownRenderer {
 
     } else if (node.type == "file") {
       block = `[${getChildren().trim()}](/todo/path)\n\n`;
+
+    } else if (node.type == "code") {
+      block += "```";
+      if (node.data) block += node.data.syntax;
+      block += "\n";
+      block += getChildren();
+      block += "```\n\n";
+
+    } else if (node.type == "code-line") {
+      block += getChildren() + "\n";
 
     } else if (node.type == "blockquote") {
       block = getChildren()
