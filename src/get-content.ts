@@ -21,7 +21,7 @@ const getContent = async () => {
   } catch (error) { }
 
   const spaces = await axios.get(
-    `https://api.gitbook.com/v1/owners/${orgId}/spaces`,
+    `https://api.gitbook.com/v1/orgs/${orgId}/spaces`,
     config
   );
 

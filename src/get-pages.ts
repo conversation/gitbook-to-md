@@ -23,10 +23,10 @@ type Node = {
 const fetchPage = async (spaceId: string, spaceName: string, path: string) => {
   try {
     const page = await axios.get(
-      `https://api.gitbook.com/v1/spaces/${spaceId}/content/url${path}`,
+      `https://api.gitbook.com/v1/spaces/${spaceId}/content/path/${encodeURIComponent(path)}`,
       { ...config, responseType: "stream" }
     );
-    const f = await fs.open(`data/${spaceName}${path}.json`, "w");
+    const f = await fs.open(`data/${spaceName}/${path}.json`, "w");
     page.data.pipe(f.createWriteStream());
   } catch (error) {
     console.error(error);
@@ -34,11 +34,11 @@ const fetchPage = async (spaceId: string, spaceName: string, path: string) => {
 };
 
 const fetchPath = async (spaceName: string, spaceId: string, path: string, node: Node) => {
-  const absNodePath = node.path ? `${path}/${node.path}` : path;
+  const absNodePath = node.path ? `${node.path}` : path;
 
   if (node.path !== undefined) {
     try {
-      await fs.mkdir(`data/${spaceName}${path}`);
+      await fs.mkdir(`data/${spaceName}/${path}`);
     } catch (error) { }
     console.log(absNodePath);
 
