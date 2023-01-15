@@ -45,8 +45,10 @@ const fetchPath = async (spaceName: string, spaceId: string, path: string, node:
     await fetchPage(spaceId, spaceName, absNodePath);
   }
 
-  for (const page of node.pages) {
-    fetchPath(spaceName, spaceId, absNodePath, page);
+  if (node.pages !== undefined) {
+    for (const page of node.pages) {
+      fetchPath(spaceName, spaceId, absNodePath, page);
+    }
   }
 };
 
