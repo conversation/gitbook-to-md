@@ -1,17 +1,28 @@
 import { promises as fs } from "fs";
 import MarkdownRenderer from "./MarkdownRenderer";
-import type { BlockNode, InlineNode, LinkNode, gitbookLinkNode, ImageLinkNode, EmojiNode, LeafNode, Files, SpaceContent, SpaceContentFile, SpaceContentPage, ImageFileNode } from "./MarkdownRenderer";
+import type {
+  BlockNode,
+  InlineNode,
+  LinkNode,
+  gitbookLinkNode,
+  ImageLinkNode,
+  EmojiNode,
+  LeafNode,
+  Files,
+  SpaceContent,
+  SpaceContentFile,
+  SpaceContentPage,
+  ImageFileNode,
+} from "./MarkdownRenderer";
 
 const defaultSpaceContentTestInitializer: SpaceContent = {
-    object: "revision",
-    id: "-MVYmSNifA9RV4lb6xiN",
-    "parents": [
-        "-MOnQAmPI8w7ceDocqT1"
-    ],
-    pages: [],
-    files: []
-}
-const FilesInitializer: Files = {}
+  object: "revision",
+  id: "-MVYmSNifA9RV4lb6xiN",
+  parents: ["-MOnQAmPI8w7ceDocqT1"],
+  pages: [],
+  files: [],
+};
+const FilesInitializer: Files = {};
 
 describe("render", () => {
   it("renders a sample document", async () => {
@@ -25,14 +36,20 @@ describe("render", () => {
     );
     const doc = JSON.parse(json).document;
 
-    const renderer = new MarkdownRenderer(FilesInitializer, defaultSpaceContentTestInitializer);
+    const renderer = new MarkdownRenderer(
+      FilesInitializer,
+      defaultSpaceContentTestInitializer
+    );
     const output: string = renderer.render(doc);
 
     expect(output).toEqual(expectedMd);
   });
 
   it("renders nested list items", async () => {
-    const renderer = new MarkdownRenderer(FilesInitializer, defaultSpaceContentTestInitializer);
+    const renderer = new MarkdownRenderer(
+      FilesInitializer,
+      defaultSpaceContentTestInitializer
+    );
     const json = await fs.readFile("fixtures/nested-list.json", "utf8");
     const node = JSON.parse(json).document;
     const result: string = renderer.render(node);
@@ -41,17 +58,28 @@ describe("render", () => {
   });
 
   it("renders mixed type nested list items", async () => {
-    const renderer = new MarkdownRenderer(FilesInitializer, defaultSpaceContentTestInitializer);
-    const json = await fs.readFile("fixtures/mixed-order-nested-list.json", "utf8");
+    const renderer = new MarkdownRenderer(
+      FilesInitializer,
+      defaultSpaceContentTestInitializer
+    );
+    const json = await fs.readFile(
+      "fixtures/mixed-order-nested-list.json",
+      "utf8"
+    );
     const node = JSON.parse(json).document;
     const result: string = renderer.render(node);
 
-    expect(result).toEqual("1. One\n  - Nested unordered\n\n2. Two\n  1. Nested ordered\n\n\n");
+    expect(result).toEqual(
+      "1. One\n  - Nested unordered\n\n2. Two\n  1. Nested ordered\n\n\n"
+    );
   });
 
   it("renders images", async () => {
-    const files = { "VlKCZMuShVzkE0pdnffR": "my-image.png" };
-    const renderer = new MarkdownRenderer(files, defaultSpaceContentTestInitializer);
+    const files = { VlKCZMuShVzkE0pdnffR: "my-image.png" };
+    const renderer = new MarkdownRenderer(
+      files,
+      defaultSpaceContentTestInitializer
+    );
     const json = await fs.readFile("fixtures/images.json", "utf8");
     const node = JSON.parse(json).document;
     const result: string = renderer.render(node);
@@ -60,8 +88,11 @@ describe("render", () => {
   });
 
   it("renders files", async () => {
-    const files = { "bYxy1vsBYjP2bXkJKFCb": "my-file.txt" };
-    const renderer = new MarkdownRenderer(files, defaultSpaceContentTestInitializer);
+    const files = { bYxy1vsBYjP2bXkJKFCb: "my-file.txt" };
+    const renderer = new MarkdownRenderer(
+      files,
+      defaultSpaceContentTestInitializer
+    );
     const json = await fs.readFile("fixtures/files.json", "utf8");
     const node = JSON.parse(json).document;
     const result: string = renderer.render(node);
@@ -74,7 +105,10 @@ describe("renderBlock()", () => {
   let renderer: MarkdownRenderer;
 
   beforeEach(() => {
-    renderer = new MarkdownRenderer(FilesInitializer, defaultSpaceContentTestInitializer);
+    renderer = new MarkdownRenderer(
+      FilesInitializer,
+      defaultSpaceContentTestInitializer
+    );
   });
 
   it("renders a heading", () => {
@@ -205,7 +239,7 @@ describe("renderBlock()", () => {
       object: "block",
       type: "hint",
       data: {
-        style: "info"
+        style: "info",
       },
       nodes: [
         {
@@ -215,20 +249,36 @@ describe("renderBlock()", () => {
           nodes: [
             {
               object: "text",
-              leaves: [{ object: "leaf", text: "An important hint callout block for user information.", marks: [], selections: [] }],
+              leaves: [
+                {
+                  object: "leaf",
+                  text: "An important hint callout block for user information.",
+                  marks: [],
+                  selections: [],
+                },
+              ],
             },
             {
               object: "text",
-              leaves: [{ object: "leaf", text: " Continued text.\nWith a newline.", marks: [], selections: [] }],
-            }
-          ]
+              leaves: [
+                {
+                  object: "leaf",
+                  text: " Continued text.\nWith a newline.",
+                  marks: [],
+                  selections: [],
+                },
+              ],
+            },
+          ],
         },
       ],
     };
 
     // it renders with 2 extra newlines which end up harmless, not worth diggin for now. Hack in place in renderBlock()
     // - Culprit is at the `(node.type == "paragraph") {` section adding extra \n's.
-    expect(renderer.renderBlock(node, 0)).toEqual("> An important hint callout block for user information. Continued text.\n> With a newline.\n\n");
+    expect(renderer.renderBlock(node, 0)).toEqual(
+      "> An important hint callout block for user information. Continued text.\n> With a newline.\n\n"
+    );
   });
 
   it("renders a code block", () => {
@@ -244,8 +294,8 @@ describe("renderBlock()", () => {
             {
               object: "text",
               leaves: [{ object: "leaf", text: "// line one", marks: [] }],
-            }
-          ]
+            },
+          ],
         },
         {
           object: "block",
@@ -254,13 +304,15 @@ describe("renderBlock()", () => {
             {
               object: "text",
               leaves: [{ object: "leaf", text: "// line two", marks: [] }],
-            }
-          ]
+            },
+          ],
         },
       ],
     };
 
-    expect(renderer.renderBlock(node, 0)).toEqual("```javascript\n// line one\n// line two\n```\n\n");
+    expect(renderer.renderBlock(node, 0)).toEqual(
+      "```javascript\n// line one\n// line two\n```\n\n"
+    );
   });
 
   it("renders a paragraph", () => {
@@ -289,7 +341,10 @@ describe("renderBlock()", () => {
 describe("renderInline()", () => {
   it("throws an error for unknown inline types", () => {
     const node: InlineNode = { object: "inline", type: "other-inline" };
-    const renderer = new MarkdownRenderer(FilesInitializer, defaultSpaceContentTestInitializer);
+    const renderer = new MarkdownRenderer(
+      FilesInitializer,
+      defaultSpaceContentTestInitializer
+    );
     expect(() => renderer.renderInline(node, 0)).toThrowError(
       "Unknown inline type: other-inline"
     );
@@ -304,7 +359,10 @@ describe("renderInline()", () => {
         { marks: [], object: "leaf", selections: [], text: "link text" },
       ],
     };
-    const renderer = new MarkdownRenderer(FilesInitializer, defaultSpaceContentTestInitializer);
+    const renderer = new MarkdownRenderer(
+      FilesInitializer,
+      defaultSpaceContentTestInitializer
+    );
     expect(renderer.renderInline(node, 0)).toEqual(
       "[link text](https://example.com)"
     );
@@ -312,67 +370,64 @@ describe("renderInline()", () => {
 
   it("renders Gitbook page links", () => {
     const node: gitbookLinkNode = {
-      "object": "inline",
-      "type": "link",
-      "isVoid": false,
-      "data": {
-          "ref": {
-              "kind": "page",
-              "page": "-M9UwQjn8e1kKADwPrrF"
-          }
+      object: "inline",
+      type: "link",
+      isVoid: false,
+      data: {
+        ref: {
+          kind: "page",
+          page: "-M9UwQjn8e1kKADwPrrF",
+        },
       },
-      "nodes": [
-          {
-              "object": "text",
-              "leaves": [
-                  {
-                      "object": "leaf",
-                      "text": "installing",
-                      "marks": [
-                          {
-                              "object": "mark",
-                              "type": "bold",
-                              "data": {}
-                          }
-                      ],
-                      "selections": []
-                  }
-              ]
-          }
-      ]
-  };
-
-  const spaceContent: SpaceContent = {
-    object: "revision",
-    id: "qCxFzUy2hI6unJ3GmG4Y",
-    parents: [
-        "6GqIbuAopAEOTYSG9sQZ",
-        "no294apqgYMSpghDgOHp"
-    ],
-    files: [],
-    pages: [
+      nodes: [
         {
-            "id": "-M9UwQjmVoE_PKEmahWz",
-            "title": "Getting started",
-            "kind": "group",
-            "type": "group",
-            "path": "getting-started",
-            "slug": "getting-started",
-            "pages": [
+          object: "text",
+          leaves: [
+            {
+              object: "leaf",
+              text: "installing",
+              marks: [
                 {
-                    "id": "-M9UwQjn8e1kKADwPrrF",
-                    "title": "Install Title",
-                    "kind": "sheet",
-                    "type": "document",
-                    "description": "",
-                    "path": "getting-started/install",
-                    "slug": "install",
-                    "pages": []
+                  object: "mark",
+                  type: "bold",
+                  data: {},
                 },
-              ]
-            }
-          ]
-        }
+              ],
+              selections: [],
+            },
+          ],
+        },
+      ],
+    };
+
+    const spaceContent: SpaceContent = {
+      object: "revision",
+      id: "qCxFzUy2hI6unJ3GmG4Y",
+      parents: ["6GqIbuAopAEOTYSG9sQZ", "no294apqgYMSpghDgOHp"],
+      files: [],
+      pages: [
+        {
+          id: "-M9UwQjmVoE_PKEmahWz",
+          title: "Getting started",
+          kind: "group",
+          type: "group",
+          path: "getting-started",
+          slug: "getting-started",
+          pages: [
+            {
+              id: "-M9UwQjn8e1kKADwPrrF",
+              title: "Install Title",
+              kind: "sheet",
+              type: "document",
+              description: "",
+              path: "getting-started/install",
+              slug: "install",
+              pages: [],
+            },
+          ],
+        },
+      ],
+    };
 
     const renderer = new MarkdownRenderer(FilesInitializer, spaceContent);
     expect(renderer.renderInline(node, 0)).toEqual(
@@ -384,12 +439,19 @@ describe("renderInline()", () => {
     const node: ImageLinkNode = {
       object: "inline",
       type: "inline-image",
-      data: { caption: "my image", ref: { url: "https://example.com" }, size: "line" },
+      data: {
+        caption: "my image",
+        ref: { url: "https://example.com" },
+        size: "line",
+      },
       leaves: [
         { marks: [], object: "leaf", selections: [], text: "link text" },
       ],
     };
-    const renderer = new MarkdownRenderer(FilesInitializer, defaultSpaceContentTestInitializer);
+    const renderer = new MarkdownRenderer(
+      FilesInitializer,
+      defaultSpaceContentTestInitializer
+    );
     expect(renderer.renderInline(node, 0)).toEqual(
       "![my image](https://example.com)"
     );
@@ -400,107 +462,116 @@ describe("renderInline()", () => {
       object: "inline",
       type: "inline-image",
       data: {
-        "ref": {
-            "kind": "file",
-            "file": "-M9ar8a0oxijwIvaQYA4"
+        ref: {
+          kind: "file",
+          file: "-M9ar8a0oxijwIvaQYA4",
         },
-        "size": "original"
-    },
+        size: "original",
+      },
       nodes: [
         {
-            "object": "text",
-            "leaves": [
-                {
-                    "object": "leaf",
-                    "text": "",
-                    "marks": [],
-                    "selections": []
-                }
-            ]
-        }
-    ]
+          object: "text",
+          leaves: [
+            {
+              object: "leaf",
+              text: "",
+              marks: [],
+              selections: [],
+            },
+          ],
+        },
+      ],
     };
-    const renderer = new MarkdownRenderer(FilesInitializer, defaultSpaceContentTestInitializer);
+    const renderer = new MarkdownRenderer(
+      FilesInitializer,
+      defaultSpaceContentTestInitializer
+    );
     expect(renderer.renderInline(node, 0)).toEqual(
       "![unknown-image-file.-M9ar8a0oxijwIvaQYA4]()"
     );
   });
 
   it("renders inline file images with info in Space", () => {
-    const spaceContent: SpaceContent = JSON.parse(JSON.stringify(defaultSpaceContentTestInitializer))
+    const spaceContent: SpaceContent = JSON.parse(
+      JSON.stringify(defaultSpaceContentTestInitializer)
+    );
     spaceContent.files = [
       {
-        "id": "-MC0GpDJ0v0g6fZ7qshj",
-        "name": "image.png",
-        "downloadURL": "https://files.gitbook.com/v0/b/gitbook-legacy-files/o/assets%2F-M8N-2NuR5V0ryoqtTWk%2F-MC0GoHeyr3P9glwOxk7%2F-MC0GpDJ0v0g6fZ7qshj%2Fimage.png?alt=media&token=5246ece1-816a-4432-b066-0f6709b06b4f",
-        "contentType": "image/png"
-    },
-    ]
+        id: "-MC0GpDJ0v0g6fZ7qshj",
+        name: "image.png",
+        downloadURL:
+          "https://files.gitbook.com/v0/b/gitbook-legacy-files/o/assets%2F-M8N-2NuR5V0ryoqtTWk%2F-MC0GoHeyr3P9glwOxk7%2F-MC0GpDJ0v0g6fZ7qshj%2Fimage.png?alt=media&token=5246ece1-816a-4432-b066-0f6709b06b4f",
+        contentType: "image/png",
+      },
+    ];
     const node: ImageFileNode = {
       object: "inline",
       type: "inline-image",
       data: {
-        "ref": {
-            "kind": "file",
-            "file": "-MC0GpDJ0v0g6fZ7qshj"
+        ref: {
+          kind: "file",
+          file: "-MC0GpDJ0v0g6fZ7qshj",
         },
-        "size": "original"
-    },
+        size: "original",
+      },
       nodes: [
         {
-            "object": "text",
-            "leaves": [
-                {
-                    "object": "leaf",
-                    "text": "",
-                    "marks": [],
-                    "selections": []
-                }
-            ]
-        }
-    ]
+          object: "text",
+          leaves: [
+            {
+              object: "leaf",
+              text: "",
+              marks: [],
+              selections: [],
+            },
+          ],
+        },
+      ],
     };
     const renderer = new MarkdownRenderer(FilesInitializer, spaceContent);
     expect(renderer.renderInline(node, 0)).toEqual(
-      "![download: https://files.gitbook.com/v0/b/gitbook-legacy-files/o/assets%2F-M8N-2NuR5V0ryoqtTWk%2F-MC0GoHeyr3P9glwOxk7%2F-MC0GpDJ0v0g6fZ7qshj%2Fimage.png?alt=media&token=5246ece1-816a-4432-b066-0f6709b06b4f](image.png \"-MC0GpDJ0v0g6fZ7qshj\")"
+      '![download: https://files.gitbook.com/v0/b/gitbook-legacy-files/o/assets%2F-M8N-2NuR5V0ryoqtTWk%2F-MC0GoHeyr3P9glwOxk7%2F-MC0GpDJ0v0g6fZ7qshj%2Fimage.png?alt=media&token=5246ece1-816a-4432-b066-0f6709b06b4f](image.png "-MC0GpDJ0v0g6fZ7qshj")'
     );
   });
 
   it("renders emojis", () => {
     const node: EmojiNode = {
-      "object": "inline",
-      "type": "emoji",
-      "isVoid": true,
-      "data": {
-          "code": "1f510"
+      object: "inline",
+      type: "emoji",
+      isVoid: true,
+      data: {
+        code: "1f510",
       },
-      "nodes": [
-          {
-              "object": "text",
-              "leaves": [
-                  {
-                      "object": "leaf",
-                      "text": "",
-                      "marks": [],
-                      "selections": []
-                  }
-              ]
-          }
-      ]
-  }
-    const renderer = new MarkdownRenderer(FilesInitializer, defaultSpaceContentTestInitializer);
-    expect(renderer.renderInline(node, 0)).toEqual(
-      "🔐 "
+      nodes: [
+        {
+          object: "text",
+          leaves: [
+            {
+              object: "leaf",
+              text: "",
+              marks: [],
+              selections: [],
+            },
+          ],
+        },
+      ],
+    };
+    const renderer = new MarkdownRenderer(
+      FilesInitializer,
+      defaultSpaceContentTestInitializer
     );
+    expect(renderer.renderInline(node, 0)).toEqual("🔐 ");
   });
-
 });
 
 describe("renderLeaf()", () => {
   let renderer: MarkdownRenderer;
 
   beforeEach(() => {
-    renderer = new MarkdownRenderer(FilesInitializer, defaultSpaceContentTestInitializer);
+    renderer = new MarkdownRenderer(
+      FilesInitializer,
+      defaultSpaceContentTestInitializer
+    );
   });
 
   it("renders plain text", () => {
@@ -509,7 +580,11 @@ describe("renderLeaf()", () => {
   });
 
   it("renders bold text", () => {
-    const node: LeafNode = { object: "leaf", text: "my text", marks: [{ object: "mark", type: "bold" }] };
+    const node: LeafNode = {
+      object: "leaf",
+      text: "my text",
+      marks: [{ object: "mark", type: "bold" }],
+    };
     expect(renderer.renderLeaf(node, 0)).toEqual("**my text**");
   });
 
@@ -535,7 +610,11 @@ describe("renderLeaf()", () => {
   });
 
   it("renders code", () => {
-    const node: LeafNode = { object: "leaf", text: "my text", marks: [{ object: "mark", type: "code" }] };
+    const node: LeafNode = {
+      object: "leaf",
+      text: "my text",
+      marks: [{ object: "mark", type: "code" }],
+    };
     expect(renderer.renderLeaf(node, 0)).toEqual("`my text`");
   });
 });

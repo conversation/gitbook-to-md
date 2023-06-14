@@ -9,38 +9,38 @@ type BlockNode = Node & {
   object: "block";
   type: string;
   data?: {
-    syntax?: string,
-    style?: string
+    syntax?: string;
+    style?: string;
   };
 };
 
 type ImageBlockNode = BlockNode & {
-  type: "image",
+  type: "image";
   data: {
     ref: {
-      file: string,
-    },
+      file: string;
+    };
   };
 };
 
 type FileBlockNode = BlockNode & {
-  type: "file",
+  type: "file";
   data: {
     ref: {
-      file: string,
-    },
+      file: string;
+    };
   };
 };
 
 type InlineNode = Node & {
   object: "inline";
   type: string;
-  isVoid?: boolean,
+  isVoid?: boolean;
   data?: {
     ref?: {
-      kind?: string
-    }
-  }
+      kind?: string;
+    };
+  };
 };
 
 type LinkNode = InlineNode & {
@@ -50,7 +50,7 @@ type LinkNode = InlineNode & {
 
 type gitbookLinkNode = InlineNode & {
   type: "link";
-  data: { ref: { kind: "page", page: string } };
+  data: { ref: { kind: "page"; page: string } };
 };
 
 // two types: link image, or file in GitBook.
@@ -58,11 +58,11 @@ type gitbookLinkNode = InlineNode & {
 type ImageLinkNode = InlineNode & {
   type: "inline-image";
   data: {
-    caption: string,
+    caption: string;
     ref: {
-      url: string
-    },
-    size: string,
+      url: string;
+    };
+    size: string;
   };
 };
 
@@ -70,10 +70,10 @@ type ImageFileNode = InlineNode & {
   type: "inline-image";
   data: {
     ref: {
-      kind: string,
-      file: string
-    },
-    size: string,
+      kind: string;
+      file: string;
+    };
+    size: string;
   };
 };
 
@@ -81,13 +81,13 @@ type EmojiNode = InlineNode & {
   type: "emoji";
   data: {
     code: string;
-  }
-}
+  };
+};
 
 type Mark = {
   object: "mark";
   type: "bold" | "italic" | "code";
-  data?: {}
+  data?: {};
 };
 
 type LeafNode = Node & {
@@ -102,39 +102,39 @@ type Files = {
 };
 
 type SpaceContentPage = {
-  id: string,
-  title: string,
+  id: string;
+  title: string;
   kind: "sheet" | "group" | "link";
   type: "group" | "document" | "link";
-  description?: string,
-  path?: string,
-  slug?: string,
-  pages?: SpaceContentPage[]
-  href?: string
-}
+  description?: string;
+  path?: string;
+  slug?: string;
+  pages?: SpaceContentPage[];
+  href?: string;
+};
 
 // TODO: this is likely a duplicate of existing File type
 type SpaceContentFile = {
-  id: string,
-  name: string,
-  downloadURL: string,
-  contentType: string
-}
+  id: string;
+  name: string;
+  downloadURL: string;
+  contentType: string;
+};
 
 type SpaceContent = {
-  object: string,
-  id: string,
-  parents: string[]
-  pages: SpaceContentPage[],
-  files: SpaceContentFile[]
-}
+  object: string;
+  id: string;
+  parents: string[];
+  pages: SpaceContentPage[];
+  files: SpaceContentFile[];
+};
 
 function isLinkNode(node: InlineNode): node is LinkNode {
   return node.type === "link";
 }
 
 function isGitbookLinkNode(node: InlineNode): node is gitbookLinkNode {
-  return node.type === "link" && (node.data?.ref?.kind == "page");
+  return node.type === "link" && node.data?.ref?.kind == "page";
 }
 
 function isImageLinkNode(node: InlineNode): node is ImageLinkNode {
@@ -142,7 +142,7 @@ function isImageLinkNode(node: InlineNode): node is ImageLinkNode {
 }
 
 function isImageFileNode(node: InlineNode): node is ImageFileNode {
-  return node.type === "inline-image" && (node.data?.ref?.kind == "file");
+  return node.type === "inline-image" && node.data?.ref?.kind == "file";
 }
 
 function isEmojiNode(node: InlineNode): node is EmojiNode {
@@ -163,7 +163,7 @@ class MarkdownRenderer {
 
   constructor(files: Files = {}, spaceContent: SpaceContent) {
     this.files = files;
-    this.spaceContent = spaceContent
+    this.spaceContent = spaceContent;
     this.listCount = [];
     this.listType = [];
   }
@@ -219,11 +219,9 @@ class MarkdownRenderer {
       const headingLevel = parseInt(node.type.split("-").pop() || "2");
       const headingMark = "#".repeat(headingLevel);
       block = `${headingMark} ${getChildren()}\n\n`;
-
     } else if (node.type == "paragraph") {
       block = getChildren() + "\n";
       if (this.listCount.length == 0) block += "\n";
-
     } else if (node.type == "list-unordered" || node.type == "list-ordered") {
       this.listType.push(node.type);
       this.listCount.push(0);
@@ -233,7 +231,6 @@ class MarkdownRenderer {
 
       this.listType.pop();
       this.listCount.pop();
-
     } else if (node.type == "list-item") {
       const count = this.listCount[this.listCount.length - 1]++;
       block += " ".repeat((this.listCount.length - 1) * 2);
@@ -245,44 +242,39 @@ class MarkdownRenderer {
       }
 
       block += getChildren();
-
     } else if (isImageBlockNode(node)) {
       const fileId = node.data.ref.file;
       const filename = this.files[fileId];
       block = `![${getChildren().trim()}](files/${filename})\n\n`;
-
     } else if (isFileBlockNode(node)) {
       const fileId = node.data.ref.file;
       const filename = this.files[fileId];
       block = `[${getChildren().trim()}](files/${filename})\n\n`;
-
     } else if (node.type == "code") {
       block += "```";
       if (node.data) block += node.data.syntax;
       block += "\n";
       block += getChildren();
       block += "```\n\n";
-
     } else if (node.type == "code-line") {
       block += getChildren() + "\n";
-
     } else if (node.type == "blockquote") {
       block = getChildren()
         .split("\n")
         .map((line) => `> ${line}\n`)
         .join("");
     } else if (node.type == "hint") {
-        let children = getChildren()
-        // hack to remove extra newlines on hint blocks
-        if (children.slice(children.length-2, children.length) === "\n\n") {
-          children = children.slice(0, children.length-2)
-        }
-        block = children
-          .split("\n")
-          .map((line) => `> ${line}\n`)
-          .join("");
-        // add the newline back at the end, so that it pushes the next markdown block away.
-        block += "\n"
+      let children = getChildren();
+      // hack to remove extra newlines on hint blocks
+      if (children.slice(children.length - 2, children.length) === "\n\n") {
+        children = children.slice(0, children.length - 2);
+      }
+      block = children
+        .split("\n")
+        .map((line) => `> ${line}\n`)
+        .join("");
+      // add the newline back at the end, so that it pushes the next markdown block away.
+      block += "\n";
     } else {
       block = getChildren();
     }
@@ -297,15 +289,18 @@ class MarkdownRenderer {
   renderInline(node: InlineNode, depth: number) {
     if (isLinkNode(node)) {
       const text = this.renderChildren(node, depth);
-      let url = '';
-      let linkTitle = '';
+      let url = "";
+      let linkTitle = "";
       if (isGitbookLinkNode(node)) {
         const pageRef = node.data.ref.page;
         // this ID can be tied back to a page slug and more using the `content.json` file
         url = pageRef;
-        const pageInfo = this.findPageInfoFromGitbookPageRef(this.spaceContent.pages, pageRef)
+        const pageInfo = this.findPageInfoFromGitbookPageRef(
+          this.spaceContent.pages,
+          pageRef
+        );
         if (pageInfo) {
-          url = `/${pageInfo?.path}`
+          url = `/${pageInfo?.path}`;
           linkTitle = ` "${pageInfo.title}"`;
         }
       } else {
@@ -316,18 +311,21 @@ class MarkdownRenderer {
     } else if (isImageFileNode(node)) {
       const imageRef = node.data.ref.file;
       // TODO: go find the image file data!
-      const fileInfo = this.findFileInfoFromGitbookFileRef(this.spaceContent.files, imageRef)
+      const fileInfo = this.findFileInfoFromGitbookFileRef(
+        this.spaceContent.files,
+        imageRef
+      );
       if (fileInfo) {
         return `![download: ${fileInfo.downloadURL}](${fileInfo.name} "${fileInfo.id}")`;
       }
-      return `![unknown-image-file.${imageRef}]()`
+      return `![unknown-image-file.${imageRef}]()`;
     } else if (isImageLinkNode(node)) {
       const text = node.data.caption;
       const url = node.data.ref.url;
       return `![${text}](${url})`;
     } else if (isEmojiNode(node)) {
       const unicode_hex_code_point = node.data.code;
-      const hex_val = Number(`0x${unicode_hex_code_point}`)
+      const hex_val = Number(`0x${unicode_hex_code_point}`);
       return `${String.fromCodePoint(hex_val)} `;
     } else {
       throw `Unknown inline type: ${node.type}`;
@@ -377,14 +375,17 @@ class MarkdownRenderer {
       .join("\n");
   }
 
-  findPageInfoFromGitbookPageRef(searchPages: SpaceContentPage[], gitbookPageRef: string): SpaceContentPage | null {
+  findPageInfoFromGitbookPageRef(
+    searchPages: SpaceContentPage[],
+    gitbookPageRef: string
+  ): SpaceContentPage | null {
     for (const p of searchPages) {
       if (p.id === gitbookPageRef) {
         return p;
       } else if (p.pages) {
         // didn't find at top level, now do recursive pages
         let pageInfo: SpaceContentPage | null = null;
-        pageInfo = this.findPageInfoFromGitbookPageRef(p.pages, gitbookPageRef)
+        pageInfo = this.findPageInfoFromGitbookPageRef(p.pages, gitbookPageRef);
         if (pageInfo) {
           return pageInfo;
         }
@@ -393,7 +394,10 @@ class MarkdownRenderer {
     return null;
   }
 
-  findFileInfoFromGitbookFileRef(files: SpaceContentFile[], fileRef: string): SpaceContentFile | null {
+  findFileInfoFromGitbookFileRef(
+    files: SpaceContentFile[],
+    fileRef: string
+  ): SpaceContentFile | null {
     for (const f of files) {
       if (f.id === fileRef) {
         return f;
@@ -402,5 +406,19 @@ class MarkdownRenderer {
     return null;
   }
 }
-export type { Node, BlockNode, InlineNode, LinkNode, gitbookLinkNode, ImageLinkNode as ImageLinkNode, ImageFileNode, EmojiNode, LeafNode, Files, SpaceContent, SpaceContentFile, SpaceContentPage };
+export type {
+  Node,
+  BlockNode,
+  InlineNode,
+  LinkNode,
+  gitbookLinkNode,
+  ImageLinkNode as ImageLinkNode,
+  ImageFileNode,
+  EmojiNode,
+  LeafNode,
+  Files,
+  SpaceContent,
+  SpaceContentFile,
+  SpaceContentPage,
+};
 export default MarkdownRenderer;

@@ -1,7 +1,12 @@
 import { promises as fs } from "fs";
 import convertToMarkdown from "./convertToMarkdown.js";
 import { extractFilename } from "./utils.js";
-import type { Files, SpaceContent, SpaceContentFile, SpaceContentPage } from "./MarkdownRenderer.js";
+import type {
+  Files,
+  SpaceContent,
+  SpaceContentFile,
+  SpaceContentPage,
+} from "./MarkdownRenderer.js";
 
 if (process.argv.length < 2) {
   console.error("Usage: npm run parse-pages -- [space name]");
@@ -23,7 +28,11 @@ const buildFilesLookup = (files: GitbookFile[]) => {
   }, {});
 };
 
-const readDir = async (path: string, fileURLs: Files, spaceContent: SpaceContent) => {
+const readDir = async (
+  path: string,
+  fileURLs: Files,
+  spaceContent: SpaceContent
+) => {
   const filenames = await fs.readdir(path);
 
   for (const file of filenames) {

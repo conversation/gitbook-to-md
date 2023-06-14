@@ -18,7 +18,7 @@ const config = { headers: { Authorization: `Bearer ${apiToken}` } };
 const getContent = async () => {
   try {
     await fs.mkdir(`data`);
-  } catch (error) { }
+  } catch (error) {}
 
   let gitbookSpacesUrl = `https://api.gitbook.com/v1/orgs/${orgId}/spaces`;
   if (orgId === "personal") {
@@ -26,16 +26,13 @@ const getContent = async () => {
     gitbookSpacesUrl = "https://api.gitbook.com/v1/user/spaces";
   }
 
-  const spaces = await axios.get(
-    gitbookSpacesUrl,
-    config
-  );
+  const spaces = await axios.get(gitbookSpacesUrl, config);
 
   for (let space of spaces.data.items) {
     console.log(space.title);
     try {
       await fs.mkdir(`data/${space.title}`);
-    } catch (error) { }
+    } catch (error) {}
     const content = await axios.get(
       `https://api.gitbook.com/v1/spaces/${space.id}/content`,
       { ...config, responseType: "stream" }
