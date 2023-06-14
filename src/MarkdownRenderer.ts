@@ -53,12 +53,25 @@ type gitbookLinkNode = InlineNode & {
   data: { ref: { kind: "page", page: string } };
 };
 
-type ImageNode = InlineNode & {
+// two types: link image, or file in GitBook.
+// Might make sense to split
+type ImageLinkNode = InlineNode & {
   type: "inline-image";
   data: {
     caption: string,
     ref: {
       url: string
+    },
+    size: string,
+  };
+};
+
+type ImageFileNode = InlineNode & {
+  type: "inline-image";
+  data: {
+    ref: {
+      kind: string,
+      file: string
     },
     size: string,
   };
@@ -124,10 +137,14 @@ function isGitbookLinkNode(node: InlineNode): node is gitbookLinkNode {
   return node.type === "link" && (node.data?.ref?.kind == "page");
 }
 
-
-function isImageNode(node: InlineNode): node is ImageNode {
+function isImageLinkNode(node: InlineNode): node is ImageLinkNode {
   return node.type === "inline-image";
 }
+
+function isImageFileNode(node: InlineNode): node is ImageFileNode {
+  return node.type === "inline-image" && (node.data?.ref?.kind == "file");
+}
+
 function isEmojiNode(node: InlineNode): node is EmojiNode {
   return node.type === "emoji";
 }
@@ -296,7 +313,15 @@ class MarkdownRenderer {
         linkTitle = "";
       }
       return `[${text}](${url}${linkTitle})`;
-    } else if (isImageNode(node)) {
+    } else if (isImageFileNode(node)) {
+      const imageRef = node.data.ref.file;
+      // TODO: go find the image file data!
+      const fileInfo = this.findFileInfoFromGitbookFileRef(this.spaceContent.files, imageRef)
+      if (fileInfo) {
+        return `![download: ${fileInfo.downloadURL}](${fileInfo.name} "${fileInfo.id}")`;
+      }
+      return `![unknown-image-file.${imageRef}]()`
+    } else if (isImageLinkNode(node)) {
       const text = node.data.caption;
       const url = node.data.ref.url;
       return `![${text}](${url})`;
@@ -367,6 +392,15 @@ class MarkdownRenderer {
     }
     return null;
   }
+
+  findFileInfoFromGitbookFileRef(files: SpaceContentFile[], fileRef: string): SpaceContentFile | null {
+    for (const f of files) {
+      if (f.id === fileRef) {
+        return f;
+      }
+    }
+    return null;
+  }
 }
-export type { Node, BlockNode, InlineNode, LinkNode, gitbookLinkNode, ImageNode, EmojiNode, LeafNode, Files, SpaceContent, SpaceContentFile, SpaceContentPage };
+export type { Node, BlockNode, InlineNode, LinkNode, gitbookLinkNode, ImageLinkNode as ImageLinkNode, ImageFileNode, EmojiNode, LeafNode, Files, SpaceContent, SpaceContentFile, SpaceContentPage };
 export default MarkdownRenderer;

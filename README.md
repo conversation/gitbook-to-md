@@ -23,7 +23,11 @@ Hints _(aka 'call-outs' or 'admonitions')_ are not natively supported in Markdow
 
 ## Images in GitBook
 
-⚠️ Work in Progress - for now, images end up as either a simple ref (`files/-Mered4r4t0g.png`) or `undefined`. There is enough information returned from GitBook API we can update to the actual CDN download links, to make it easy for users to get the images back.
+If the image information is available in the GitBook Spaces API response (under `files`), it will be fetched based on the ID and the GitBook download URL will be part of the rendered output.
+
+_Why not just set the download URL as the image link?_
+
+We don't want users migrating away from the service to get a false sense of security and forget to find a new host for their images. It would be very easy to let the GitBook CDN "just work" for a bit, serving the images happily and making the migration look successful - up until the day it doesn't 💥.
 
 ## Contributions
 

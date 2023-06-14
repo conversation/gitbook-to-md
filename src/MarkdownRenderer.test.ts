@@ -1,6 +1,6 @@
 import { promises as fs } from "fs";
 import MarkdownRenderer from "./MarkdownRenderer";
-import type { BlockNode, InlineNode, LinkNode, gitbookLinkNode, ImageNode, EmojiNode, LeafNode, Files, SpaceContent, SpaceContentFile, SpaceContentPage } from "./MarkdownRenderer";
+import type { BlockNode, InlineNode, LinkNode, gitbookLinkNode, ImageLinkNode, EmojiNode, LeafNode, Files, SpaceContent, SpaceContentFile, SpaceContentPage, ImageFileNode } from "./MarkdownRenderer";
 
 const defaultSpaceContentTestInitializer: SpaceContent = {
     object: "revision",
@@ -380,8 +380,8 @@ describe("renderInline()", () => {
     );
   });
 
-  it("renders images", () => {
-    const node: ImageNode = {
+  it("renders inline link images", () => {
+    const node: ImageLinkNode = {
       object: "inline",
       type: "inline-image",
       data: { caption: "my image", ref: { url: "https://example.com" }, size: "line" },
@@ -392,6 +392,77 @@ describe("renderInline()", () => {
     const renderer = new MarkdownRenderer(FilesInitializer, defaultSpaceContentTestInitializer);
     expect(renderer.renderInline(node, 0)).toEqual(
       "![my image](https://example.com)"
+    );
+  });
+
+  it("renders inline file imagess with no info in Space", () => {
+    const node: ImageFileNode = {
+      object: "inline",
+      type: "inline-image",
+      data: {
+        "ref": {
+            "kind": "file",
+            "file": "-M9ar8a0oxijwIvaQYA4"
+        },
+        "size": "original"
+    },
+      nodes: [
+        {
+            "object": "text",
+            "leaves": [
+                {
+                    "object": "leaf",
+                    "text": "",
+                    "marks": [],
+                    "selections": []
+                }
+            ]
+        }
+    ]
+    };
+    const renderer = new MarkdownRenderer(FilesInitializer, defaultSpaceContentTestInitializer);
+    expect(renderer.renderInline(node, 0)).toEqual(
+      "![unknown-image-file.-M9ar8a0oxijwIvaQYA4]()"
+    );
+  });
+
+  it("renders inline file images with info in Space", () => {
+    const spaceContent: SpaceContent = JSON.parse(JSON.stringify(defaultSpaceContentTestInitializer))
+    spaceContent.files = [
+      {
+        "id": "-MC0GpDJ0v0g6fZ7qshj",
+        "name": "image.png",
+        "downloadURL": "https://files.gitbook.com/v0/b/gitbook-legacy-files/o/assets%2F-M8N-2NuR5V0ryoqtTWk%2F-MC0GoHeyr3P9glwOxk7%2F-MC0GpDJ0v0g6fZ7qshj%2Fimage.png?alt=media&token=5246ece1-816a-4432-b066-0f6709b06b4f",
+        "contentType": "image/png"
+    },
+    ]
+    const node: ImageFileNode = {
+      object: "inline",
+      type: "inline-image",
+      data: {
+        "ref": {
+            "kind": "file",
+            "file": "-MC0GpDJ0v0g6fZ7qshj"
+        },
+        "size": "original"
+    },
+      nodes: [
+        {
+            "object": "text",
+            "leaves": [
+                {
+                    "object": "leaf",
+                    "text": "",
+                    "marks": [],
+                    "selections": []
+                }
+            ]
+        }
+    ]
+    };
+    const renderer = new MarkdownRenderer(FilesInitializer, spaceContent);
+    expect(renderer.renderInline(node, 0)).toEqual(
+      "![download: https://files.gitbook.com/v0/b/gitbook-legacy-files/o/assets%2F-M8N-2NuR5V0ryoqtTWk%2F-MC0GoHeyr3P9glwOxk7%2F-MC0GpDJ0v0g6fZ7qshj%2Fimage.png?alt=media&token=5246ece1-816a-4432-b066-0f6709b06b4f](image.png \"-MC0GpDJ0v0g6fZ7qshj\")"
     );
   });
 
