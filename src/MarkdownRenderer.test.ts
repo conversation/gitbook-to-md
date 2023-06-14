@@ -200,6 +200,37 @@ describe("renderBlock()", () => {
     expect(renderer.renderBlock(node, 0)).toEqual("> line one\n> line two\n");
   });
 
+  it("renders a hint", () => {
+    const node: BlockNode = {
+      object: "block",
+      type: "hint",
+      data: {
+        style: "info"
+      },
+      nodes: [
+        {
+          object: "block",
+          type: "paragraph",
+          data: {},
+          nodes: [
+            {
+              object: "text",
+              leaves: [{ object: "leaf", text: "An important hint callout block for user information.", marks: [], selections: [] }],
+            },
+            {
+              object: "text",
+              leaves: [{ object: "leaf", text: " Continued text.\nWith a newline.", marks: [], selections: [] }],
+            }
+          ]
+        },
+      ],
+    };
+
+    // it renders with 2 extra newlines which end up harmless, not worth diggin for now. Hack in place in renderBlock()
+    // - Culprit is at the `(node.type == "paragraph") {` section adding extra \n's.
+    expect(renderer.renderBlock(node, 0)).toEqual("> An important hint callout block for user information. Continued text.\n> With a newline.\n\n");
+  });
+
   it("renders a code block", () => {
     const node: BlockNode = {
       object: "block",

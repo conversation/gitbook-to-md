@@ -17,7 +17,17 @@ npm run parse-pages -- [space name]
 npm run gitbook-to-md -- [page.json]
 ```
 
-## Testing
+## GitBook Hints
+
+Hints _(aka 'call-outs' or 'admonitions')_ are not natively supported in Markdown. For now, they are rendered as a block quote.
+
+## Images in GitBook
+
+⚠️ Work in Progress - for now, images end up as either a simple ref (`files/-Mered4r4t0g.png`) or `undefined`. There is enough information returned from GitBook API we can update to the actual CDN download links, to make it easy for users to get the images back.
+
+## Contributions
+
+### Testing
 
 ```bash
 # Run tests

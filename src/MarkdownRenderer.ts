@@ -9,7 +9,8 @@ type BlockNode = Node & {
   object: "block";
   type: string;
   data?: {
-    syntax: string,
+    syntax?: string,
+    style?: string
   };
 };
 
@@ -253,7 +254,18 @@ class MarkdownRenderer {
         .split("\n")
         .map((line) => `> ${line}\n`)
         .join("");
-
+    } else if (node.type == "hint") {
+        let children = getChildren()
+        // hack to remove extra newlines on hint blocks
+        if (children.slice(children.length-2, children.length) === "\n\n") {
+          children = children.slice(0, children.length-2)
+        }
+        block = children
+          .split("\n")
+          .map((line) => `> ${line}\n`)
+          .join("");
+        // add the newline back at the end, so that it pushes the next markdown block away.
+        block += "\n"
     } else {
       block = getChildren();
     }
