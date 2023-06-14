@@ -50,7 +50,7 @@ type LinkNode = InlineNode & {
 
 type gitbookLinkNode = InlineNode & {
   type: "link";
-  data: { ref: { kind: "page"; page: string } };
+  data: { ref: { kind: "page" | "anchor"; page: string, anchor?: string } };
 };
 
 // two types: link image, or file in GitBook.
@@ -134,7 +134,7 @@ function isLinkNode(node: InlineNode): node is LinkNode {
 }
 
 function isGitbookLinkNode(node: InlineNode): node is gitbookLinkNode {
-  return node.type === "link" && node.data?.ref?.kind == "page";
+  return node.type === "link" && ["page", "anchor"].includes(node.data?.ref?.kind || '');
 }
 
 function isImageLinkNode(node: InlineNode): node is ImageLinkNode {
@@ -293,6 +293,7 @@ class MarkdownRenderer {
       let linkTitle = "";
       if (isGitbookLinkNode(node)) {
         const pageRef = node.data.ref.page;
+        const anchor = node.data.ref.anchor ? `#${node.data.ref.anchor}`: '';
         // this ID can be tied back to a page slug and more using the `content.json` file
         url = pageRef;
         const pageInfo = this.findPageInfoFromGitbookPageRef(
@@ -303,6 +304,8 @@ class MarkdownRenderer {
           url = `/${pageInfo?.path}`;
           linkTitle = ` "${pageInfo.title}"`;
         }
+        // still add the anchor, since it's useful even without full page info
+        url = `${url}${anchor}`
       } else {
         url = node.data.ref.url;
         linkTitle = "";

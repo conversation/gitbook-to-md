@@ -439,6 +439,18 @@ describe("renderInline()", () => {
     expect(renderer.renderInline(node, 0)).toEqual(
       `[**installing**](/getting-started/install "Install Title")`
     );
+
+    // also anchor type
+    node.data = {
+      ref: {
+          kind: "anchor",
+          anchor: "list-of-ids",
+          page: "-M9UwQjn8e1kKADwPrrF"
+      }
+  }
+    expect(renderer.renderInline(node, 0)).toEqual(
+      `[**installing**](/getting-started/install#list-of-ids "Install Title")`
+    );
   });
 
   it("renders inline link images", () => {
