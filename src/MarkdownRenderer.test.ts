@@ -313,6 +313,12 @@ describe("renderBlock()", () => {
     expect(renderer.renderBlock(node, 0)).toEqual(
       "```javascript\n// line one\n// line two\n```\n\n"
     );
+
+    // also handle if they don't have syntax defined
+    node.data = {};
+    expect(renderer.renderBlock(node, 0)).toEqual(
+      "```\n// line one\n// line two\n```\n\n"
+    );
   });
 
   it("renders a paragraph", () => {

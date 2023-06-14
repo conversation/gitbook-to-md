@@ -252,7 +252,7 @@ class MarkdownRenderer {
       block = `[${getChildren().trim()}](files/${filename})\n\n`;
     } else if (node.type == "code") {
       block += "```";
-      if (node.data) block += node.data.syntax;
+      if (node.data) block += node.data?.syntax || '';
       block += "\n";
       block += getChildren();
       block += "```\n\n";
