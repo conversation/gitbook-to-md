@@ -6,7 +6,8 @@
 npm run build
 
 # Fetch and parse an entire space
-API_TOKEN=xxxx npm run get-content -- [organisation id]
+# -- ℹ️ If your spaces are under the user's "Personal" rather than in an organization, use "personal" as the organization id.
+API_TOKEN=xxxx npm run get-content -- [organization id | "personal"]
 API_TOKEN=xxxx npm run get-pages -- [space name]
 npm run parse-pages -- [space name]
 

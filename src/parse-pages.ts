@@ -1,7 +1,7 @@
 import { promises as fs } from "fs";
 import convertToMarkdown from "./convertToMarkdown.js";
 import { extractFilename } from "./utils.js";
-import type { Files } from "./MarkdownRenderer.js";
+import type { Files, SpaceContent, SpaceContentFile, SpaceContentPage } from "./MarkdownRenderer.js";
 
 if (process.argv.length < 2) {
   console.error("Usage: npm run parse-pages -- [space name]");
@@ -23,7 +23,7 @@ const buildFilesLookup = (files: GitbookFile[]) => {
   }, {});
 };
 
-const readDir = async (path: string, fileURLs: Files) => {
+const readDir = async (path: string, fileURLs: Files, spaceContent: SpaceContent) => {
   const filenames = await fs.readdir(path);
 
   for (const file of filenames) {
@@ -32,10 +32,10 @@ const readDir = async (path: string, fileURLs: Files) => {
     const stat = await fs.lstat(absPath);
 
     if (stat.isDirectory()) {
-      readDir(absPath, fileURLs);
+      readDir(absPath, fileURLs, spaceContent);
     } else if (file.match(/\.json$/) && file != "content.json") {
       console.log(`${absPath} -> ${absPath.replace(".json", ".md")}`);
-      const markdown = await convertToMarkdown(absPath, fileURLs);
+      const markdown = await convertToMarkdown(absPath, fileURLs, spaceContent);
       if (markdown) {
         await fs.writeFile(absPath.replace(".json", ".md"), markdown);
       }
@@ -44,12 +44,12 @@ const readDir = async (path: string, fileURLs: Files) => {
 };
 
 const parsePages = async (spaceName: string) => {
-  const content = JSON.parse(
+  const spaceContent: SpaceContent = JSON.parse(
     await fs.readFile(`data/${spaceName}/content.json`, "utf8")
   );
-  const fileURLs = buildFilesLookup(content.files);
+  const fileURLs = buildFilesLookup(spaceContent.files);
 
-  await readDir(`data/${spaceName}`, fileURLs);
+  await readDir(`data/${spaceName}`, fileURLs, spaceContent);
 };
 
 parsePages(spaceName).then(() => console.log("Done"));

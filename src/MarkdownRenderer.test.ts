@@ -1,6 +1,17 @@
 import { promises as fs } from "fs";
 import MarkdownRenderer from "./MarkdownRenderer";
-import type { BlockNode, InlineNode, LinkNode, ImageNode, LeafNode } from "./MarkdownRenderer";
+import type { BlockNode, InlineNode, LinkNode, gitbookLinkNode, ImageNode, EmojiNode, LeafNode, Files, SpaceContent, SpaceContentFile, SpaceContentPage } from "./MarkdownRenderer";
+
+const defaultSpaceContentTestInitializer: SpaceContent = {
+    object: "revision",
+    id: "-MVYmSNifA9RV4lb6xiN",
+    "parents": [
+        "-MOnQAmPI8w7ceDocqT1"
+    ],
+    pages: [],
+    files: []
+}
+const FilesInitializer: Files = {}
 
 describe("render", () => {
   it("renders a sample document", async () => {
@@ -14,14 +25,14 @@ describe("render", () => {
     );
     const doc = JSON.parse(json).document;
 
-    const renderer = new MarkdownRenderer();
+    const renderer = new MarkdownRenderer(FilesInitializer, defaultSpaceContentTestInitializer);
     const output: string = renderer.render(doc);
 
     expect(output).toEqual(expectedMd);
   });
 
   it("renders nested list items", async () => {
-    const renderer = new MarkdownRenderer();
+    const renderer = new MarkdownRenderer(FilesInitializer, defaultSpaceContentTestInitializer);
     const json = await fs.readFile("fixtures/nested-list.json", "utf8");
     const node = JSON.parse(json).document;
     const result: string = renderer.render(node);
@@ -30,7 +41,7 @@ describe("render", () => {
   });
 
   it("renders mixed type nested list items", async () => {
-    const renderer = new MarkdownRenderer();
+    const renderer = new MarkdownRenderer(FilesInitializer, defaultSpaceContentTestInitializer);
     const json = await fs.readFile("fixtures/mixed-order-nested-list.json", "utf8");
     const node = JSON.parse(json).document;
     const result: string = renderer.render(node);
@@ -40,7 +51,7 @@ describe("render", () => {
 
   it("renders images", async () => {
     const files = { "VlKCZMuShVzkE0pdnffR": "my-image.png" };
-    const renderer = new MarkdownRenderer(files);
+    const renderer = new MarkdownRenderer(files, defaultSpaceContentTestInitializer);
     const json = await fs.readFile("fixtures/images.json", "utf8");
     const node = JSON.parse(json).document;
     const result: string = renderer.render(node);
@@ -50,7 +61,7 @@ describe("render", () => {
 
   it("renders files", async () => {
     const files = { "bYxy1vsBYjP2bXkJKFCb": "my-file.txt" };
-    const renderer = new MarkdownRenderer(files);
+    const renderer = new MarkdownRenderer(files, defaultSpaceContentTestInitializer);
     const json = await fs.readFile("fixtures/files.json", "utf8");
     const node = JSON.parse(json).document;
     const result: string = renderer.render(node);
@@ -63,7 +74,7 @@ describe("renderBlock()", () => {
   let renderer: MarkdownRenderer;
 
   beforeEach(() => {
-    renderer = new MarkdownRenderer();
+    renderer = new MarkdownRenderer(FilesInitializer, defaultSpaceContentTestInitializer);
   });
 
   it("renders a heading", () => {
@@ -247,7 +258,7 @@ describe("renderBlock()", () => {
 describe("renderInline()", () => {
   it("throws an error for unknown inline types", () => {
     const node: InlineNode = { object: "inline", type: "other-inline" };
-    const renderer = new MarkdownRenderer();
+    const renderer = new MarkdownRenderer(FilesInitializer, defaultSpaceContentTestInitializer);
     expect(() => renderer.renderInline(node, 0)).toThrowError(
       "Unknown inline type: other-inline"
     );
@@ -262,9 +273,79 @@ describe("renderInline()", () => {
         { marks: [], object: "leaf", selections: [], text: "link text" },
       ],
     };
-    const renderer = new MarkdownRenderer();
+    const renderer = new MarkdownRenderer(FilesInitializer, defaultSpaceContentTestInitializer);
     expect(renderer.renderInline(node, 0)).toEqual(
       "[link text](https://example.com)"
+    );
+  });
+
+  it("renders Gitbook page links", () => {
+    const node: gitbookLinkNode = {
+      "object": "inline",
+      "type": "link",
+      "isVoid": false,
+      "data": {
+          "ref": {
+              "kind": "page",
+              "page": "-M9UwQjn8e1kKADwPrrF"
+          }
+      },
+      "nodes": [
+          {
+              "object": "text",
+              "leaves": [
+                  {
+                      "object": "leaf",
+                      "text": "installing",
+                      "marks": [
+                          {
+                              "object": "mark",
+                              "type": "bold",
+                              "data": {}
+                          }
+                      ],
+                      "selections": []
+                  }
+              ]
+          }
+      ]
+  };
+
+  const spaceContent: SpaceContent = {
+    object: "revision",
+    id: "qCxFzUy2hI6unJ3GmG4Y",
+    parents: [
+        "6GqIbuAopAEOTYSG9sQZ",
+        "no294apqgYMSpghDgOHp"
+    ],
+    files: [],
+    pages: [
+        {
+            "id": "-M9UwQjmVoE_PKEmahWz",
+            "title": "Getting started",
+            "kind": "group",
+            "type": "group",
+            "path": "getting-started",
+            "slug": "getting-started",
+            "pages": [
+                {
+                    "id": "-M9UwQjn8e1kKADwPrrF",
+                    "title": "Install Title",
+                    "kind": "sheet",
+                    "type": "document",
+                    "description": "",
+                    "path": "getting-started/install",
+                    "slug": "install",
+                    "pages": []
+                },
+              ]
+            }
+          ]
+        }
+
+    const renderer = new MarkdownRenderer(FilesInitializer, spaceContent);
+    expect(renderer.renderInline(node, 0)).toEqual(
+      `[**installing**](/getting-started/install "Install Title")`
     );
   });
 
@@ -277,9 +358,37 @@ describe("renderInline()", () => {
         { marks: [], object: "leaf", selections: [], text: "link text" },
       ],
     };
-    const renderer = new MarkdownRenderer();
+    const renderer = new MarkdownRenderer(FilesInitializer, defaultSpaceContentTestInitializer);
     expect(renderer.renderInline(node, 0)).toEqual(
       "![my image](https://example.com)"
+    );
+  });
+
+  it("renders emojis", () => {
+    const node: EmojiNode = {
+      "object": "inline",
+      "type": "emoji",
+      "isVoid": true,
+      "data": {
+          "code": "1f510"
+      },
+      "nodes": [
+          {
+              "object": "text",
+              "leaves": [
+                  {
+                      "object": "leaf",
+                      "text": "",
+                      "marks": [],
+                      "selections": []
+                  }
+              ]
+          }
+      ]
+  }
+    const renderer = new MarkdownRenderer(FilesInitializer, defaultSpaceContentTestInitializer);
+    expect(renderer.renderInline(node, 0)).toEqual(
+      "🔐 "
     );
   });
 
@@ -289,7 +398,7 @@ describe("renderLeaf()", () => {
   let renderer: MarkdownRenderer;
 
   beforeEach(() => {
-    renderer = new MarkdownRenderer();
+    renderer = new MarkdownRenderer(FilesInitializer, defaultSpaceContentTestInitializer);
   });
 
   it("renders plain text", () => {

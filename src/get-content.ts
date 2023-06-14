@@ -20,8 +20,14 @@ const getContent = async () => {
     await fs.mkdir(`data`);
   } catch (error) { }
 
+  let gitbookSpacesUrl = `https://api.gitbook.com/v1/orgs/${orgId}/spaces`;
+  if (orgId === "personal") {
+    // pulls spaces for the user who owns the API Token
+    gitbookSpacesUrl = "https://api.gitbook.com/v1/user/spaces";
+  }
+
   const spaces = await axios.get(
-    `https://api.gitbook.com/v1/orgs/${orgId}/spaces`,
+    gitbookSpacesUrl,
     config
   );
 
