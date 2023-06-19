@@ -13,7 +13,7 @@ if (process.argv.length < 2) {
   process.exit(1);
 }
 
-const spaceName: string = process.argv[2];
+const spaceNameArg: string = process.argv[2];
 
 type GitbookFile = {
   id: string;
@@ -53,6 +53,7 @@ const readDir = async (
 };
 
 const parsePages = async (spaceName: string) => {
+  console.log(`[*] Parsing started for ${spaceName}...`);
   const spaceContent: SpaceContent = JSON.parse(
     await fs.readFile(`data/${spaceName}/content.json`, "utf8")
   );
@@ -61,4 +62,4 @@ const parsePages = async (spaceName: string) => {
   await readDir(`data/${spaceName}`, fileURLs, spaceContent);
 };
 
-parsePages(spaceName).then(() => console.log("Done"));
+parsePages(spaceNameArg).then(() => console.log("Done"));
