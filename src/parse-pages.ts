@@ -58,7 +58,6 @@ const parsePages = async (spaceName: string) => {
     await fs.readFile(`data/${spaceName}/content.json`, "utf8")
   );
   const fileURLs = buildFilesLookup(spaceContent.files);
-
   await readDir(`data/${spaceName}`, fileURLs, spaceContent);
 };
 

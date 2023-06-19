@@ -16,8 +16,10 @@ type BlockNode = Node & {
 
 type ImageBlockNode = BlockNode & {
   type: "image";
+  isVoid: boolean;
   data: {
     ref: {
+      kind: "file";
       file: string;
     };
   };
@@ -248,6 +250,8 @@ class MarkdownRenderer {
     } else if (isImageBlockNode(node)) {
       const fileId = node.data.ref.file;
       const filename = this.files[fileId];
+      // const fileInfo = this.findFileInfoFromGitbookFileRef(this.spaceContent.files, fileId)
+      // const filename = fileInfo?.name;
       block = `![${getChildren().trim()}](files/${filename})\n\n`;
     } else if (isFileBlockNode(node)) {
       const fileId = node.data.ref.file;
@@ -328,15 +332,8 @@ class MarkdownRenderer {
       return `[${text}](${url}${linkTitle})`;
     } else if (isImageFileNode(node)) {
       const imageRef = node.data.ref.file;
-      // TODO: go find the image file data!
-      const fileInfo = this.findFileInfoFromGitbookFileRef(
-        this.spaceContent.files,
-        imageRef
-      );
-      if (fileInfo) {
-        return `![download: ${fileInfo.downloadURL}](${fileInfo.name} "${fileInfo.id}")`;
-      }
-      return `![unknown-image-file.${imageRef}]()`;
+      const output = this.renderImageFile(imageRef);
+      return output;
     } else if (isImageLinkNode(node)) {
       const text = node.data.caption;
       const url = node.data.ref.url;
@@ -412,6 +409,18 @@ class MarkdownRenderer {
     return null;
   }
 
+  renderImageFile(imageRef: string) {
+    // TODO: this ignores existing captions
+    const fileInfo = this.findFileInfoFromGitbookFileRef(
+      this.spaceContent.files,
+      imageRef
+    );
+    if (fileInfo) {
+      return `![download: ${fileInfo.downloadURL}](${fileInfo.name} "${fileInfo.id}")`;
+    }
+    return `![unknown-image-file.${imageRef}]()`;
+  }
+
   findFileInfoFromGitbookFileRef(
     files: SpaceContentFile[],
     fileRef: string
@@ -427,6 +436,7 @@ class MarkdownRenderer {
 export type {
   Node,
   BlockNode,
+  ImageBlockNode,
   InlineNode,
   LinkNode,
   gitbookLinkNode,

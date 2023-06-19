@@ -2,6 +2,7 @@ import { promises as fs } from "fs";
 import MarkdownRenderer from "./MarkdownRenderer";
 import type {
   BlockNode,
+  ImageBlockNode,
   InlineNode,
   LinkNode,
   gitbookLinkNode,
@@ -221,6 +222,37 @@ describe("renderBlock()", () => {
     );
   });
 
+  it("renders an image block with file metadata from Space", () => {
+    const localSpaceContent: SpaceContent = JSON.parse(
+      JSON.stringify(defaultSpaceContentTestInitializer)
+    );
+    localSpaceContent.files = [
+      {
+        id: "-MC0GpDJ0v0g6fZ7qshj",
+        name: "image.png",
+        downloadURL:
+          "https://files.gitbook.com/v0/b/gitbook-legacy-files/o/assets%2F-M8N-2NuR5V0ryoqtTWk%2F-MC0GoHeyr3P9glwOxk7%2F-MC0GpDJ0v0g6fZ7qshj%2Fimage.png?alt=media&token=5246ece1-816a-4432-b066-0f6709b06b4f",
+        contentType: "image/png",
+      },
+    ];
+    const localFilesLookup = {
+      "-MC0GpDJ0v0g6fZ7qshj": "image.png",
+    };
+    const node: ImageBlockNode = {
+      object: "block",
+      type: "image",
+      isVoid: true,
+      data: {
+        ref: {
+          kind: "file",
+          file: "-MC0GpDJ0v0g6fZ7qshj",
+        },
+      },
+    };
+    renderer = new MarkdownRenderer(localFilesLookup, localSpaceContent);
+    expect(renderer.renderBlock(node, 0)).toEqual("![](files/image.png)\n\n");
+  });
+
   it("renders a block quote", () => {
     const node: BlockNode = {
       object: "block",
@@ -406,7 +438,7 @@ describe("renderInline()", () => {
       ],
     };
 
-    const spaceContent: SpaceContent = {
+    const localSpaceContent: SpaceContent = {
       object: "revision",
       id: "qCxFzUy2hI6unJ3GmG4Y",
       parents: ["6GqIbuAopAEOTYSG9sQZ", "no294apqgYMSpghDgOHp"],
@@ -435,7 +467,7 @@ describe("renderInline()", () => {
       ],
     };
 
-    const renderer = new MarkdownRenderer(FilesInitializer, spaceContent);
+    const renderer = new MarkdownRenderer(FilesInitializer, localSpaceContent);
     expect(renderer.renderInline(node, 0)).toEqual(
       `[**installing**](/getting-started/install "Install Title")`
     );
@@ -510,10 +542,10 @@ describe("renderInline()", () => {
   });
 
   it("renders inline file images with info in Space", () => {
-    const spaceContent: SpaceContent = JSON.parse(
+    const localSpaceContent: SpaceContent = JSON.parse(
       JSON.stringify(defaultSpaceContentTestInitializer)
     );
-    spaceContent.files = [
+    localSpaceContent.files = [
       {
         id: "-MC0GpDJ0v0g6fZ7qshj",
         name: "image.png",
@@ -546,7 +578,7 @@ describe("renderInline()", () => {
         },
       ],
     };
-    const renderer = new MarkdownRenderer(FilesInitializer, spaceContent);
+    const renderer = new MarkdownRenderer(FilesInitializer, localSpaceContent);
     expect(renderer.renderInline(node, 0)).toEqual(
       '![download: https://files.gitbook.com/v0/b/gitbook-legacy-files/o/assets%2F-M8N-2NuR5V0ryoqtTWk%2F-MC0GoHeyr3P9glwOxk7%2F-MC0GpDJ0v0g6fZ7qshj%2Fimage.png?alt=media&token=5246ece1-816a-4432-b066-0f6709b06b4f](image.png "-MC0GpDJ0v0g6fZ7qshj")'
     );
