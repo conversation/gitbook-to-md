@@ -50,7 +50,7 @@ type LinkNode = InlineNode & {
 
 type gitbookLinkNode = InlineNode & {
   type: "link";
-  data: { ref: { kind: "page" | "anchor"; page: string, anchor?: string } };
+  data: { ref: { kind: "page" | "anchor"; page: string; anchor?: string } };
 };
 
 // two types: link image, or file in GitBook.
@@ -134,7 +134,10 @@ function isLinkNode(node: InlineNode): node is LinkNode {
 }
 
 function isGitbookLinkNode(node: InlineNode): node is gitbookLinkNode {
-  return node.type === "link" && ["page", "anchor"].includes(node.data?.ref?.kind || '');
+  return (
+    node.type === "link" &&
+    ["page", "anchor"].includes(node.data?.ref?.kind || "")
+  );
 }
 
 function isImageLinkNode(node: InlineNode): node is ImageLinkNode {
@@ -252,7 +255,7 @@ class MarkdownRenderer {
       block = `[${getChildren().trim()}](files/${filename})\n\n`;
     } else if (node.type == "code") {
       block += "```";
-      if (node.data) block += node.data?.syntax || '';
+      if (node.data) block += node.data?.syntax || "";
       block += "\n";
       block += getChildren();
       block += "```\n\n";
@@ -269,9 +272,21 @@ class MarkdownRenderer {
       if (children.slice(children.length - 2, children.length) === "\n\n") {
         children = children.slice(0, children.length - 2);
       }
+
+      // https://docs.gitbook.com/content-creation/blocks/hint
+      const hintStyleToEmoji: Record<string, string> = {
+        info: "⏹",
+        success: "✅",
+        warning: "⚠️",
+        danger: "🚩",
+      };
+      const styleKey = node.data?.style || "info";
+      const symbolReplacementPrefix = hintStyleToEmoji[styleKey] + " ";
       block = children
         .split("\n")
-        .map((line) => `> ${line}\n`)
+        .map(
+          (line, i) => `> ${i === 0 ? symbolReplacementPrefix : ""}${line}\n`
+        )
         .join("");
       // add the newline back at the end, so that it pushes the next markdown block away.
       block += "\n";
@@ -293,7 +308,7 @@ class MarkdownRenderer {
       let linkTitle = "";
       if (isGitbookLinkNode(node)) {
         const pageRef = node.data.ref.page;
-        const anchor = node.data.ref.anchor ? `#${node.data.ref.anchor}`: '';
+        const anchor = node.data.ref.anchor ? `#${node.data.ref.anchor}` : "";
         // this ID can be tied back to a page slug and more using the `content.json` file
         url = pageRef;
         const pageInfo = this.findPageInfoFromGitbookPageRef(
@@ -305,7 +320,7 @@ class MarkdownRenderer {
           linkTitle = ` "${pageInfo.title}"`;
         }
         // still add the anchor, since it's useful even without full page info
-        url = `${url}${anchor}`
+        url = `${url}${anchor}`;
       } else {
         url = node.data.ref.url;
         linkTitle = "";

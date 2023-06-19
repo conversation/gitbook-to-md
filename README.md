@@ -19,7 +19,11 @@ npm run gitbook-to-md -- [page.json]
 
 ## GitBook Hints
 
-Hints _(aka 'call-outs' or 'admonitions')_ are not natively supported in Markdown. For now, they are rendered as a block quote.
+[GitBook Hints](https://docs.gitbook.com/content-creation/blocks/hint) _(aka ['call-outs'](https://docs.readme.com/rdmd/docs/callouts) or ['admonitions'](https://squidfunk.github.io/mkdocs-material/reference/admonitions/))_ are not natively supported in Markdown. For now, they are rendered as a block quote with an emoji, e.g.:
+
+> ⏹️ An informational hint
+
+
 
 ## Images in GitBook
 

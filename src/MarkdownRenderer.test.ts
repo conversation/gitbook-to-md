@@ -277,7 +277,7 @@ describe("renderBlock()", () => {
     // it renders with 2 extra newlines which end up harmless, not worth diggin for now. Hack in place in renderBlock()
     // - Culprit is at the `(node.type == "paragraph") {` section adding extra \n's.
     expect(renderer.renderBlock(node, 0)).toEqual(
-      "> An important hint callout block for user information. Continued text.\n> With a newline.\n\n"
+      "> ⏹ An important hint callout block for user information. Continued text.\n> With a newline.\n\n"
     );
   });
 
@@ -443,11 +443,11 @@ describe("renderInline()", () => {
     // also anchor type
     node.data = {
       ref: {
-          kind: "anchor",
-          anchor: "list-of-ids",
-          page: "-M9UwQjn8e1kKADwPrrF"
-      }
-  }
+        kind: "anchor",
+        anchor: "list-of-ids",
+        page: "-M9UwQjn8e1kKADwPrrF",
+      },
+    };
     expect(renderer.renderInline(node, 0)).toEqual(
       `[**installing**](/getting-started/install#list-of-ids "Install Title")`
     );
