@@ -22,6 +22,24 @@ npm run download-files -- [space name]
 npm run gitbook-to-md -- [Space Name] [data/space-name/subfolder/page.json]
 ```
 
+### Copying files with directory structure
+
+If you want to copy over your Markdown files while retaining the directory structure, here's a short script you can use:
+
+```bash
+set -x
+
+space_name="$1"
+orig_path="./data/${space_name}"
+# has to be relative to the orig path
+dest="../../../my-mkdocs-repo/docs/${space_name}"
+
+echo "Copying .md from ${orig_path} to ${dest}.."
+# without cd, it copies the orig path parent dirs as well, when I had wanted it to start from that folder
+cd "${orig_path}"
+find . -name '*.md' -exec cp --parents \{\} "${dest}" \;
+```
+
 ## GitBook Hints
 
 [GitBook Hints](https://docs.gitbook.com/content-creation/blocks/hint) _(aka ['call-outs'](https://docs.readme.com/rdmd/docs/callouts) or ['admonitions'](https://squidfunk.github.io/mkdocs-material/reference/admonitions/))_ are not natively supported in Markdown. For now, they are rendered as a block quote with an emoji, e.g.:
