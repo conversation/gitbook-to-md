@@ -1,3 +1,5 @@
+import { isNullUndefinedOrEmptyString } from "./utils.js";
+
 type Node = {
   object: string;
   nodes?: Array<Node | BlockNode | InlineNode | LeafNode>;
@@ -249,10 +251,17 @@ class MarkdownRenderer {
       block += getChildren();
     } else if (isImageBlockNode(node)) {
       const fileId = node.data.ref.file;
-      const filename = this.files[fileId];
-      // const fileInfo = this.findFileInfoFromGitbookFileRef(this.spaceContent.files, fileId)
-      // const filename = fileInfo?.name;
-      block = `![${getChildren().trim()}](files/${filename})\n\n`;
+      const fileInfo = this.findFileInfoFromGitbookFileRef(
+        this.spaceContent.files,
+        fileId
+      );
+      const filename = fileInfo?.name || "unknown-file";
+      const filesRef = `files/${fileInfo?.id}.${filename}`;
+      let captionAltText = getChildren().trim();
+      captionAltText = isNullUndefinedOrEmptyString(captionAltText)
+        ? filename
+        : captionAltText;
+      block = `![${captionAltText}](${filesRef} "${fileInfo?.downloadURL}")\n\n`;
     } else if (isFileBlockNode(node)) {
       const fileId = node.data.ref.file;
       const filename = this.files[fileId];
@@ -416,9 +425,9 @@ class MarkdownRenderer {
       imageRef
     );
     if (fileInfo) {
-      return `![download: ${fileInfo.downloadURL}](${fileInfo.name} "${fileInfo.id}")`;
+      return `![${fileInfo.id}](${fileInfo.name} "${fileInfo.downloadURL}")`;
     }
-    return `![unknown-image-file.${imageRef}]()`;
+    return `![unknown-file.${imageRef}]()`;
   }
 
   findFileInfoFromGitbookFileRef(

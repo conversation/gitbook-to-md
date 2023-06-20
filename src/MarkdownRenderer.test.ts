@@ -77,15 +77,26 @@ describe("render", () => {
 
   it("renders images", async () => {
     const files = { VlKCZMuShVzkE0pdnffR: "my-image.png" };
-    const renderer = new MarkdownRenderer(
-      files,
-      defaultSpaceContentTestInitializer
+    const localSpaceContent: SpaceContent = JSON.parse(
+      JSON.stringify(defaultSpaceContentTestInitializer)
     );
+    localSpaceContent.files = [
+      {
+        id: "VlKCZMuShVzkE0pdnffR",
+        name: "image.png",
+        downloadURL:
+          "https://files.gitbook.com/v0/b/gitbook-legacy-files/o/assets%2F-M8N-2NuR5V0ryoqtTWk%2F-MC0GoHeyr3P9glwOxk7%2FVlKCZMuShVzkE0pdnffR%2Fmy-image.png?alt=media&token=5246ece1-816a-4432-b066-0f6709b06b4f",
+        contentType: "image/png",
+      },
+    ];
+    const renderer = new MarkdownRenderer(files, localSpaceContent);
     const json = await fs.readFile("fixtures/images.json", "utf8");
     const node = JSON.parse(json).document;
     const result: string = renderer.render(node);
 
-    expect(result).toEqual("![This is a caption](files/my-image.png)\n\n");
+    expect(result).toEqual(
+      '![This is a caption](files/VlKCZMuShVzkE0pdnffR.image.png "https://files.gitbook.com/v0/b/gitbook-legacy-files/o/assets%2F-M8N-2NuR5V0ryoqtTWk%2F-MC0GoHeyr3P9glwOxk7%2FVlKCZMuShVzkE0pdnffR%2Fmy-image.png?alt=media&token=5246ece1-816a-4432-b066-0f6709b06b4f")\n\n'
+    );
   });
 
   it("renders files", async () => {
@@ -250,7 +261,9 @@ describe("renderBlock()", () => {
       },
     };
     renderer = new MarkdownRenderer(localFilesLookup, localSpaceContent);
-    expect(renderer.renderBlock(node, 0)).toEqual("![](files/image.png)\n\n");
+    expect(renderer.renderBlock(node, 0)).toEqual(
+      '![image.png](files/-MC0GpDJ0v0g6fZ7qshj.image.png "https://files.gitbook.com/v0/b/gitbook-legacy-files/o/assets%2F-M8N-2NuR5V0ryoqtTWk%2F-MC0GoHeyr3P9glwOxk7%2F-MC0GpDJ0v0g6fZ7qshj%2Fimage.png?alt=media&token=5246ece1-816a-4432-b066-0f6709b06b4f")\n\n'
+    );
   });
 
   it("renders a block quote", () => {
@@ -537,7 +550,7 @@ describe("renderInline()", () => {
       defaultSpaceContentTestInitializer
     );
     expect(renderer.renderInline(node, 0)).toEqual(
-      "![unknown-image-file.-M9ar8a0oxijwIvaQYA4]()"
+      "![unknown-file.-M9ar8a0oxijwIvaQYA4]()"
     );
   });
 
@@ -580,7 +593,7 @@ describe("renderInline()", () => {
     };
     const renderer = new MarkdownRenderer(FilesInitializer, localSpaceContent);
     expect(renderer.renderInline(node, 0)).toEqual(
-      '![download: https://files.gitbook.com/v0/b/gitbook-legacy-files/o/assets%2F-M8N-2NuR5V0ryoqtTWk%2F-MC0GoHeyr3P9glwOxk7%2F-MC0GpDJ0v0g6fZ7qshj%2Fimage.png?alt=media&token=5246ece1-816a-4432-b066-0f6709b06b4f](image.png "-MC0GpDJ0v0g6fZ7qshj")'
+      '![-MC0GpDJ0v0g6fZ7qshj](image.png "https://files.gitbook.com/v0/b/gitbook-legacy-files/o/assets%2F-M8N-2NuR5V0ryoqtTWk%2F-MC0GoHeyr3P9glwOxk7%2F-MC0GpDJ0v0g6fZ7qshj%2Fimage.png?alt=media&token=5246ece1-816a-4432-b066-0f6709b06b4f")'
     );
   });
 

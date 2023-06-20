@@ -9,7 +9,16 @@ export default {
 
   // The root directory that Jest should scan for tests and modules within
   rootDir: "src",
-
+  // Getting it to make utils import work both for jest & compiled
+  extensionsToTreatAsEsm: ['.ts'],
+  globals: {
+    'ts-jest': {
+      useESM: true,
+    },
+  },
+  moduleNameMapper: {
+    '^(\\.{1,2}/.*)\\.js$': '$1',
+  },
   // Typescript config
   preset: 'ts-jest',
   transform: {

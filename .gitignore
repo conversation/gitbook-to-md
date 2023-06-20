@@ -2,4 +2,8 @@ node_modules/
 built/
 data/
 .env
+*.png
+*.jpg
+*.tif
+*.gif
 

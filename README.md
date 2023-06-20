@@ -14,6 +14,9 @@ npm run parse-pages -- [space name]
 
 # See documents in data/*
 
+# Images/Files - Download them all in one go
+npm run download-files -- [space name]
+
 # OR
 # Parse a single page
 npm run gitbook-to-md -- [Space Name] [data/space-name/subfolder/page.json]
@@ -32,6 +35,25 @@ If the image information is available in the GitBook Spaces API response (under 
 _Why not just set the download URL as the image link?_
 
 We don't want users migrating away from GitBook to get a false sense of security and forget to find a new host for their images. It would be very easy to let the GitBook CDN _"just work"_ for a while, serving the images happily and making the migration look finished -- until the day it doesn't because GB deleted them💥.
+
+Example of image Markdown:
+
+```bash
+# we use the Markdown `title` section to add the download url as well as local image path & retain the caption
+![this is a caption](files/-MGNEGkbb3zWb-CgpWVS.my-image.png "https://files.gitbook.com/v0/b/gitbook-legacy-files/o/assets%2F-M9QNJLU2f5V-QClWeyJ%2F-MGNDIT-xVrbs3pSkW6r%2F-MGNEGkbb3zWb-CgpWVS%2Fmy-image.png?alt=media&token=7879f2b5-9174-4847-a129-11e88ff2dc25")
+```
+
+### Download Script
+
+There is a separate script that will download all the listed files for a Space.
+
+```bash
+npm run download-files -- [space name]
+
+# files are then available at data/{space name}/files/{image ID}.{file name}.{extension}
+```
+
+> ⏹️ _Images are saved with their `ID` as part of the filename, so duplicate image names should be handled._
 
 ## Contributions
 

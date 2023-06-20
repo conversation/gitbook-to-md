@@ -11,7 +11,8 @@
     "get-pages": "node built/get-pages.js",
     "get-files": "node built/get-files.js",
     "parse-pages": "node built/parse-pages.js",
-    "gitbook-to-md": "node built/gitbook-to-md.js"
+    "gitbook-to-md": "node built/gitbook-to-md.js",
+    "download-files": "node built/download-files.js"
   },
   "dependencies": {
     "axios": "^0.27.2",
