@@ -593,7 +593,7 @@ describe("renderInline()", () => {
     };
     const renderer = new MarkdownRenderer(FilesInitializer, localSpaceContent);
     expect(renderer.renderInline(node, 0)).toEqual(
-      '![-MC0GpDJ0v0g6fZ7qshj](image.png "https://files.gitbook.com/v0/b/gitbook-legacy-files/o/assets%2F-M8N-2NuR5V0ryoqtTWk%2F-MC0GoHeyr3P9glwOxk7%2F-MC0GpDJ0v0g6fZ7qshj%2Fimage.png?alt=media&token=5246ece1-816a-4432-b066-0f6709b06b4f")'
+      '![image.png](files/-MC0GpDJ0v0g6fZ7qshj.image.png "https://files.gitbook.com/v0/b/gitbook-legacy-files/o/assets%2F-M8N-2NuR5V0ryoqtTWk%2F-MC0GoHeyr3P9glwOxk7%2F-MC0GpDJ0v0g6fZ7qshj%2Fimage.png?alt=media&token=5246ece1-816a-4432-b066-0f6709b06b4f")'
     );
   });
 

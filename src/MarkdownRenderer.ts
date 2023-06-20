@@ -251,17 +251,9 @@ class MarkdownRenderer {
       block += getChildren();
     } else if (isImageBlockNode(node)) {
       const fileId = node.data.ref.file;
-      const fileInfo = this.findFileInfoFromGitbookFileRef(
-        this.spaceContent.files,
-        fileId
-      );
-      const filename = fileInfo?.name || "unknown-file";
-      const filesRef = `files/${fileInfo?.id}.${filename}`;
       let captionAltText = getChildren().trim();
-      captionAltText = isNullUndefinedOrEmptyString(captionAltText)
-        ? filename
-        : captionAltText;
-      block = `![${captionAltText}](${filesRef} "${fileInfo?.downloadURL}")\n\n`;
+      block = this.renderImageFile(fileId, captionAltText);
+      block += "\n\n";
     } else if (isFileBlockNode(node)) {
       const fileId = node.data.ref.file;
       const filename = this.files[fileId];
@@ -341,8 +333,8 @@ class MarkdownRenderer {
       return `[${text}](${url}${linkTitle})`;
     } else if (isImageFileNode(node)) {
       const imageRef = node.data.ref.file;
-      const output = this.renderImageFile(imageRef);
-      return output;
+      const captionAltText = this.renderChildren(node, depth);
+      return this.renderImageFile(imageRef, captionAltText);
     } else if (isImageLinkNode(node)) {
       const text = node.data.caption;
       const url = node.data.ref.url;
@@ -418,16 +410,21 @@ class MarkdownRenderer {
     return null;
   }
 
-  renderImageFile(imageRef: string) {
+  renderImageFile(imageRefID: string, captionAltText: string = "") {
     // TODO: this ignores existing captions
     const fileInfo = this.findFileInfoFromGitbookFileRef(
       this.spaceContent.files,
-      imageRef
+      imageRefID
     );
+    const filename = fileInfo?.name || "unknown-file";
+    const filesRef = `files/${fileInfo?.id}.${filename}`;
+    captionAltText = isNullUndefinedOrEmptyString(captionAltText)
+      ? filename
+      : captionAltText;
     if (fileInfo) {
-      return `![${fileInfo.id}](${fileInfo.name} "${fileInfo.downloadURL}")`;
+      return `![${captionAltText}](${filesRef} "${fileInfo?.downloadURL}")`;
     }
-    return `![unknown-file.${imageRef}]()`;
+    return `![unknown-file.${imageRefID}]()`;
   }
 
   findFileInfoFromGitbookFileRef(
