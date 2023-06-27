@@ -115,6 +115,7 @@ type SpaceContentPage = {
   slug?: string;
   pages?: SpaceContentPage[];
   href?: string;
+  document?: Node;
 };
 
 // TODO: this is likely a duplicate of existing File type
