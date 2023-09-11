@@ -264,10 +264,29 @@
                                 "marks": [],
                                 "object": "leaf",
                                 "selections": [],
-                                "text": "This has some interesting challenges when designing, building and deploying our software. "
+                                "text": "This has some interesting challenges when designing, building and deploying our software. Namely: "
                             }
                         ],
                         "object": "text"
+                    },
+                    {
+                      "object": "inline",
+                      "type": "inline-math",
+                      "isVoid": true,
+                      "data": { "formula": "E = m * c^{2}" },
+                      "nodes": [
+                        {
+                          "object": "text",
+                          "leaves": [
+                            {
+                              "object": "leaf",
+                              "text": "",
+                              "marks": [],
+                              "selections": []
+                            }
+                          ]
+                        }
+                      ]
                     }
                 ],
                 "object": "block",

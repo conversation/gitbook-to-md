@@ -88,6 +88,13 @@ type EmojiNode = InlineNode & {
   };
 };
 
+type MathNode = InlineNode & {
+  type: "inline-math";
+  data: {
+    formula: string;
+  };
+};
+
 type Mark = {
   object: "mark";
   type: "bold" | "italic" | "code";
@@ -155,6 +162,9 @@ function isImageFileNode(node: InlineNode): node is ImageFileNode {
 
 function isEmojiNode(node: InlineNode): node is EmojiNode {
   return node.type === "emoji";
+}
+function isMathNode(node: InlineNode): node is MathNode {
+  return node.type === "inline-math";
 }
 function isImageBlockNode(node: BlockNode): node is ImageBlockNode {
   return node.type === "image";
@@ -344,6 +354,8 @@ class MarkdownRenderer {
       const unicode_hex_code_point = node.data.code;
       const hex_val = Number(`0x${unicode_hex_code_point}`);
       return `${String.fromCodePoint(hex_val)} `;
+    } else if (isMathNode(node)) {
+      return `$$${node.data.formula}$$`;
     } else {
       throw `Unknown inline type: ${node.type}`;
     }
