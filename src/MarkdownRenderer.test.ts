@@ -41,7 +41,7 @@ describe("render", () => {
       FilesInitializer,
       defaultSpaceContentTestInitializer
     );
-    const output: string = renderer.render(doc);
+    const output: string = await renderer.render(doc);
 
     expect(output).toEqual(expectedMd);
   });
@@ -53,7 +53,7 @@ describe("render", () => {
     );
     const json = await fs.readFile("fixtures/nested-list.json", "utf8");
     const node = JSON.parse(json).document;
-    const result: string = renderer.render(node);
+    const result: string = await renderer.render(node);
 
     expect(result).toEqual("- list item\n  - nested item\n\n\n");
   });
@@ -68,7 +68,7 @@ describe("render", () => {
       "utf8"
     );
     const node = JSON.parse(json).document;
-    const result: string = renderer.render(node);
+    const result: string = await renderer.render(node);
 
     expect(result).toEqual(
       "1. One\n  - Nested unordered\n\n2. Two\n  1. Nested ordered\n\n\n"
@@ -92,7 +92,7 @@ describe("render", () => {
     const renderer = new MarkdownRenderer(files, localSpaceContent);
     const json = await fs.readFile("fixtures/images.json", "utf8");
     const node = JSON.parse(json).document;
-    const result: string = renderer.render(node);
+    const result: string = await renderer.render(node);
 
     expect(result).toEqual(
       '![This is a caption](files/VlKCZMuShVzkE0pdnffR.image.png "https://files.gitbook.com/v0/b/gitbook-legacy-files/o/assets%2F-M8N-2NuR5V0ryoqtTWk%2F-MC0GoHeyr3P9glwOxk7%2FVlKCZMuShVzkE0pdnffR%2Fmy-image.png?alt=media&token=5246ece1-816a-4432-b066-0f6709b06b4f")\n\n'
@@ -107,7 +107,7 @@ describe("render", () => {
     );
     const json = await fs.readFile("fixtures/files.json", "utf8");
     const node = JSON.parse(json).document;
-    const result: string = renderer.render(node);
+    const result: string = await renderer.render(node);
 
     expect(result).toEqual("[This is a file](files/my-file.txt)\n\n");
   });
@@ -123,7 +123,7 @@ describe("renderBlock()", () => {
     );
   });
 
-  it("renders a heading", () => {
+  it("renders a heading", async () => {
     const node: BlockNode = {
       object: "block",
       type: "heading-2",
@@ -132,10 +132,10 @@ describe("renderBlock()", () => {
       ],
     };
 
-    expect(renderer.renderBlock(node, 0)).toEqual("## heading text\n\n");
+    expect(await renderer.renderBlock(node, 0)).toEqual("## heading text\n\n");
   });
 
-  it("renders unordered list items", () => {
+  it("renders unordered list items", async () => {
     const node: BlockNode = {
       object: "block",
       type: "list-unordered",
@@ -179,12 +179,12 @@ describe("renderBlock()", () => {
       ],
     };
 
-    expect(renderer.renderBlock(node, 0)).toEqual(
+    expect(await renderer.renderBlock(node, 0)).toEqual(
       "- list text\n- list text\n\n"
     );
   });
 
-  it("renders ordered list items", () => {
+  it("renders ordered list items", async () => {
     const node: BlockNode = {
       object: "block",
       type: "list-ordered",
@@ -228,12 +228,12 @@ describe("renderBlock()", () => {
       ],
     };
 
-    expect(renderer.renderBlock(node, 0)).toEqual(
+    expect(await renderer.renderBlock(node, 0)).toEqual(
       "1. list text\n2. another item\n\n"
     );
   });
 
-  it("renders an image block with file metadata from Space", () => {
+  it("renders an image block with file metadata from Space", async () => {
     const localSpaceContent: SpaceContent = JSON.parse(
       JSON.stringify(defaultSpaceContentTestInitializer)
     );
@@ -261,12 +261,12 @@ describe("renderBlock()", () => {
       },
     };
     renderer = new MarkdownRenderer(localFilesLookup, localSpaceContent);
-    expect(renderer.renderBlock(node, 0)).toEqual(
+    expect(await renderer.renderBlock(node, 0)).toEqual(
       '![image.png](files/-MC0GpDJ0v0g6fZ7qshj.image.png "https://files.gitbook.com/v0/b/gitbook-legacy-files/o/assets%2F-M8N-2NuR5V0ryoqtTWk%2F-MC0GoHeyr3P9glwOxk7%2F-MC0GpDJ0v0g6fZ7qshj%2Fimage.png?alt=media&token=5246ece1-816a-4432-b066-0f6709b06b4f")\n\n'
     );
   });
 
-  it("renders a block quote", () => {
+  it("renders a block quote", async () => {
     const node: BlockNode = {
       object: "block",
       type: "blockquote",
@@ -276,10 +276,10 @@ describe("renderBlock()", () => {
       ],
     };
 
-    expect(renderer.renderBlock(node, 0)).toEqual("> line one\n> line two\n");
+    expect(await renderer.renderBlock(node, 0)).toEqual("> line one\n> line two\n");
   });
 
-  it("renders a hint", () => {
+  it("renders a hint", async () => {
     const node: BlockNode = {
       object: "block",
       type: "hint",
@@ -321,12 +321,12 @@ describe("renderBlock()", () => {
 
     // it renders with 2 extra newlines which end up harmless, not worth diggin for now. Hack in place in renderBlock()
     // - Culprit is at the `(node.type == "paragraph") {` section adding extra \n's.
-    expect(renderer.renderBlock(node, 0)).toEqual(
+    expect(await renderer.renderBlock(node, 0)).toEqual(
       "> ⏹ An important hint callout block for user information. Continued text.\n> With a newline.\n\n"
     );
   });
 
-  it("renders a code block", () => {
+  it("renders a code block", async () => {
     const node: BlockNode = {
       object: "block",
       type: "code",
@@ -355,18 +355,18 @@ describe("renderBlock()", () => {
       ],
     };
 
-    expect(renderer.renderBlock(node, 0)).toEqual(
+    expect(await renderer.renderBlock(node, 0)).toEqual(
       "```javascript\n// line one\n// line two\n```\n\n"
     );
 
     // also handle if they don't have syntax defined
     node.data = {};
-    expect(renderer.renderBlock(node, 0)).toEqual(
+    expect(await renderer.renderBlock(node, 0)).toEqual(
       "```\n// line one\n// line two\n```\n\n"
     );
   });
 
-  it("renders a paragraph", () => {
+  it("renders a paragraph", async () => {
     const node: BlockNode = {
       object: "block",
       type: "paragraph",
@@ -375,33 +375,35 @@ describe("renderBlock()", () => {
       ],
     };
 
-    expect(renderer.renderBlock(node, 0)).toEqual("my paragraph\n\n");
+    expect(await renderer.renderBlock(node, 0)).toEqual("my paragraph\n\n");
   });
 
-  it("renders an unknown block type", () => {
+  it("renders an unknown block type", async () => {
     const node: BlockNode = {
       object: "block",
       type: "who-knows",
       leaves: [{ marks: [], object: "leaf", selections: [], text: "my text" }],
     };
 
-    expect(renderer.renderBlock(node, 0)).toEqual("my text");
+    expect(await renderer.renderBlock(node, 0)).toEqual("my text");
   });
 });
 
 describe("renderInline()", () => {
-  it("throws an error for unknown inline types", () => {
+  it("throws an error for unknown inline types", async () => {
     const node: InlineNode = { object: "inline", type: "other-inline" };
     const renderer = new MarkdownRenderer(
       FilesInitializer,
       defaultSpaceContentTestInitializer
     );
-    expect(() => renderer.renderInline(node, 0)).toThrowError(
+    renderer.renderInline(node, 0).catch((error) => {
+      expect(error).toBe(
       "Unknown inline type: other-inline"
     );
   });
+  });
 
-  it("renders links", () => {
+  it("renders links", async () => {
     const node: LinkNode = {
       object: "inline",
       type: "link",
@@ -414,12 +416,12 @@ describe("renderInline()", () => {
       FilesInitializer,
       defaultSpaceContentTestInitializer
     );
-    expect(renderer.renderInline(node, 0)).toEqual(
+    expect(await renderer.renderInline(node, 0)).toEqual(
       "[link text](https://example.com)"
     );
   });
 
-  it("renders Gitbook page links", () => {
+  it("renders Gitbook page links", async () => {
     const node: gitbookLinkNode = {
       object: "inline",
       type: "link",
@@ -481,7 +483,7 @@ describe("renderInline()", () => {
     };
 
     const renderer = new MarkdownRenderer(FilesInitializer, localSpaceContent);
-    expect(renderer.renderInline(node, 0)).toEqual(
+    expect(await renderer.renderInline(node, 0)).toEqual(
       `[**installing**](/getting-started/install "Install Title")`
     );
 
@@ -493,12 +495,12 @@ describe("renderInline()", () => {
         page: "-M9UwQjn8e1kKADwPrrF",
       },
     };
-    expect(renderer.renderInline(node, 0)).toEqual(
+    expect(await renderer.renderInline(node, 0)).toEqual(
       `[**installing**](/getting-started/install#list-of-ids "Install Title")`
     );
   });
 
-  it("renders inline link images", () => {
+  it("renders inline link images", async () => {
     const node: ImageLinkNode = {
       object: "inline",
       type: "inline-image",
@@ -515,12 +517,12 @@ describe("renderInline()", () => {
       FilesInitializer,
       defaultSpaceContentTestInitializer
     );
-    expect(renderer.renderInline(node, 0)).toEqual(
+    expect(await renderer.renderInline(node, 0)).toEqual(
       "![my image](https://example.com)"
     );
   });
 
-  it("renders inline file imagess with no info in Space", () => {
+  it("renders inline file imagess with no info in Space", async () => {
     const node: ImageFileNode = {
       object: "inline",
       type: "inline-image",
@@ -549,12 +551,12 @@ describe("renderInline()", () => {
       FilesInitializer,
       defaultSpaceContentTestInitializer
     );
-    expect(renderer.renderInline(node, 0)).toEqual(
+    expect(await renderer.renderInline(node, 0)).toEqual(
       "![unknown-file.-M9ar8a0oxijwIvaQYA4]()"
     );
   });
 
-  it("renders inline file images with info in Space", () => {
+  it("renders inline file images with info in Space", async () => {
     const localSpaceContent: SpaceContent = JSON.parse(
       JSON.stringify(defaultSpaceContentTestInitializer)
     );
@@ -592,12 +594,12 @@ describe("renderInline()", () => {
       ],
     };
     const renderer = new MarkdownRenderer(FilesInitializer, localSpaceContent);
-    expect(renderer.renderInline(node, 0)).toEqual(
+    expect(await renderer.renderInline(node, 0)).toEqual(
       '![image.png](files/-MC0GpDJ0v0g6fZ7qshj.image.png "https://files.gitbook.com/v0/b/gitbook-legacy-files/o/assets%2F-M8N-2NuR5V0ryoqtTWk%2F-MC0GoHeyr3P9glwOxk7%2F-MC0GpDJ0v0g6fZ7qshj%2Fimage.png?alt=media&token=5246ece1-816a-4432-b066-0f6709b06b4f")'
     );
   });
 
-  it("renders emojis", () => {
+  it("renders emojis", async () => {
     const node: EmojiNode = {
       object: "inline",
       type: "emoji",
@@ -623,7 +625,7 @@ describe("renderInline()", () => {
       FilesInitializer,
       defaultSpaceContentTestInitializer
     );
-    expect(renderer.renderInline(node, 0)).toEqual("🔐 ");
+    expect(await renderer.renderInline(node, 0)).toEqual("🔐 ");
   });
 });
 

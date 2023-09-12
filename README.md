@@ -11,6 +11,8 @@ npm run build
 API_TOKEN=xxxx npm run get-content -- [organization id | "personal"]
 API_TOKEN=xxxx npm run get-pages -- [space name]
 npm run parse-pages -- [space name]
+# If you want to have the images embedded in the markdown files, run
+DOWNLOAD_IMAGES=true npm run parse-pages -- [space name]
 
 # See documents in data/*
 
@@ -60,6 +62,10 @@ Example of image Markdown:
 # we use the Markdown `title` section to add the download url as well as local image path & retain the caption
 ![this is a caption](files/-MGNEGkbb3zWb-CgpWVS.my-image.png "https://files.gitbook.com/v0/b/gitbook-legacy-files/o/assets%2F-M9QNJLU2f5V-QClWeyJ%2F-MGNDIT-xVrbs3pSkW6r%2F-MGNEGkbb3zWb-CgpWVS%2Fmy-image.png?alt=media&token=7879f2b5-9174-4847-a129-11e88ff2dc25")
 ```
+
+### Automatically embed images
+
+If running the parse-pages script with the environment variable `DOWNLOAD_IMAGES` set to `true`, the images will be downloaded and automatically embedded as `base64` strings. These will render and can be converted to HTML or other formats using `pandoc`.
 
 ### Download Script
 

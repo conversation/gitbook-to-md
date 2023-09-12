@@ -15,9 +15,10 @@ export default async (
   let output = undefined;
   if (data.kind === "sheet" && data.document) {
     // top level of a page
-    const desc = data?.description ? `\ndescription: ${data.description}`: '';
-    output = `---\ntitle: ${data.title}${desc}\n---\n\n`
-    output += renderer.render(data.document);
+    const desc = data?.description ? `\ndescription: ${data.description.replace(/:/g, " -")}`: '';
+    const create = `\ncreate: ${new Date().toISOString()}`;
+    output = `---\ntitle: ${data.title.replace(/:/g, " -")}${desc}${create}\n---\n\n`
+    output += await renderer.render(data.document);
   }
 
   return output;

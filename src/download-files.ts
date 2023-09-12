@@ -1,12 +1,9 @@
-import { promises as pfs, existsSync, mkdirSync, createWriteStream } from "fs";
-import { Readable } from "stream";
-import { ReadableStream } from "stream/web";
-import { finished } from "stream/promises";
+import { promises as pfs, existsSync, mkdirSync } from "fs";
 import type {
-  Files,
   SpaceContent,
-  SpaceContentFile,
 } from "./MarkdownRenderer.js";
+import axios from "axios";
+import { writeFileSync } from "fs";
 
 if (process.argv.length < 2) {
   console.error("Usage: npm run download-files -- [space name]");
@@ -16,12 +13,8 @@ if (process.argv.length < 2) {
 const spaceNameArg: string = process.argv[2];
 
 const download = async (imageUrl: string, filePath: string) => {
-  const stream = createWriteStream(filePath);
-  const { body } = await fetch(imageUrl);
-  if (body === null) {
-    throw Error("Body was null!");
-  }
-  await finished(Readable.fromWeb(body as ReadableStream).pipe(stream));
+  const download = await axios.get(imageUrl);
+  writeFileSync(download.data, filePath);
 };
 
 const main = async () => {
