@@ -1,0 +1,20 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Parse Pages",
+      "skipFiles": ["<node_internals>/**"],
+      "args": ["${workspaceFolder}/src/parse-pages.ts", "<space>"],
+      "runtimeArgs": ["-r", "ts-node/register", "--loader", "ts-node/esm"],
+      "env": {
+        "API_TOKEN": "<token>",
+        "DOWNLOAD_IMAGES": "true"
+      }
+    }
+  ]
+}
