@@ -1,3 +1,5 @@
+import { isNullUndefinedOrEmptyString } from "./utils.js";
+
 type Node = {
   object: string;
   nodes?: Array<Node | BlockNode | InlineNode | LeafNode>;
@@ -9,31 +11,40 @@ type BlockNode = Node & {
   object: "block";
   type: string;
   data?: {
-    syntax: string,
+    syntax?: string;
+    style?: string;
   };
 };
 
 type ImageBlockNode = BlockNode & {
-  type: "image",
+  type: "image";
+  isVoid: boolean;
   data: {
     ref: {
-      file: string,
-    },
+      kind: "file";
+      file: string;
+    };
   };
 };
 
 type FileBlockNode = BlockNode & {
-  type: "file",
+  type: "file";
   data: {
     ref: {
-      file: string,
-    },
+      file: string;
+    };
   };
 };
 
 type InlineNode = Node & {
   object: "inline";
   type: string;
+  isVoid?: boolean;
+  data?: {
+    ref?: {
+      kind?: string;
+    };
+  };
 };
 
 type LinkNode = InlineNode & {
@@ -41,20 +52,46 @@ type LinkNode = InlineNode & {
   data: { ref: { url: string } };
 };
 
-type ImageNode = InlineNode & {
+type gitbookLinkNode = InlineNode & {
+  type: "link";
+  data: { ref: { kind: "page" | "anchor"; page: string; anchor?: string } };
+};
+
+// two types: link image, or file in GitBook.
+// Might make sense to split
+type ImageLinkNode = InlineNode & {
   type: "inline-image";
   data: {
-    caption: string,
+    caption: string;
     ref: {
-      url: string
-    },
-    size: string,
+      url: string;
+    };
+    size: string;
+  };
+};
+
+type ImageFileNode = InlineNode & {
+  type: "inline-image";
+  data: {
+    ref: {
+      kind: string;
+      file: string;
+    };
+    size: string;
+  };
+};
+
+type EmojiNode = InlineNode & {
+  type: "emoji";
+  data: {
+    code: string;
   };
 };
 
 type Mark = {
   object: "mark";
   type: "bold" | "italic" | "code";
+  data?: {};
 };
 
 type LeafNode = Node & {
@@ -68,11 +105,56 @@ type Files = {
   [id: string]: string;
 };
 
+type SpaceContentPage = {
+  id: string;
+  title: string;
+  kind: "sheet" | "group" | "link";
+  type: "group" | "document" | "link";
+  description?: string;
+  path?: string;
+  slug?: string;
+  pages?: SpaceContentPage[];
+  href?: string;
+  document?: Node;
+};
+
+// TODO: this is likely a duplicate of existing File type
+type SpaceContentFile = {
+  id: string;
+  name: string;
+  downloadURL: string;
+  contentType: string;
+};
+
+type SpaceContent = {
+  object: string;
+  id: string;
+  parents: string[];
+  pages: SpaceContentPage[];
+  files: SpaceContentFile[];
+};
+
 function isLinkNode(node: InlineNode): node is LinkNode {
   return node.type === "link";
 }
-function isImageNode(node: InlineNode): node is ImageNode {
+
+function isGitbookLinkNode(node: InlineNode): node is gitbookLinkNode {
+  return (
+    node.type === "link" &&
+    ["page", "anchor"].includes(node.data?.ref?.kind || "")
+  );
+}
+
+function isImageLinkNode(node: InlineNode): node is ImageLinkNode {
   return node.type === "inline-image";
+}
+
+function isImageFileNode(node: InlineNode): node is ImageFileNode {
+  return node.type === "inline-image" && node.data?.ref?.kind == "file";
+}
+
+function isEmojiNode(node: InlineNode): node is EmojiNode {
+  return node.type === "emoji";
 }
 function isImageBlockNode(node: BlockNode): node is ImageBlockNode {
   return node.type === "image";
@@ -83,11 +165,13 @@ function isFileBlockNode(node: BlockNode): node is FileBlockNode {
 
 class MarkdownRenderer {
   files: Files;
+  spaceContent: SpaceContent;
   listCount: number[];
   listType: ("list-unordered" | "list-ordered")[];
 
-  constructor(files: Files = {}) {
+  constructor(files: Files = {}, spaceContent: SpaceContent) {
     this.files = files;
+    this.spaceContent = spaceContent;
     this.listCount = [];
     this.listType = [];
   }
@@ -143,11 +227,9 @@ class MarkdownRenderer {
       const headingLevel = parseInt(node.type.split("-").pop() || "2");
       const headingMark = "#".repeat(headingLevel);
       block = `${headingMark} ${getChildren()}\n\n`;
-
     } else if (node.type == "paragraph") {
       block = getChildren() + "\n";
       if (this.listCount.length == 0) block += "\n";
-
     } else if (node.type == "list-unordered" || node.type == "list-ordered") {
       this.listType.push(node.type);
       this.listCount.push(0);
@@ -157,7 +239,6 @@ class MarkdownRenderer {
 
       this.listType.pop();
       this.listCount.pop();
-
     } else if (node.type == "list-item") {
       const count = this.listCount[this.listCount.length - 1]++;
       block += " ".repeat((this.listCount.length - 1) * 2);
@@ -169,33 +250,52 @@ class MarkdownRenderer {
       }
 
       block += getChildren();
-
     } else if (isImageBlockNode(node)) {
       const fileId = node.data.ref.file;
-      const filename = this.files[fileId];
-      block = `![${getChildren().trim()}](files/${filename})\n\n`;
-
+      let captionAltText = getChildren().trim();
+      block = this.renderImageFile(fileId, captionAltText);
+      block += "\n\n";
     } else if (isFileBlockNode(node)) {
       const fileId = node.data.ref.file;
       const filename = this.files[fileId];
       block = `[${getChildren().trim()}](files/${filename})\n\n`;
-
     } else if (node.type == "code") {
       block += "```";
-      if (node.data) block += node.data.syntax;
+      if (node.data) block += node.data?.syntax || "";
       block += "\n";
       block += getChildren();
       block += "```\n\n";
-
     } else if (node.type == "code-line") {
       block += getChildren() + "\n";
-
     } else if (node.type == "blockquote") {
       block = getChildren()
         .split("\n")
         .map((line) => `> ${line}\n`)
         .join("");
+    } else if (node.type == "hint") {
+      let children = getChildren();
+      // hack to remove extra newlines on hint blocks
+      if (children.slice(children.length - 2, children.length) === "\n\n") {
+        children = children.slice(0, children.length - 2);
+      }
 
+      // https://docs.gitbook.com/content-creation/blocks/hint
+      const hintStyleToEmoji: Record<string, string> = {
+        info: "⏹",
+        success: "✅",
+        warning: "⚠️",
+        danger: "🚩",
+      };
+      const styleKey = node.data?.style || "info";
+      const symbolReplacementPrefix = hintStyleToEmoji[styleKey] + " ";
+      block = children
+        .split("\n")
+        .map(
+          (line, i) => `> ${i === 0 ? symbolReplacementPrefix : ""}${line}\n`
+        )
+        .join("");
+      // add the newline back at the end, so that it pushes the next markdown block away.
+      block += "\n";
     } else {
       block = getChildren();
     }
@@ -210,12 +310,40 @@ class MarkdownRenderer {
   renderInline(node: InlineNode, depth: number) {
     if (isLinkNode(node)) {
       const text = this.renderChildren(node, depth);
-      const url = node.data.ref.url;
-      return `[${text}](${url})`;
-    } else if (isImageNode(node)) {
+      let url = "";
+      let linkTitle = "";
+      if (isGitbookLinkNode(node)) {
+        const pageRef = node.data.ref.page;
+        const anchor = node.data.ref.anchor ? `#${node.data.ref.anchor}` : "";
+        // this ID can be tied back to a page slug and more using the `content.json` file
+        url = pageRef;
+        const pageInfo = this.findPageInfoFromGitbookPageRef(
+          this.spaceContent.pages,
+          pageRef
+        );
+        if (pageInfo) {
+          url = `/${pageInfo?.path}`;
+          linkTitle = ` "${pageInfo.title}"`;
+        }
+        // still add the anchor, since it's useful even without full page info
+        url = `${url}${anchor}`;
+      } else {
+        url = node.data.ref.url;
+        linkTitle = "";
+      }
+      return `[${text}](${url}${linkTitle})`;
+    } else if (isImageFileNode(node)) {
+      const imageRef = node.data.ref.file;
+      const captionAltText = this.renderChildren(node, depth);
+      return this.renderImageFile(imageRef, captionAltText);
+    } else if (isImageLinkNode(node)) {
       const text = node.data.caption;
       const url = node.data.ref.url;
       return `![${text}](${url})`;
+    } else if (isEmojiNode(node)) {
+      const unicode_hex_code_point = node.data.code;
+      const hex_val = Number(`0x${unicode_hex_code_point}`);
+      return `${String.fromCodePoint(hex_val)} `;
     } else {
       throw `Unknown inline type: ${node.type}`;
     }
@@ -263,6 +391,69 @@ class MarkdownRenderer {
       .map((s) => s.trimEnd())
       .join("\n");
   }
+
+  findPageInfoFromGitbookPageRef(
+    searchPages: SpaceContentPage[],
+    gitbookPageRef: string
+  ): SpaceContentPage | null {
+    for (const p of searchPages) {
+      if (p.id === gitbookPageRef) {
+        return p;
+      } else if (p.pages) {
+        // didn't find at top level, now do recursive pages
+        let pageInfo: SpaceContentPage | null = null;
+        pageInfo = this.findPageInfoFromGitbookPageRef(p.pages, gitbookPageRef);
+        if (pageInfo) {
+          return pageInfo;
+        }
+      }
+    }
+    return null;
+  }
+
+  renderImageFile(imageRefID: string, captionAltText: string = "") {
+    // TODO: this ignores existing captions
+    const fileInfo = this.findFileInfoFromGitbookFileRef(
+      this.spaceContent.files,
+      imageRefID
+    );
+    const filename = fileInfo?.name || "unknown-file";
+    const filesRef = `files/${fileInfo?.id}.${filename}`;
+    captionAltText = isNullUndefinedOrEmptyString(captionAltText)
+      ? filename
+      : captionAltText;
+    if (fileInfo) {
+      return `![${captionAltText}](${filesRef} "${fileInfo?.downloadURL}")`;
+    }
+    return `![unknown-file.${imageRefID}]()`;
+  }
+
+  findFileInfoFromGitbookFileRef(
+    files: SpaceContentFile[],
+    fileRef: string
+  ): SpaceContentFile | null {
+    for (const f of files) {
+      if (f.id === fileRef) {
+        return f;
+      }
+    }
+    return null;
+  }
 }
-export type { Node, BlockNode, InlineNode, LinkNode, ImageNode, LeafNode, Files };
+export type {
+  Node,
+  BlockNode,
+  ImageBlockNode,
+  InlineNode,
+  LinkNode,
+  gitbookLinkNode,
+  ImageLinkNode as ImageLinkNode,
+  ImageFileNode,
+  EmojiNode,
+  LeafNode,
+  Files,
+  SpaceContent,
+  SpaceContentFile,
+  SpaceContentPage,
+};
 export default MarkdownRenderer;
