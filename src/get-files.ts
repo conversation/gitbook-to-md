@@ -24,11 +24,11 @@ const getFiles = async (spaceName: string) => {
 
   try {
     await fs.mkdir(`data/${spaceName}/files`);
-  } catch (error) { }
+  } catch (error) {}
 
   await Promise.all(
     content.files.map((file: { downloadURL: string }) => {
-      getFile(spaceName, file.downloadURL)
+      getFile(spaceName, file.downloadURL);
     })
   );
 };
