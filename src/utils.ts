@@ -7,4 +7,8 @@ const extractFilename = (urlStr: string): string => {
   return file ? `${file[1]}.${file[3]}` : "unknown";
 };
 
-export { extractFilename };
+const isNullUndefinedOrEmptyString = (input: string | undefined | null) => {
+  return input === undefined || input === null || input.length === 0;
+};
+
+export { extractFilename, isNullUndefinedOrEmptyString };
